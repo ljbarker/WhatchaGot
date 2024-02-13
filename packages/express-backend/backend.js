@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import queries from "./models/user-services.js";
+import queries from "./models/recipe-services.js";
 
 const app = express();
 const port = 8000;
