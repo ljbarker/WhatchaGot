@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from "./Home";
 
 function MyApp() {
 
     return (
-        <div className="container">
-        Hello World
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+            </Routes>
+        </BrowserRouter>
     );
 
     
