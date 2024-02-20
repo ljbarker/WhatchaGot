@@ -1,6 +1,6 @@
 WatchaGot - Recipe and Ingredient Manager
 
-To Start:
+To Get Started:
     npm install from root, react-frontend, express-backend
 
 To Develop:
