@@ -9,42 +9,28 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("WatchaGot Data Home");
 });
   
-app.get("/users", (req, res) => {
+app.get("/recipes", (req, res) => {
     const name = req.query.name;
-    const job = req.query.job;
     let result;
     if (name != undefined) {
-      if (job != undefined) {
-        queries.findUserByNameAndJob(name, job)
-        .then((qres) => { 
-          result = qres;
-          result = { users_list : result };
-          res.send(result);})
-        .catch((error) => { 
-          result = undefined;
-          console.log(error);
-        });
-      } else { 
-        queries.findUserByName(name)
-        .then((qres) => { 
-          result = qres;
-          result = { users_list : result };
-          res.send(result);})
-        .catch((error) => { 
-          result = undefined;
-          console.log(error);
-        });
-      }
-      
+      queries.findRecipeByName(name)
+      .then((qres) => { 
+        result = qres;
+        result = { recipe_list : result };
+        res.send(result);})
+      .catch((error) => { 
+        result = undefined;
+        console.log(error);
+      });
     } else {
-      queries.getUsers()
+      queries.getRecipes()
       .then((qres) => { 
         console.log(qres)
         result = qres;
-        result = { users_list : result };
+        result = { recipe_list : result };
         res.send(result);})
       .catch((error) => {
         result = undefined;
@@ -53,10 +39,10 @@ app.get("/users", (req, res) => {
     };
 });
 
-app.get("/users/:id", (req, res) => {
+app.get("/recipe/:id", (req, res) => {
     const id = req.params["id"]; //or req.params.id
     let result;
-    queries.findUserById(id)
+    queries.findRecipeById(id)
     .then((qres) => {
       result = qres;
       if (result === undefined) {
@@ -71,26 +57,28 @@ app.get("/users/:id", (req, res) => {
     
 });
 
-app.post("/users", (req, res) => {
-    const userToAdd = {_id: Math.floor(Math.random()*1000).toString(), ...req.body};
-    let result;
-    queries.addUser(userToAdd).then((qres) => {
-      result = qres;
-      if(result != null) {
-        res.status(201).send(result);
-      } else { 
-        res.status(400).send("Bad user.");
-      }
-    }).catch((error) => {
-      result = undefined;
-      console.log(error);
-    });
-    ;
+app.post("/recipes", (req, res) => {
+  const body = {name: req.body.name, ingredientList: [[req.body.ingredientName, req.body.ingredientAmount, req.body.ingredientUnits]]};
+  const recipeToAdd = {_id: Math.floor(Math.random()*1000).toString(), ...body};
+  let result;
+  console.log(recipeToAdd)
+  queries.addRecipe(recipeToAdd).then((qres) => {
+    result = qres;
+    if(result != null) {
+      res.status(201).send(result);
+    } else { 
+      res.status(400).send("Bad user.");
+    }
+  }).catch((error) => {
+    result = undefined;
+    console.log(error);
+  });
+  ;
 });
 
-app.delete("/users/:id", (req, res) => {
+app.delete("/recipes/:id", (req, res) => {
     const id = req.params["id"];
-    queries.deleteUser(id)
+    queries.deleteRecipe(id)
     .then((qres) => {
       if (qres === null) {
         res.status(404).send("Resource not found.");

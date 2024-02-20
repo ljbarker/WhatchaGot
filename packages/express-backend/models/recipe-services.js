@@ -10,6 +10,32 @@ mongoose
 })
 .catch((error) => console.log(error));
 
-export default {
-
+function getRecipes() {
+    return recipeModel.find();
 }
+
+function findRecipeByName(name) {
+    return recipeModel.find({ name: name });
+}
+
+function findRecipeById(id) {
+    return recipeModel.findById(id);
+}
+
+function addRecipe(recipe) {
+    const recipeToAdd = new recipeModel(recipe);
+    const promise = recipeToAdd.save();
+    return promise;
+}
+
+function deleteRecipe(id) {
+    return recipeModel.findByIdAndDelete(id);
+}
+
+export default {
+    getRecipes,
+    addRecipe,
+    deleteRecipe,
+    findRecipeByName,
+    findRecipeById,
+};

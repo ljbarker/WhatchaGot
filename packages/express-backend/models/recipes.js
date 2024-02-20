@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+const RecipeSchema = new mongoose.Schema(
 {
     _id : {
     type: String,
@@ -17,14 +17,16 @@ const UserSchema = new mongoose.Schema(
     required: true,
     trim: true,
     validate(value) {
-        if (value.length < 2)
-        throw new Error("Invalid Ingredient, must have name and amount.");
+        value.forEach(element => {
+            if (element.length < 3)
+                throw new Error("Invalid Ingredient: Must have name, amount, and units.");
+        });
     },
     },
 },
 { collection: "recipe_list" }
 );
 
-const User = mongoose.model("User", UserSchema);
+const Recipe = mongoose.model("Recipe", RecipeSchema);
 
-export default User;
+export default Recipe;
