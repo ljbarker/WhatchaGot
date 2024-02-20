@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Card, Pane, Group, Button, TrashIcon, ManualIcon } from "evergreen-ui";
+import { Card, Pane, Group, Button, TrashIcon, ManualIcon, Dialog, Heading } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import RecipeForm from "./RecipeForm";
 
 function MyRecipes() {
     const [recipes, setRecipes] = useState([]);
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
+        setShowForm(false);
         fetchRecipes()
         .then((res) => res.json())
         .then((json) => setRecipes(json["recipe_list"]))
@@ -90,18 +92,33 @@ function MyRecipes() {
                         margin={16}
                         padding={16}
                         display="flex"
+                        flexDirection="column"
                         justifyContent="space-between"
                         alignItems="center"
                     >
-                        <h3>{recipe.name}</h3>
+                        <Heading  size={900}>{recipe.name}</Heading>
+                        <Group >
                         <Button iconAfter={ManualIcon}>
                             <Link to={`/recipe/${recipe._id}`}>View</Link>
-                        </Button>
-                        <Button intent="danger" iconAfter={TrashIcon} onClick={() => removeOneRecipe(index)}>Delete</Button>
+                            </Button>
+                            <Button intent="danger" iconAfter={TrashIcon} onClick={() => removeOneRecipe(index)}>Delete</Button>
+                        </Group>
                     </Card>
                 ))}
             </Group>
-            <RecipeForm handleSubmit={updateList}/>
+            <Pane>
+                <Dialog
+                isShown={showForm}
+                title="Add a Recipe"
+                onCloseComplete={() => setShowForm(false)}
+                confirmLabel="Done"
+                hasFooter={false}
+                >
+                    <RecipeForm handleSubmit={updateList}/>
+                </Dialog>
+                <Button onClick={() => setShowForm(true)} intent="success">Add Recipe</Button>
+            </Pane>
+            
         </Pane>
     );
 }

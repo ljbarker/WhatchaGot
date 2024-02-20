@@ -72,7 +72,7 @@ function RecipeForm(props) {
         }}
         />
 
-        <Button onClick={submitForm}>Submit</Button>
+        <Button intent="success" onClick={submitForm}>Add</Button>
     </form>
   );
 }

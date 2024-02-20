@@ -4,7 +4,7 @@ import recipeModel from "./recipes.js";
 mongoose.set("debug", true);
 
 mongoose
-.connect("mongodb://localhost:27017/users", {
+.connect("mongodb://localhost:27017/recipes", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
