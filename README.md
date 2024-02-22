@@ -1,8 +1,10 @@
 # WhatchaGot - Recipe and Ingredient Manager
 
 ## To Get Started:
-    npm install from root, react-frontend, express-backend
+### From root, react-frontend, express-backend:
+    npm install 
     
+## 
     Add .env file to express-backend package and put MONGODB_URI connection string
     from the Atlas Website for the WhatchaGot Database. Click connect on WhatchaGot Database
     and copy that connection string. Replace the full <username> with the username of your
