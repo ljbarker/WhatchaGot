@@ -7,8 +7,8 @@ From root, react-frontend, express-backend:
      
 Add .env file to express-backend package and put MONGODB_URI connection string
 from the Atlas Website for the WhatchaGot Database. Click connect on WhatchaGot Database
-and copy that connection string. Replace the full "<username>" with the username of your
-user in the database and the full "<password>" with the password for that user.
+and copy that connection string. Replace the full \<username\> with the username of your
+user in the database and the full \<password\> with the password for that user.
     
 
 ## To Develop:
