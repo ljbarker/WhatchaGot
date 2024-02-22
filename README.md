@@ -1,6 +1,6 @@
-#WatchaGot - Recipe and Ingredient Manager
+# WhatchaGot - Recipe and Ingredient Manager
 
-##To Get Started:
+## To Get Started:
     npm install from root, react-frontend, express-backend
     
     Add .env file to express-backend package and put MONGODB_URI connection string
@@ -9,9 +9,9 @@
     user in the database and the full <password> with the password for that user.
     
 
-##To Develop:
+## To Develop:
     express-backend npm run dev
     react-frontend npm start
 
-##Design System-Evergreen: https://evergreen.segment.com/introduction/getting-started
+## Design System-Evergreen: https://evergreen.segment.com/introduction/getting-started
     npm install -w react-frontend evergreen-ui
