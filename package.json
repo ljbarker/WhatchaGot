@@ -15,7 +15,7 @@
   "dependencies": {
     "create-react-app": "^5.0.1",
     "dotenv": "^16.4.5",
-    "mongoose": "^8.1.1"
+    "mongoose": "^8.2.0"
   },
   "devDependencies": {
     "eslint-config-prettier": "^9.1.0",
