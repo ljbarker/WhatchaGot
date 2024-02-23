@@ -1,16 +1,15 @@
-import { Pane } from "evergreen-ui";
+import { Heading, Pane, Paragraph } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 function Home() {
     return (
         <Pane>
-            <Navbar></Navbar>
-            <div>
-                <h1>Home</h1>
-                <p>Welcome to the WhatchaGot page!</p>
-                <Link to="/myrecipes">My Recipes</Link>
-            </div>
+            <Navbar/>
+            <Pane>
+                <Heading fontSize={32}>Home</Heading>
+                <Paragraph>Welcome to the WhatchaGot page!</Paragraph>
+            </Pane>
         </Pane>
     );
 }

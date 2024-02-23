@@ -85,7 +85,7 @@ function MyRecipes() {
 
     return (
         <Pane>
-            <Navbar></Navbar>
+            <Navbar />
             <Group>
                 {recipes.map((recipe, index) => (
                     <Card
