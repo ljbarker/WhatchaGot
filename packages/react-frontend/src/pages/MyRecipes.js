@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card, Pane, Group, Button, TrashIcon, ManualIcon, Dialog, Heading } from "evergreen-ui";
 import { Link } from "react-router-dom";
-import RecipeForm from "./RecipeForm";
+import RecipeForm from "../components/RecipeForm";
+import Navbar from "../components/Navbar";
 
 function MyRecipes() {
     const [recipes, setRecipes] = useState([]);
@@ -84,6 +85,7 @@ function MyRecipes() {
 
     return (
         <Pane>
+            <Navbar></Navbar>
             <Group>
                 {recipes.map((recipe, index) => (
                     <Card
