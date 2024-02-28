@@ -1,5 +1,5 @@
 import { Button, Combobox, TextInputField } from "evergreen-ui";
-import React, { useState } from "react";
+import { useState } from "react";
 
 function RecipeForm(props) {
   const [recipe, setRecipe] = useState({
