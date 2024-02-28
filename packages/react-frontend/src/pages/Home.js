@@ -11,7 +11,7 @@ function Home() {
                 <Heading fontSize={32}>Home</Heading>
                 <Paragraph>Welcome to the WhatchaGot page!</Paragraph>
             </Pane>
-            <Pane display="flex" justifyContent="center">
+            <Pane display="flex" alignItems="center" justifyContent="center">
                 <SearchInput placeholder="Enter recipe here..." onChange={(e) => setValue(e.target.value)} value={value} />
             </Pane>
         </Pane>
