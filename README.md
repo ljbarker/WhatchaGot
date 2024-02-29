@@ -14,4 +14,5 @@ and copy that connection string. You will need to wrap it in double quotes. Repl
     ~/express-backend npm run dev
     ~/react-frontend npm start
 
-## Design System-Orbit: [https://evergreen.segment.com/introduction/getting-started](https://orbit.kiwi/getting-started/for-developers/)https://orbit.kiwi/getting-started/for-developers/
+## Design System-Evergreen: 
+https://evergreen.segment.com/introduction/getting-started
