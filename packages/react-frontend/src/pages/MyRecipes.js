@@ -118,7 +118,7 @@ function MyRecipes() {
                 >
                     <RecipeForm handleSubmit={updateList}/>
                 </Dialog>
-                <Button onClick={() => setShowForm(true)} intent="success">Add Recipe</Button>
+                <Button marginLeft={16} onClick={() => setShowForm(true)} intent="success">Add Recipe</Button>
             </Pane>
             
         </Pane>
