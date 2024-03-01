@@ -22,7 +22,7 @@ function MyRecipes() {
     }
 
     function postRecipe(recipe) {
-        const promise = fetch("Http://localhost:8000/recipes", {
+        const promise = fetch("http://localhost:8000/recipes", {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
