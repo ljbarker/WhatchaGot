@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import MyRecipes from "./pages/MyRecipes";
 import MyInventory from './pages/MyInventory';
 import MyList from './pages/MyList';
+import Login from './pages/Login';
 
 function MyApp() {
 
@@ -13,6 +14,7 @@ function MyApp() {
                 <Route path="/myrecipes" element={<MyRecipes />} />
                 <Route path="/myinventory" element={<MyInventory />} />
                 <Route path="/mylist" element={<MyList />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </BrowserRouter>
     );
