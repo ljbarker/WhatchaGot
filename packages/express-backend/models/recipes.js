@@ -23,6 +23,11 @@ const RecipeSchema = new mongoose.Schema(
         });
     },
     },
+    description: {
+        type: String,
+        required: true,
+        trim: true,
+    },
 },
 { collection: "recipe_list" }
 );
