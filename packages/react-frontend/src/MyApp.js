@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import MyRecipes from "./pages/MyRecipes";
 import MyInventory from './pages/MyInventory';
 import MyList from './pages/MyList';
+import Recipe from './pages/Recipe';
 
 function MyApp() {
 
@@ -11,6 +12,7 @@ function MyApp() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/myrecipes" element={<MyRecipes />} />
+                <Route path="/recipe/:id" element={<Recipe />} />
                 <Route path="/myinventory" element={<MyInventory />} />
                 <Route path="/mylist" element={<MyList />} />
             </Routes>
