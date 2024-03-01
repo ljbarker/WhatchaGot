@@ -1,7 +1,7 @@
 import { Heading, Pane, Table } from "evergreen-ui";
 import Navbar from "../components/Navbar";
 
-function MyList() {
+function MyShoppingList() {
   return (
     <Pane>
       <Pane>
@@ -56,4 +56,4 @@ const profiles = [
   },
 ];
 
-export default MyList;
+export default MyShoppingList;

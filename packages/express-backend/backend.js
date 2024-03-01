@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import queries from "./models/recipe-services.js";
+import recipeQueries from "./models/recipe-services.js";
+import inventoryQueries from "./models/inventory-services.js";
 
 const app = express();
 const port = 8000;
@@ -16,7 +17,7 @@ app.get("/recipes", (req, res) => {
     const name = req.query.name;
     let result;
     if (name != undefined) {
-      queries.findRecipeByName(name)
+      recipeQueries.findRecipeByName(name)
       .then((qres) => { 
         result = qres;
         result = { recipe_list : result };
@@ -26,7 +27,7 @@ app.get("/recipes", (req, res) => {
         console.log(error);
       });
     } else {
-      queries.getRecipes()
+      recipeQueries.getRecipes()
       .then((qres) => { 
         console.log(qres)
         result = qres;
@@ -42,7 +43,7 @@ app.get("/recipes", (req, res) => {
 app.get("/recipe/:id", (req, res) => {
     const id = req.params["id"]; //or req.params.id
     let result;
-    queries.findRecipeById(id)
+    recipeQueries.findRecipeById(id)
     .then((qres) => {
       result = qres;
       if (result === undefined) {
@@ -62,7 +63,7 @@ app.post("/recipes", (req, res) => {
   const recipeToAdd = {_id: Math.floor(Math.random()*1000).toString(), ...body};
   let result;
   console.log(recipeToAdd)
-  queries.addRecipe(recipeToAdd).then((qres) => {
+  recipeQueries.addRecipe(recipeToAdd).then((qres) => {
     result = qres;
     if(result != null) {
       res.status(201).send(result);
@@ -78,7 +79,7 @@ app.post("/recipes", (req, res) => {
 
 app.delete("/recipes/:id", (req, res) => {
     const id = req.params["id"];
-    queries.deleteRecipe(id)
+    recipeQueries.deleteRecipe(id)
     .then((qres) => {
       if (qres === null) {
         res.status(404).send("Resource not found.");
@@ -89,6 +90,85 @@ app.delete("/recipes/:id", (req, res) => {
     .catch((error) => {
       console.log(error);
     })
+});
+
+app.get("/inventory", (req, res) => {
+  const name = req.query.name;
+  let result;
+  if (name != undefined) {
+    inventoryQueries.findItemByName(name)
+    .then((qres) => { 
+      result = qres;
+      result = { inventory_list : result };
+      res.send(result);})
+    .catch((error) => { 
+      result = undefined;
+      console.log(error);
+    });
+  } else {
+    inventoryQueries.getInventory()
+    .then((qres) => { 
+      console.log(qres)
+      result = qres;
+      result = { inventory_list : result };
+      res.send(result);})
+    .catch((error) => {
+      result = undefined;
+      console.log(error);
+    });     
+  };
+});
+
+app.get("/inventory/:id", (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result;
+  inventoryQueries.findItemById(id)
+  .then((qres) => {
+    result = qres;
+    if (result === undefined) {
+      res.status(404).send("Resource not found.");
+    } else {
+      res.send(result);
+    }})
+  .catch((error) => {
+    result = undefined;
+    console.log(error);
+  });
+  
+});
+
+app.post("/inventory", (req, res) => {
+const body = {name: req.body.name, quantity: req.body.quantity, expiration: req.body.expiration};
+const itemToAdd = {_id: Math.floor(Math.random()*1000).toString(), ...body};
+let result;
+console.log(itemToAdd)
+inventoryQueries.addItem(itemToAdd).then((qres) => {
+  result = qres;
+  if(result != null) {
+    res.status(201).send(result);
+  } else { 
+    res.status(400).send("Bad user.");
+  }
+}).catch((error) => {
+  result = undefined;
+  console.log(error);
+});
+;
+});
+
+app.delete("/inventory/:id", (req, res) => {
+  const id = req.params["id"];
+  inventoryQueries.deleteItem(id)
+  .then((qres) => {
+    if (qres === null) {
+      res.status(404).send("Resource not found.");
+    } else {
+      res.status(204).send("Resource deleted.");
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  })
 });
 
 app.listen(port, () => {
