@@ -59,7 +59,7 @@ app.get("/recipe/:id", (req, res) => {
 });
 
 app.post("/recipes", (req, res) => {
-  const body = {name: req.body.name, ingredientList: [[req.body.ingredientName, req.body.ingredientAmount, req.body.ingredientUnits]]};
+  const body = {name: req.body.name, ingredientList: req.body.ingredients, description: req.body.description};
   const recipeToAdd = {_id: Math.floor(Math.random()*1000).toString(), ...body};
   let result;
   console.log(recipeToAdd)
