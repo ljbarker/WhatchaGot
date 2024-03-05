@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import MyRecipes from "./pages/MyRecipes";
 import MyInventory from './pages/MyInventory';
 import MyShoppingList from './pages/MyShoppingList';
+import Recipe from './pages/Recipe';
 import Login from './pages/Login';
 
 function MyApp() {
