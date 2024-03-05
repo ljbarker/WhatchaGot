@@ -1,4 +1,4 @@
-import { Heading, Pane, Paragraph, SearchInput } from "evergreen-ui";
+import { Heading, Pane, Paragraph, SearchInput, Table } from "evergreen-ui";
 import { useState } from 'react';
 import Navbar from "../components/Navbar";
 function Home() {
@@ -9,23 +9,31 @@ function Home() {
         e.preventDefault();
         setheaderValue(value);
     };
-
     return (
         <Pane>
             <Navbar/>
-            <Pane>
-                <Heading fontSize={32}>Home</Heading>
-                <Paragraph>Welcome to the WhatchaGot page!</Paragraph>
+            <Pane display="flex" alignItems="center" justifyContent="center" paddingY={10}>
+                <Heading fontSize={32}>Welcome to WhatchaGot!</Heading>
             </Pane>
-            <Pane display="flex" alignItems="center" justifyContent="center">
+            <Pane display="flex" alignItems="center" justifyContent="center" paddingY={10}>
                     <form onSubmit={handleSubmit}>
                         <SearchInput placeholder="Enter recipe here..." onChange={(e) => setValue(e.target.value)} value={value}/>
                     </form>
-                </Pane>
-            <Pane>
-                <Heading>You inputted: {headerValue}</Heading>
             </Pane>
-        </Pane>
+            <Table>
+                <Table.Head>
+                <Table.TextHeaderCell>Recipe</Table.TextHeaderCell>
+                <Table.TextHeaderCell>Ingredients</Table.TextHeaderCell>
+                </Table.Head>
+                <Table.Body height={240}>
+            
+                <Table.Row key={headerValue} isSelectable onSelect={() => alert(headerValue)}>
+                <Table.TextCell>{headerValue}</Table.TextCell>
+                <Table.TextCell>{headerValue}</Table.TextCell>
+                </Table.Row>
+                </Table.Body>
+                </Table>
+                </Pane>
     );
 }
 
