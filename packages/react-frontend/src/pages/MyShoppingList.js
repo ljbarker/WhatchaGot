@@ -108,7 +108,7 @@ function MyShoppingList() {
           <Table.TextHeaderCell>Quantity</Table.TextHeaderCell>
         </Table.Head>
         <Table.Body height={240}>
-          {inventory.map((item, index) => (
+          {shoppinglist.map((item, index) => (
             <Table.Row
               key={index}
               isSelectable
