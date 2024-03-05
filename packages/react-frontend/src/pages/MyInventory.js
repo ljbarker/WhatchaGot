@@ -19,8 +19,6 @@ function MyInventory() {
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    console.log("items:", inventory);
-
     setShowForm(false);
     fetchInventory()
       .then((res) => res.json())
