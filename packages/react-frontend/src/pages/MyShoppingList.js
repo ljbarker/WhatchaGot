@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import ShoppingListForm from "../components/ShoppingListForm";
 import Navbar from "../components/Navbar";
 
-function MyInventory() {
+function MyShoppingList() {
   const [shoppinglist, setItems] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
