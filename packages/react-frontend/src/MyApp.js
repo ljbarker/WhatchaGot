@@ -2,7 +2,7 @@ import React, { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import MyRecipes from "./pages/MyRecipes";
 import MyInventory from './pages/MyInventory';
-import MyList from './pages/MyShoppingList';
+import MyShoppingList from './pages/MyShoppingList';
 import Login from './pages/Login';
 
 function MyApp() {
