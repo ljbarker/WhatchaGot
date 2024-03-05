@@ -33,9 +33,11 @@ function Navbar() {
         <Link to="/mylist">
           <Tab size={500}>My List</Tab>
         </Link>
+        <Link to="/login">
         <Tab appearance="primary">
           <Avatar name="User" size={40}></Avatar>
         </Tab>
+        </Link>
       </Group>
     </Tablist>
   );
