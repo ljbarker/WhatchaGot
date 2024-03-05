@@ -62,3 +62,4 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_59646148A52B4178AA20BAA0828BE2E4 }}
           package: .
+          node-version: '20.x'
