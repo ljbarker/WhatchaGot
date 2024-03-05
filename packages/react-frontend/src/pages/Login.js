@@ -9,25 +9,21 @@ function Login() {
   return (
     <Pane>
       <Navbar />
-      <Pane display="flex" alignItems="center" justifyContent="center">
-        <Heading margin={8} fontSize={32} marginY={90}>
+      <Heading display="flex" alignItems="center" justifyContent="center" margin={8} fontSize={32} marginY={40}>
           Login
         </Heading>
-      </Pane>
+      <Pane display="flex" alignItems="center" justifyContent="center" paddingY={30}>
       <Pane
         elevation={4}
         float="left"
         is="section"
         background="lightgreen"
         border="muted"
-        marginLeft={505}
-        marginY={24}
-        paddingTop={12}
-        paddingX={40}
         width={360}
         height={250}
+        paddingY={20}
       >
-        <Pane paddingY={30}>
+        <Pane paddingY={30} paddingX={40}>
           <SearchInput
             placeholder="Enter Username"
             onChange={(e) => setUsername(e.target.userName)}
@@ -45,6 +41,7 @@ function Login() {
           </Pane>
         </Pane>
       </Pane>
+    </Pane>
     </Pane>
   );
 }
