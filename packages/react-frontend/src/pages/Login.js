@@ -1,4 +1,4 @@
-import { Heading, Pane, Link, SearchInput, Button } from "evergreen-ui";
+import { Heading, Pane, Link, TextInput, Button } from "evergreen-ui";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 
@@ -10,7 +10,7 @@ function Login() {
     <Pane>
       <Navbar />
       <Pane display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-        <Heading margin={8} fontSize={32} marginY={90}>
+        <Heading margin={8} fontSize={32} marginY={60}>
           Login
         </Heading>
         <Pane
@@ -26,13 +26,13 @@ function Login() {
         height={250}
         >
           <Pane paddingY={30}>
-            <SearchInput
+            <TextInput
               placeholder="Enter Username"
               onChange={(e) => setUsername(e.target.userName)}
               userName={userName}
             />
             <Pane paddingY={10} />
-            <SearchInput
+            <TextInput
               placeholder="Enter Password"
               onChange={(e) => setPassword(e.target.password)}
               password={password}
