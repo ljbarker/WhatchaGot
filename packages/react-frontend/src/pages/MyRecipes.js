@@ -57,7 +57,7 @@ function MyRecipes() {
     }
 
     function deleteRecipe(id) {
-        const promise = fetch("https://localhost:8000/recipe_list/${id}", {
+        const promise = fetch(`https://localhost:8000/recipe_list/${id}`, {
             method: "DELETE",
         });
         return promise;

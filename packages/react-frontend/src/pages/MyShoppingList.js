@@ -67,7 +67,7 @@ function MyShoppingList() {
   }
 
   function deleteItem(id) {
-    const promise = fetch("https://localhost:8000/shopping_list/${id}", {
+    const promise = fetch(`https://localhost:8000/shopping_list/${id}`, {
       method: "DELETE",
     });
     return promise;
