@@ -1,39 +1,66 @@
-import { Button, Combobox, TextInputField } from "evergreen-ui";
+import { Button, Group, TextInputField, TextareaField, DeleteIcon, IconButton } from "evergreen-ui";
 import { useState } from "react";
 
 function RecipeForm(props) {
   const [recipe, setRecipe] = useState({
     name: "",
-    ingredientName: "",
-    ingredientAmount: "",
-    ingredientUnits: "",
+    ingredients: [{name: "", amount: ""}],
+    description: "",
   });
-  function handleChange(event) {
+
+  const [numIngredients, setNumIngredients] = useState(1);
+  
+  function handleChange(event, index) {
     const { name, value } = event.target;
+    
     if (name === "amount") {
-        setRecipe({ name: recipe["name"], 
-                    ingredientName: recipe["ingredientName"], 
-                    ingredientAmount: value, 
-                    ingredientUnits: recipe["ingredientUnits"] });
+      const ingredient = {name: recipe["ingredients"][index].name, amount: value}
+      let ingredientlist = recipe["ingredients"]
+      ingredientlist[index] = ingredient
+        
+      setRecipe({ name: recipe["name"], 
+                  ingredients: ingredientlist,
+                  description: recipe["description"]});
     } else if (name === "ingredient") {
+        const ingredient = {name: value, amount: recipe["ingredients"][index].amount}
+        let ingredientlist = recipe["ingredients"]
+        ingredientlist[index] = ingredient
+
         setRecipe({ name: recipe["name"], 
-                    ingredientName: value, 
-                    ingredientAmount: recipe["ingredientAmount"], 
-                    ingredientUnits: recipe["ingredientUnits"] });
-    } else {
+                    ingredients: ingredientlist,
+                    description: recipe["description"]});
+    } else if (name === "name") {
         setRecipe({ name: value, 
-                    ingredientName: recipe["ingredientName"], 
-                    ingredientAmount: recipe["ingredientAmount"], 
-                    ingredientUnits: recipe["ingredientUnits"] });
+                  ingredients: recipe["ingredients"],
+                  description: recipe["description"]});
+    } else {
+        setRecipe({ name: recipe["name"], 
+                    ingredients: recipe["ingredients"],
+                    description: value});
     }
   }
 
-  function submitForm() {
+  function addIngredient(event) {
+    event.preventDefault(); 
+    setNumIngredients(numIngredients + 1); 
+    setRecipe({name: recipe["name"], ingredients: [...recipe["ingredients"], {name: "", amount: ""}], description: recipe["description"]})
+  }
+
+  function removeIngredient(event, index) {
+    event.preventDefault();
+    let ingredientlist = recipe["ingredients"]
+    ingredientlist.splice(index, 1)
+    setNumIngredients(numIngredients - 1)
+    setRecipe({name: recipe["name"], ingredients: ingredientlist, description: recipe["description"]})
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
     props.handleSubmit(recipe);
-    setRecipe({ name: "", 
-                ingredientName: "",
-                ingredientAmount: "",
-                ingredientUnits: "", });
+    setRecipe({ name: "",
+                ingredients: [{name: "", amount: ""}],
+                description: "", })
+    setNumIngredients(1);
   }
 
   return (
@@ -43,34 +70,37 @@ function RecipeForm(props) {
             name="name"
             id="name"
             value={recipe.name}
+            onChange={(e) => handleChange(e, undefined)}
+        />
+        {Array.from({length: numIngredients}, (_, i) => i).map((_, index) => (
+        <Group key={index}>
+          <TextInputField
+              label="Ingredient"
+              name="ingredient"
+              id={`ingredient${index}`}
+              value={recipe.ingredients[index].name}
+              onChange={(e) => handleChange(e, index)}
+              marginRight={12}
+          />
+          <TextInputField
+              label="Amount"
+              key={index}
+              name="amount"
+              id={`amount${index}`}
+              value={recipe.ingredients[index].amount}
+              onChange={(e) => handleChange(e, index)}
+              marginX={12}
+          />
+          <IconButton alignSelf="center" icon={DeleteIcon} intent="danger" onClick={(e) => removeIngredient(e, index)}></IconButton>
+        </Group>))}
+        <Button marginBottom={16} intent="success" onClick={addIngredient}>Add Another Ingredient</Button>
+        <TextareaField
+            label="Description"
+            name="description"
+            id="description"
+            value={recipe.description}
             onChange={handleChange}
-        />
-        <TextInputField
-            label="Ingredient"
-            name="ingredient"
-            id="ingredient"
-            value={recipe.ingredientName}
-            onChange={handleChange}
-        />
-        <TextInputField
-            label="Amount"
-            name="amount"
-            id="amount"
-            value={recipe.ingredientAmount}
-            onChange={handleChange}
-        />
-        <Combobox
-        name="units"
-        id="units"
-        value={recipe.ingredientUnits}
-        items={['cups', 'fl oz', 'gal', 'grams', 'lbs', 'ml', 'oz', 'pints', 'quarts', 'tbsp', 'tsp', 'other (specify in amount box)']}
-        onChange={(selected) => setRecipe({ name: recipe["name"], ingredientName: recipe["ingredientName"], ingredientAmount: recipe["ingredientAmount"], ingredientUnits: selected})}
-        placeholder="Units"
-        autocompleteProps={{
-            // Used for the title in the autocomplete.
-            title: 'Units'
-        }}
-        />
+          /> 
 
         <Button intent="success" onClick={submitForm}>Add</Button>
     </form>

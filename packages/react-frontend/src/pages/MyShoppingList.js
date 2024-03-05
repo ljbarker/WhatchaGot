@@ -11,28 +11,28 @@ import {
   Table,
 } from "evergreen-ui";
 import { Link } from "react-router-dom";
-import InventoryForm from "../components/InventoryForm";
+import ShoppingListForm from "../components/ShoppingListForm";
 import Navbar from "../components/Navbar";
 
-function MyInventory() {
-  const [inventory, setItems] = useState([]);
+function MyShoppingList() {
+  const [shoppinglist, setItems] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     setShowForm(false);
-    fetchInventory()
+    fetchShoppingList()
       .then((res) => res.json())
-      .then((json) => setItems(json["inventory_list"]))
+      .then((json) => setItems(json["shopping_list"]))
       .catch((error) => console.log(error));
   }, []);
 
-  function fetchInventory() {
-    const promise = fetch("http://localhost:8000/inventory_list");
+  function fetchShoppingList() {
+    const promise = fetch("http://localhost:8000/shopping_list");
     return promise;
   }
 
   function postItem(item) {
-    const promise = fetch("http://localhost:8000/inventory_list", {
+    const promise = fetch("http://localhost:8000/shopping_list", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,12 +45,12 @@ function MyInventory() {
 
   function removeOneItem(index) {
     let id;
-    inventory.forEach((item, i) => {
+    shoppinglist.forEach((item, i) => {
       if (i === index) {
         id = item._id;
       }
     });
-    const updated = inventory.filter((item, i) => {
+    const updated = shoppinglist.filter((item, i) => {
       return i !== index;
     });
     deleteItem(id)
@@ -67,7 +67,7 @@ function MyInventory() {
   }
 
   function deleteItem(id) {
-    const promise = fetch(`http://localhost:8000/inventory_list/${id}`, {
+    const promise = fetch(`http://localhost:8000/shopping_list/${id}`, {
       method: "DELETE",
     });
     return promise;
@@ -84,7 +84,7 @@ function MyInventory() {
         }
       })
       .then((json) => {
-        if (json) setItems([...inventory, json]);
+        if (json) setItems([...shoppinglist, json]);
       })
       .catch((error) => {
         console.log(error);
@@ -96,25 +96,23 @@ function MyInventory() {
       <Pane>
         <Navbar />
         <Heading margin={8} fontSize={32}>
-          My Inventory
+          My Shopping List
         </Heading>
       </Pane>
       <Table>
         <Table.Head>
           <Table.SearchHeaderCell />
           <Table.TextHeaderCell>Quantity</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Expires</Table.TextHeaderCell>
         </Table.Head>
         <Table.Body height={240}>
-          {inventory.map((item, index) => (
+          {shoppinglist.map((item, index) => (
             <Table.Row
               key={index}
               isSelectable
               onSelect={() => alert(item.name)}
             >
-              <Table.TextCell>{item.item}</Table.TextCell>
+              <Table.TextCell>{item.name}</Table.TextCell>
               <Table.TextCell>{item.quantity}</Table.TextCell>
-              <Table.TextCell>{item.expiration}</Table.TextCell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -123,4 +121,4 @@ function MyInventory() {
   );
 }
 
-export default MyInventory;
+export default MyShoppingList;

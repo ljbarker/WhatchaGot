@@ -18,10 +18,15 @@ const RecipeSchema = new mongoose.Schema(
     trim: true,
     validate(value) {
         value.forEach(element => {
-            if (element.length < 3)
-                throw new Error("Invalid Ingredient: Must have name, amount, and units.");
+            if (element.length < 2)
+                throw new Error("Invalid Ingredient: Must have name and amount.");
         });
     },
+    },
+    description: {
+        type: String,
+        required: true,
+        trim: true,
     },
 },
 { collection: "recipe_list" }
