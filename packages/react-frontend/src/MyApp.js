@@ -4,7 +4,6 @@ import MyRecipes from "./pages/MyRecipes";
 import MyInventory from './pages/MyInventory';
 import MyShoppingList from './pages/MyShoppingList';
 import Recipe from './pages/Recipe';
-import Login from './pages/Login';
 
 function MyApp() {
 
@@ -15,7 +14,6 @@ function MyApp() {
                 <Route path="/myrecipes" element={<MyRecipes />} />
                 <Route path="/myinventory" element={<MyInventory />} />
                 <Route path="/myshoppinglist" element={<MyShoppingList />} />
-                <Route path="/login" element={<Login />} />
             </Routes>
         </BrowserRouter>
     );
