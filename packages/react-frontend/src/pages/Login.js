@@ -6,7 +6,6 @@ import Navbar from "../components/Navbar";
 function Login() {
     const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [click, setClick] = useState("");
 
     return (
         <Pane>
