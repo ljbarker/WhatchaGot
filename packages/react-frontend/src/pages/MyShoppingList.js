@@ -27,12 +27,12 @@ function MyShoppingList() {
   }, []);
 
   function fetchShoppingList() {
-    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list");
+    const promise = fetch("https://localhost:8000/shopping_list");
     return promise;
   }
 
   function postItem(item) {
-    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list", {
+    const promise = fetch("https://localhost:8000/shopping_list", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,12 +67,9 @@ function MyShoppingList() {
   }
 
   function deleteItem(id) {
-    const promise = fetch(
-      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const promise = fetch("https://localhost:8000/shopping_list/${id}", {
+      method: "DELETE",
+    });
     return promise;
   }
 
@@ -114,7 +111,7 @@ function MyShoppingList() {
               isSelectable
               onSelect={() => alert(item.name)}
             >
-              <Table.TextCell>{item.item}</Table.TextCell>
+              <Table.TextCell>{item.name}</Table.TextCell>
               <Table.TextCell>{item.quantity}</Table.TextCell>
             </Table.Row>
           ))}

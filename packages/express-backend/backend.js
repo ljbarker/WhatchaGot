@@ -219,7 +219,7 @@ app.get("/shopping_list", (req, res) => {
       });
   } else {
     shoppingListQueries
-      .getInventory()
+      .getShoppingList()
       .then((qres) => {
         console.log(qres);
         result = qres;
