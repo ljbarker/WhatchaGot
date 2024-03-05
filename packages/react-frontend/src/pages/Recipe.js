@@ -9,7 +9,7 @@ function Recipe() {
     const [recipe, setRecipe] = useState({name: "", ingredientList: [], description: ""});
     
     useEffect(() => {
-        fetch(`http://whatchagot.azurewebsites.net/recipe/${id}`)
+        fetch(`https://whatchagot.azurewebsites.net/recipe/${id}`)
         .then((res) => res.json())
         .then((json) => setRecipe(json))
         .catch((error) => console.log(error));

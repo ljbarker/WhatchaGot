@@ -27,12 +27,12 @@ function MyShoppingList() {
   }, []);
 
   function fetchShoppingList() {
-    const promise = fetch("http://whatchagot.azurewebsites.net/shopping_list");
+    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list");
     return promise;
   }
 
   function postItem(item) {
-    const promise = fetch("http://whatchagot.azurewebsites.net/shopping_list", {
+    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function MyShoppingList() {
 
   function deleteItem(id) {
     const promise = fetch(
-      `http://whatchagot.azurewebsites.net/shopping_list/${id}`,
+      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
       {
         method: "DELETE",
       }
