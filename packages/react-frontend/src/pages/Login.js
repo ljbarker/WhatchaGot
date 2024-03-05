@@ -1,4 +1,4 @@
-import { Heading, Pane, Text, SearchInput } from "evergreen-ui";
+import { Heading, Pane, Link, SearchInput, Button } from "evergreen-ui";
 import { useState } from 'react';
 import Navbar from "../components/Navbar";
 
@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 function Login() {
     const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [click, setClick] = useState("");
 
     return (
         <Pane>
@@ -23,9 +24,16 @@ function Login() {
                 paddingTop={12}
                 paddingX={40}
                 width={360}
-                height={480}>
-                <SearchInput placeholder="Enter Username" onChange={(e) => setUsername(e.target.userName)} userName={userName}/>
-                <SearchInput placeholder="Enter Password" onChange={(e) => setPassword(e.target.password)} password={password}/>
+                height={240}>
+                    <Pane paddingY={30}>
+                        <SearchInput placeholder="Enter Username" onChange={(e) => setUsername(e.target.userName)} userName={userName}/>
+                        <Pane paddingY={10}/>
+                            <SearchInput placeholder="Enter Password" onChange={(e) => setPassword(e.target.password)} password={password}/>
+                            <Pane paddingX={100} paddingY={20}>
+                                <Button>Login</Button>
+                                <Link href="#">Forgot Password?</Link>
+                            </Pane>
+                        </Pane>
                 </Pane> 
         </Pane>
 
