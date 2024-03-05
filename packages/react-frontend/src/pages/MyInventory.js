@@ -27,12 +27,12 @@ function MyInventory() {
   }, []);
 
   function fetchInventory() {
-    const promise = fetch("http://localhost:8000/inventory_list");
+    const promise = fetch("https://whatchagot.azurewebsites.net/inventory_list");
     return promise;
   }
 
   function postItem(item) {
-    const promise = fetch("http://localhost:8000/inventory_list", {
+    const promise = fetch("https://whatchagot.azurewebsites.net/inventory_list", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ function MyInventory() {
   }
 
   function deleteItem(id) {
-    const promise = fetch(`http://localhost:8000/inventory_list/${id}`, {
+    const promise = fetch(`https://whatchagot.azurewebsites.net/inventory_list/${id}`, {
       method: "DELETE",
     });
     return promise;
