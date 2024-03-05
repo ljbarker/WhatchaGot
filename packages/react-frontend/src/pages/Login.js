@@ -9,42 +9,42 @@ function Login() {
   return (
     <Pane>
       <Navbar />
-      <Pane display="flex" alignItems="center" justifyContent="center">
+      <Pane display="flex" flexDirection="column" alignItems="center" justifyContent="center">
         <Heading margin={8} fontSize={32} marginY={90}>
           Login
         </Heading>
-      </Pane>
-      <Pane
+        <Pane
         elevation={4}
         float="left"
         is="section"
         background="lightgreen"
         border="muted"
-        marginLeft={505}
         marginY={24}
         paddingTop={12}
         paddingX={40}
         width={360}
         height={250}
-      >
-        <Pane paddingY={30}>
-          <SearchInput
-            placeholder="Enter Username"
-            onChange={(e) => setUsername(e.target.userName)}
-            userName={userName}
-          />
-          <Pane paddingY={10} />
-          <SearchInput
-            placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.password)}
-            password={password}
-          />
-          <Pane paddingX={100} paddingY={20}>
-            <Button>Login</Button>
-            <Link href="#">Forgot Password?</Link>
+        >
+          <Pane paddingY={30}>
+            <SearchInput
+              placeholder="Enter Username"
+              onChange={(e) => setUsername(e.target.userName)}
+              userName={userName}
+            />
+            <Pane paddingY={10} />
+            <SearchInput
+              placeholder="Enter Password"
+              onChange={(e) => setPassword(e.target.password)}
+              password={password}
+            />
+            <Pane paddingX={100} paddingY={20}>
+              <Button>Login</Button>
+              <Link href="#">Forgot Password?</Link>
+            </Pane>
           </Pane>
         </Pane>
       </Pane>
+      
     </Pane>
   );
 }
