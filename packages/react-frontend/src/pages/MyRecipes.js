@@ -17,13 +17,13 @@ function MyRecipes() {
     }, []);
 
     function fetchRecipes() {
-        const promise = fetch("http://whatchagot.azurewebsites.net/recipes");
+        const promise = fetch("http://localhost:8000/recipe_list");
         return promise;
     }
 
     function postRecipe(recipe) {
 
-        const promise = fetch("http://whatchagot.azurewebsites.net/recipes", {
+        const promise = fetch("http://localhost:8000/recipe_list", {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -57,7 +57,7 @@ function MyRecipes() {
     }
 
     function deleteRecipe(id) {
-        const promise = fetch(`Http://whatchagot.azurewebsites.net/recipes/${id}`, {
+        const promise = fetch("http://localhost:8000/recipe_list/${id}", {
             method: "DELETE",
         });
         return promise;
