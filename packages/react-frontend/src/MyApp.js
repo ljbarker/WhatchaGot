@@ -1,11 +1,11 @@
 import React, { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from "./pages/Home";
-import MyRecipes from "./pages/MyRecipes";
-import MyInventory from './pages/MyInventory';
-import MyShoppingList from './pages/MyShoppingList';
-import Recipe from './pages/Recipe';
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
+import Home from "./pages/Home.js";
+import MyRecipes from "./pages/MyRecipes.js";
+import MyInventory from './pages/MyInventory.js';
+import MyShoppingList from './pages/MyShoppingList.js';
+import Recipe from './pages/Recipe.js';
+import Login from './pages/Login.js';
+import SignUp from './pages/SignUp.js';
 
 
 function MyApp() {

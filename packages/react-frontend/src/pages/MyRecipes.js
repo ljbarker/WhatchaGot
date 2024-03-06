@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card, Pane, Group, Button, TrashIcon, ManualIcon, Dialog, Heading } from "evergreen-ui";
 import { Link } from "react-router-dom";
-import RecipeForm from "../components/RecipeForm";
-import Navbar from "../components/Navbar";
+import RecipeForm from "../components/RecipeForm.js";
+import Navbar from "../components/Navbar.js";
 
 function MyRecipes() {
     const [recipes, setRecipes] = useState([]);

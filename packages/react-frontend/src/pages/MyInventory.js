@@ -11,8 +11,8 @@ import {
   Table,
 } from "evergreen-ui";
 import { Link } from "react-router-dom";
-import InventoryForm from "../components/InventoryForm";
-import Navbar from "../components/Navbar";
+import InventoryForm from "../components/InventoryForm.js";
+import Navbar from "../components/Navbar.js";
 
 function MyInventory() {
   const [inventory, setItems] = useState([]);
@@ -27,12 +27,16 @@ function MyInventory() {
   }, []);
 
   function fetchInventory() {
+
     const promise = fetch("https://whatchagot.azurewebsites.net/inventory_list");
+
     return promise;
   }
 
   function postItem(item) {
+
     const promise = fetch("https://whatchagot.azurewebsites.net/inventory_list", {
+
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +71,9 @@ function MyInventory() {
   }
 
   function deleteItem(id) {
+
     const promise = fetch(`https://whatchagot.azurewebsites.net/inventory_list/${id}`, {
+
       method: "DELETE",
     });
     return promise;

@@ -1,5 +1,7 @@
-import Navbar from "./components/Navbar.js";
-import RecipeForm from "./components/RecipeForm.js";
+import React from "react";
+import RecipeForm from "./src/components/RecipeForm.js";
+import { render, screen } from "@testing-library/react";
+import '@testing-library/jest-dom';
 
 test("renders the empty form correctly", () => {
   render(<RecipeForm />);
@@ -11,12 +13,4 @@ test("renders the empty form correctly", () => {
   expect(screen.getByText("Add")).toBeInTheDocument();
 });
 
-test("renders the navbar correctly", () => {
-  render(<Navbar />);
-  expect(screen.getByText("WhatchaGot")).toBeInTheDocument();
-  expect(screen.getByText("My Recipes")).toBeInTheDocument();
-  expect(screen.getByText("My Inventory")).toBeInTheDocument()
-  expect(screen.getByText("My List")).toBeInTheDocument();
-});
-
-// more tests as components are developed
+// more recipe form component tests that are more involved

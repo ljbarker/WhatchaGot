@@ -11,8 +11,8 @@ import {
   Table,
 } from "evergreen-ui";
 import { Link } from "react-router-dom";
-import ShoppingListForm from "../components/ShoppingListForm";
-import Navbar from "../components/Navbar";
+import ShoppingListForm from "../components/ShoppingListForm.js";
+import Navbar from "../components/Navbar.js";
 
 function MyShoppingList() {
   const [shoppinglist, setItems] = useState([]);
