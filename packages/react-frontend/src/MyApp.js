@@ -5,6 +5,7 @@ import MyInventory from './pages/MyInventory';
 import MyShoppingList from './pages/MyShoppingList';
 import Recipe from './pages/Recipe';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
 
 function MyApp() {
@@ -18,6 +19,7 @@ function MyApp() {
                 <Route path="/myinventory" element={<MyInventory />} />
                 <Route path="/myshoppinglist" element={<MyShoppingList />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp/>} />
             </Routes>
         </BrowserRouter>
     );
