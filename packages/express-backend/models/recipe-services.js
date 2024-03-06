@@ -6,11 +6,11 @@ dotenv.config();
 mongoose.set("debug", true);
 
 mongoose
-.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.catch((error) => console.log(error));
+    .connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .catch((error) => console.log(error));
 
 function getRecipes() {
     return recipeModel.find();

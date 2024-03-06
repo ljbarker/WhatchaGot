@@ -11,9 +11,9 @@ function MyRecipes() {
     useEffect(() => {
         setShowForm(false);
         fetchRecipes()
-        .then((res) => res.json())
-        .then((json) => setRecipes(json["recipe_list"]))
-        .catch((error) => console.log(error));
+            .then((res) => res.json())
+            .then((json) => setRecipes(json["recipe_list"]))
+            .catch((error) => console.log(error));
     }, []);
 
     function fetchRecipes() {
@@ -26,7 +26,7 @@ function MyRecipes() {
         const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
             method: "POST",
             headers: {
-            "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(recipe),
         });
@@ -42,18 +42,19 @@ function MyRecipes() {
             };
         });
         const updated = recipes.filter((character, i) => {
-          return i !== index;
+            return i !== index;
         });
         deleteRecipe(id)
-        .then((res) => {
-            if (res.status === 204) {
-                setRecipes(updated);
-            } else {
-                console.log("Error: " + res.status + " No object found.");
-            }})
-        .catch((error) => {
-            console.log(error);
-        });
+            .then((res) => {
+                if (res.status === 204) {
+                    setRecipes(updated);
+                } else {
+                    console.log("Error: " + res.status + " No object found.");
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     function deleteRecipe(id) {
@@ -65,21 +66,21 @@ function MyRecipes() {
 
     function updateList(recipe) {
         postRecipe(recipe)
-        .then((res) => {
-            if (res.status === 201) {
-                return res.json()
-                
-            } else {
-                console.log("Error: " + res.status);
-                return undefined;
-            }
-        })
-        .then((json) => {
-            if(json) setRecipes([...recipes, json])
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+            .then((res) => {
+                if (res.status === 201) {
+                    return res.json()
+
+                } else {
+                    console.log("Error: " + res.status);
+                    return undefined;
+                }
+            })
+            .then((json) => {
+                if (json) setRecipes([...recipes, json])
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
 
@@ -99,10 +100,10 @@ function MyRecipes() {
                         justifyContent="space-between"
                         alignItems="center"
                     >
-                        <Heading  size={900}>{recipe.name}</Heading>
+                        <Heading size={900}>{recipe.name}</Heading>
                         <Group >
-                        <Button iconAfter={ManualIcon}>
-                            <Link to={`/recipe/${recipe._id}`}>View</Link>
+                            <Button iconAfter={ManualIcon}>
+                                <Link to={`/recipe/${recipe._id}`}>View</Link>
                             </Button>
                             <Button intent="danger" iconAfter={TrashIcon} onClick={() => removeOneRecipe(index)}>Delete</Button>
                         </Group>
@@ -111,17 +112,17 @@ function MyRecipes() {
             </Group>
             <Pane>
                 <Dialog
-                isShown={showForm}
-                title="Add a Recipe"
-                onCloseComplete={() => setShowForm(false)}
-                confirmLabel="Done"
-                hasFooter={false}
+                    isShown={showForm}
+                    title="Add a Recipe"
+                    onCloseComplete={() => setShowForm(false)}
+                    confirmLabel="Done"
+                    hasFooter={false}
                 >
-                    <RecipeForm handleSubmit={updateList}/>
+                    <RecipeForm handleSubmit={updateList} />
                 </Dialog>
                 <Button marginLeft={16} onClick={() => setShowForm(true)} intent="success">Add Recipe</Button>
             </Pane>
-            
+
         </Pane>
     );
 }

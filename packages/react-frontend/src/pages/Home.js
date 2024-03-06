@@ -11,29 +11,29 @@ function Home() {
     };
     return (
         <Pane>
-            <Navbar/>
+            <Navbar />
             <Pane display="flex" alignItems="center" justifyContent="center" paddingY={10}>
                 <Heading fontSize={32}>Welcome to WhatchaGot!</Heading>
             </Pane>
             <Pane display="flex" alignItems="center" justifyContent="center" paddingY={10}>
-                    <form onSubmit={handleSubmit}>
-                        <SearchInput placeholder="Enter recipe here..." onChange={(e) => setValue(e.target.value)} value={value}/>
-                    </form>
+                <form onSubmit={handleSubmit}>
+                    <SearchInput placeholder="Enter recipe here..." onChange={(e) => setValue(e.target.value)} value={value} />
+                </form>
             </Pane>
             <Table>
                 <Table.Head>
-                <Table.TextHeaderCell>Recipe</Table.TextHeaderCell>
-                <Table.TextHeaderCell>Ingredients</Table.TextHeaderCell>
+                    <Table.TextHeaderCell>Recipe</Table.TextHeaderCell>
+                    <Table.TextHeaderCell>Ingredients</Table.TextHeaderCell>
                 </Table.Head>
                 <Table.Body height={240}>
-            
-                <Table.Row key={headerValue} isSelectable onSelect={() => alert(headerValue)}>
-                <Table.TextCell>{headerValue}</Table.TextCell>
-                <Table.TextCell>{headerValue}</Table.TextCell>
-                </Table.Row>
+
+                    <Table.Row key={headerValue} isSelectable onSelect={() => alert(headerValue)}>
+                        <Table.TextCell>{headerValue}</Table.TextCell>
+                        <Table.TextCell>{headerValue}</Table.TextCell>
+                    </Table.Row>
                 </Table.Body>
-                </Table>
-                </Pane>
+            </Table>
+        </Pane>
     );
 }
 

@@ -22,7 +22,7 @@ function MyApp() {
         </BrowserRouter>
     );
 
-    
+
 }
 
 export default MyApp;
