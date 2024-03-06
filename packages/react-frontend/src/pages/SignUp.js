@@ -1,6 +1,6 @@
 import { Heading, Pane, Link, TextInput, Button } from "evergreen-ui";
 import { useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar.js";
 
 function SignUp() {
   const [userName, setUsername] = useState("");

@@ -11,8 +11,8 @@ import {
   Table,
 } from "evergreen-ui";
 import { Link } from "react-router-dom";
-import InventoryForm from "../components/InventoryForm";
-import Navbar from "../components/Navbar";
+import InventoryForm from "../components/InventoryForm.js";
+import Navbar from "../components/Navbar.js";
 
 function MyInventory() {
   const [inventory, setItems] = useState([]);

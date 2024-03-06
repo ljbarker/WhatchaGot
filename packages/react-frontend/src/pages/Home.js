@@ -1,6 +1,6 @@
 import { Heading, Pane, Paragraph, SearchInput, Table } from "evergreen-ui";
 import { useState } from 'react';
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar.js";
 function Home() {
     const [value, setValue] = useState("");
     const [headerValue, setheaderValue] = useState("");
