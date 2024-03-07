@@ -3,7 +3,7 @@ import cors from "cors";
 import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
-import { registerUser, loginUser, authenticateUser, generateAccessToken } from 'auth.js';
+import { registerUser, loginUser, authenticateUser } from './auth.js';
 
 const app = express();
 const port = 8000;

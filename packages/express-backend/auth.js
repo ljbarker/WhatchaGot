@@ -92,5 +92,4 @@ export function registerUser(req, res) {
         });
     }
   }
-
-  export default {registerUser, loginUser, authenticateUser, generateAccessToken};
+  

@@ -3,10 +3,11 @@ import { useState } from "react";
 import Navbar from "../components/Navbar.js";
 import { Link } from "react-router-dom";
 
-function Login() {
-  const [userName, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+function Login(props) {
+  const [creds, setCreds] = useState({
+    username: "",
+    pwd: ""
+  });
   return (
     <Pane>
       <Navbar />
@@ -32,17 +33,23 @@ function Login() {
           height={250}
         >
           <Pane paddingY={30}>
-            <TextInput
-              placeholder="Enter Username"
-              onChange={(e) => setUsername(e.target.userName)}
-              userName={userName}
+            <form>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              value={creds.username}
+              onChange={handleChange}
             />
             <Pane paddingY={10} />
-            <TextInput
-              placeholder="Enter Password"
-              onChange={(e) => setPassword(e.target.password)}
-              password={password}
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={creds.pwd}
+              onChange={handleChange}
             />
+            
             <Pane
               display="flex"
               flexDirection="column"
@@ -50,17 +57,42 @@ function Login() {
               justifyContent="center"
               paddingY={10}
             >
-              <Button>Login</Button>
+              <input
+                type="button"
+                value={props.buttonLabel || "Log In"}
+                onClick={submitForm}
+              />
+              
               <Link style={{ marginTop: "5px" }}>Forgot Password?</Link>
               <Link style={{ marginTop: "30px" }} to="/signup">
                 New User? Sign up here!
+              
               </Link>
             </Pane>
+            </form>
           </Pane>
         </Pane>
       </Pane>
     </Pane>
   );
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    switch (name) {
+      case "username":
+        setCreds({ ...creds, username: value });
+        break;
+      case "password":
+        setCreds({ ...creds, pwd: value });
+        break;
+    }
+  }
+
+  function submitForm() {
+    window.alert(creds);
+    props.handleSubmit(creds);
+    setCreds({ username: "", pwd: "" });
+  }
 }
 
 export default Login;
