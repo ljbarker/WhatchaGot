@@ -1,6 +1,7 @@
-import { Heading, Pane, Link, TextInput, Button } from "evergreen-ui";
+import { Heading, Pane, TextInput, Button } from "evergreen-ui";
 import { useState } from "react";
 import Navbar from "../components/Navbar.js";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [userName, setUsername] = useState("");
@@ -9,7 +10,12 @@ function Login() {
   return (
     <Pane>
       <Navbar />
-      <Pane display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+      <Pane
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Heading margin={8} fontSize={32} marginY={60}>
           Login
         </Heading>
@@ -37,10 +43,18 @@ function Login() {
               onChange={(e) => setPassword(e.target.password)}
               password={password}
             />
-            <Pane display="flex" flexDirection="column" alignItems="center" justifyContent="center" paddingY={10}>
+            <Pane
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              paddingY={10}
+            >
               <Button>Login</Button>
-              <Link paddingY={10} href="#">Forgot Password?</Link>
-              <Link paddingY={10} href="./signup">New User? Sign up here!</Link>
+              <Link style={{ marginTop: "5px" }}>Forgot Password?</Link>
+              <Link style={{ marginTop: "30px" }} to="/signup">
+                New User? Sign up here!
+              </Link>
             </Pane>
           </Pane>
         </Pane>
