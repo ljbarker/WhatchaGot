@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Card, Pane, Group, Button, TrashIcon, ManualIcon, Dialog, Heading } from "evergreen-ui";
+import {
+  Card,
+  Pane,
+  Group,
+  Button,
+  TrashIcon,
+  ManualIcon,
+  Dialog,
+  Heading,
+} from "evergreen-ui";
 import { Link } from "react-router-dom";
 import RecipeForm from "../components/RecipeForm.js";
 import Navbar from "../components/Navbar.js";
@@ -8,13 +17,13 @@ function MyRecipes(props) {
     const [recipes, setRecipes] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
-    useEffect(() => {
-        setShowForm(false);
-        fetchRecipes()
-            .then((res) => res.json())
-            .then((json) => setRecipes(json["recipe_list"]))
-            .catch((error) => console.log(error));
-    }, []);
+  useEffect(() => {
+    setShowForm(false);
+    fetchRecipes()
+      .then((res) => res.json())
+      .then((json) => setRecipes(json["recipe_list"]))
+      .catch((error) => console.log(error));
+  }, []);
 
     function addAuthHeader(otherHeaders = {}) {
         if (props.token === "INVALID_TOKEN") {
@@ -34,7 +43,14 @@ function MyRecipes(props) {
         return promise;
     }
 
-    function postRecipe(recipe) {
+  function postRecipe(recipe) {
+    const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(recipe),
+    });
 
         const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
             method: "POST",
@@ -97,48 +113,100 @@ function MyRecipes(props) {
             })
     }
 
-
-
-    return (
-        <Pane>
-            <Navbar />
-            <Group>
-                {recipes.map((recipe, index) => (
-                    <Card
-                        key={index}
-                        elevation={1}
-                        margin={16}
-                        padding={16}
-                        display="flex"
-                        flexDirection="column"
-                        justifyContent="space-between"
-                        alignItems="center"
-                    >
-                        <Heading size={900}>{recipe.name}</Heading>
-                        <Group >
-                            <Button iconAfter={ManualIcon}>
-                                <Link to={`/recipe/${recipe._id}`}>View</Link>
-                            </Button>
-                            <Button intent="danger" iconAfter={TrashIcon} onClick={() => removeOneRecipe(index)}>Delete</Button>
-                        </Group>
-                    </Card>
-                ))}
-            </Group>
-            <Pane>
-                <Dialog
-                    isShown={showForm}
-                    title="Add a Recipe"
-                    onCloseComplete={() => setShowForm(false)}
-                    confirmLabel="Done"
-                    hasFooter={false}
-                >
-                    <RecipeForm handleSubmit={updateList} />
-                </Dialog>
-                <Button marginLeft={16} onClick={() => setShowForm(true)} intent="success">Add Recipe</Button>
-            </Pane>
-
-        </Pane>
+  function deleteRecipe(id) {
+    const promise = fetch(
+      `https://whatchagot.azurewebsites.net/recipe_list/${id}`,
+      {
+        method: "DELETE",
+      }
     );
+    return promise;
+  }
+
+  function updateList(recipe) {
+    postRecipe(recipe)
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json();
+        } else {
+          console.log("Error: " + res.status);
+          return undefined;
+        }
+      })
+      .then((json) => {
+        if (json) setRecipes([...recipes, json]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  return (
+    <Pane>
+      <Navbar />
+      <Pane
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        paddingY={30}
+      >
+        <Heading fontSize={32}>My Recipes</Heading>
+      </Pane>
+      <Group>
+        {recipes.map((recipe, index) => (
+          <Card
+            key={index}
+            elevation={1}
+            margin={16}
+            padding={16}
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Heading size={900} padding={10}>
+              {recipe.name}
+            </Heading>
+            <Group>
+              <Button iconAfter={ManualIcon}>
+                <Link to={`/recipe/${recipe._id}`}>View</Link>
+              </Button>
+              <Button
+                intent="danger"
+                iconAfter={TrashIcon}
+                onClick={() => removeOneRecipe(index)}
+              >
+                Delete
+              </Button>
+            </Group>
+          </Card>
+        ))}
+      </Group>
+      <Pane
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        paddingY={10}
+      >
+        <Dialog
+          isShown={showForm}
+          title="Add a Recipe"
+          onCloseComplete={() => setShowForm(false)}
+          confirmLabel="Done"
+          hasFooter={false}
+        >
+          <RecipeForm handleSubmit={updateList} />
+        </Dialog>
+        <Button
+          marginLeft={16}
+          onClick={() => setShowForm(true)}
+          intent="success"
+        >
+          Add Recipe
+        </Button>
+      </Pane>
+    </Pane>
+  );
 }
 
 export default MyRecipes;

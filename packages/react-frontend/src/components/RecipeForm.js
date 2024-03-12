@@ -1,4 +1,11 @@
-import { Button, Group, TextInputField, TextareaField, DeleteIcon, IconButton } from "evergreen-ui";
+import {
+  Button,
+  Group,
+  TextInputField,
+  TextareaField,
+  DeleteIcon,
+  IconButton,
+} from "evergreen-ui";
 import React, { useState } from "react";
 
 function RecipeForm(props) {
@@ -57,15 +64,23 @@ function RecipeForm(props) {
   function addIngredient(event) {
     event.preventDefault();
     setNumIngredients(numIngredients + 1);
-    setRecipe({ name: recipe["name"], ingredients: [...recipe["ingredients"], { name: "", amount: "" }], description: recipe["description"] })
+    setRecipe({
+      name: recipe["name"],
+      ingredients: [...recipe["ingredients"], { name: "", amount: "" }],
+      description: recipe["description"],
+    });
   }
 
   function removeIngredient(event, index) {
     event.preventDefault();
-    let ingredientlist = recipe["ingredients"]
-    ingredientlist.splice(index, 1)
-    setNumIngredients(numIngredients - 1)
-    setRecipe({ name: recipe["name"], ingredients: ingredientlist, description: recipe["description"] })
+    let ingredientlist = recipe["ingredients"];
+    ingredientlist.splice(index, 1);
+    setNumIngredients(numIngredients - 1);
+    setRecipe({
+      name: recipe["name"],
+      ingredients: ingredientlist,
+      description: recipe["description"],
+    });
   }
 
   function submitForm(e) {
@@ -75,7 +90,7 @@ function RecipeForm(props) {
       name: "",
       ingredients: [{ name: "", amount: "" }],
       description: "",
-    })
+    });
     setNumIngredients(1);
   }
 
@@ -107,9 +122,17 @@ function RecipeForm(props) {
             onChange={(e) => handleChange(e, index)}
             marginX={12}
           />
-          <IconButton alignSelf="center" icon={DeleteIcon} intent="danger" onClick={(e) => removeIngredient(e, index)}></IconButton>
-        </Group>))}
-      <Button marginBottom={16} intent="success" onClick={addIngredient}>Add Another Ingredient</Button>
+          <IconButton
+            alignSelf="center"
+            icon={DeleteIcon}
+            intent="danger"
+            onClick={(e) => removeIngredient(e, index)}
+          ></IconButton>
+        </Group>
+      ))}
+      <Button marginBottom={16} intent="success" onClick={addIngredient}>
+        Add Another Ingredient
+      </Button>
       <TextareaField
         label="Description"
         name="description"
@@ -122,6 +145,5 @@ function RecipeForm(props) {
     </form>
   );
 }
-
 
 export default RecipeForm;
