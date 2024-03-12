@@ -1,10 +1,33 @@
-import { Heading, Pane, Link, TextInput, Button } from "evergreen-ui";
+import { Heading, Pane, TextInput, Button, Text, TextInputField } from "evergreen-ui";
 import { useState } from "react";
+import { Link as RouteLink } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
 
-function SignUp() {
-  const [userName, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function SignUp(props) {
+  const [creds, setCreds] = useState({
+    username: "",
+    password: "",
+  });
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    switch (name) {
+      case "username":
+        setCreds({ ...creds, username: value });
+        break;
+      case "password":
+        setCreds({ ...creds, password: value });
+        break;
+      default:
+        break;
+    }
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    props.handleSubmit(creds);
+    setCreds({ username: "", pwd: "" });
+  }
 
   return (
     <Pane>
@@ -28,35 +51,41 @@ function SignUp() {
           paddingTop={12}
           paddingX={40}
           width={360}
-          height={250}
+          height={420}
         >
-          <Pane paddingY={30}>
-            <TextInput
-              placeholder="Enter Username"
-              onChange={(e) => setUsername(e.target.userName)}
-              userName={userName}
-            />
-            <Pane paddingY={10} />
-            <TextInput
-              placeholder="Enter Password"
-              onChange={(e) => setPassword(e.target.password)}
-              password={password}
-            />
-            <Pane paddingY={10} />
-            <TextInput
-              placeholder="Re-enter Password"
+          <form onSubmit={submitForm}>
+            <Pane paddingY={30}>
+              <TextInputField
+                label="Username"
+                name="username"
+                id="username"
+                placeholder="Enter Username"
+                onChange={handleChange}
+                value={creds.username}
+              />
+              <Pane paddingY={10} />
+              <TextInputField
+                label="Password"
+                name="password"
+                id="password"
+                placeholder="Enter Password"
+                onChange={handleChange}
+                value={creds.password}
+              />
+              <Pane paddingY={10} />
+              <TextInputField
+                label="Re-enter Password"
+                name="repassword"
+                id="repassword"
+                placeholder="Re-enter Password"
               /* Add functionality to check if curr password is equal to re-entered password */
-            />
-            <Pane
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              paddingY={10}
-            >
-              <Button>Sign Up</Button>
+              />
+              <Pane display="flex" flexDirection="column" alignItems="center" justifyContent="center" paddingY={10}>
+                <Button type="submit">Sign Up</Button>
+                <RouteLink to="/login"><Text paddingY={10}>Already have an account?</Text></RouteLink>
+              </Pane>
             </Pane>
-          </Pane>
+          </form>
         </Pane>
       </Pane>
     </Pane>

@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import ShoppingListForm from "../components/ShoppingListForm.js";
 import Navbar from "../components/Navbar.js";
 
-function MyShoppingList() {
+function MyShoppingList(props) {
   const [shoppinglist, setItems] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
@@ -26,22 +26,32 @@ function MyShoppingList() {
       .catch((error) => console.log(error));
   }, []);
 
+  function addAuthHeader(otherHeaders = {}) {
+    if (props.token === "INVALID_TOKEN") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${props.token}`
+      };
+    }
+  }
+
   function fetchShoppingList() {
-    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list");
+    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list", {
+      headers: addAuthHeader()
+    });
     return promise;
   }
 
   function postItem(item) {
-    const promise = fetch(
-      "https://whatchagot.azurewebsites.net/shopping_list",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(item),
-      }
-    );
+    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list", {
+      method: "POST",
+      headers: addAuthHeader({
+        "Content-Type": "application/json",
+      }),
+      body: JSON.stringify(item),
+    });
 
     return promise;
   }
@@ -70,12 +80,10 @@ function MyShoppingList() {
   }
 
   function deleteItem(id) {
-    const promise = fetch(
-      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const promise = fetch(`https://whatchagot.azurewebsites.net/shopping_list/${id}`, {
+      method: "DELETE",
+      headers: addAuthHeader()
+    });
     return promise;
   }
 
