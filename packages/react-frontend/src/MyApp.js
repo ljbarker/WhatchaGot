@@ -19,7 +19,8 @@ function MyApp() {
                 <Route path="/myinventory" element={<MyInventory />} />
                 <Route path="/myshoppinglist" element={<MyShoppingList />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp/>} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/forgotPassword" element={<SignUp />} />
             </Routes>
         </BrowserRouter>
     );

@@ -1,5 +1,6 @@
 import { Heading, Pane, Link, TextInput, Button } from "evergreen-ui";
 import { useState } from "react";
+import { Link as RouteLink } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
 
 function SignUp() {
@@ -14,16 +15,16 @@ function SignUp() {
           SignUp
         </Heading>
         <Pane
-        elevation={4}
-        float="left"
-        is="section"
-        background="lightgreen"
-        border="muted"
-        marginY={24}
-        paddingTop={12}
-        paddingX={40}
-        width={360}
-        height={250}
+          elevation={4}
+          float="left"
+          is="section"
+          background="lightgreen"
+          border="muted"
+          marginY={24}
+          paddingTop={12}
+          paddingX={40}
+          width={360}
+          height={250}
         >
           <Pane paddingY={30}>
             <TextInput
@@ -44,11 +45,11 @@ function SignUp() {
             />
             <Pane display="flex" flexDirection="column" alignItems="center" justifyContent="center" paddingY={10}>
               <Button>Sign Up</Button>
+              <RouteLink to="/login"><Link paddingY={10}>Already have an account?</Link></RouteLink>
             </Pane>
           </Pane>
         </Pane>
       </Pane>
-      
     </Pane>
   );
 }
