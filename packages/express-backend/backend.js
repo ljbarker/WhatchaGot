@@ -203,9 +203,25 @@ app.delete("/inventory_list/:id", (req, res) => {
     });
 });
 
-app.get("/recipe_API", (req, res) => {
-  
-})
+app.get("/recipe_API", (req, res) => { // filtering returned recipes
+  inventoryQueries.getIngredients()
+    .then(userIngredients => {
+      // Now, use those ingredients to find matching recipes
+      recipeAPIQueries.searchRecByUserIngreds(userIngredients)
+        .then(matchingRecipes => {
+          // Respond with the matching recipes
+          res.json(matchingRecipes);
+        })
+        .catch(error => {
+          console.error(error);
+          res.status(500).send("Error searching for recipes");
+        });
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).send("Error fetching user ingredients");
+    });
+});
 
 app.get("/shopping_list", (req, res) => {
   const name = req.query.name;
