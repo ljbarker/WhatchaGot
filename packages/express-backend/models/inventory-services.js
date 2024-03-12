@@ -16,6 +16,10 @@ function getInventory() {
   return inventoryModel.find();
 }
 
+function getIngredients() {
+  return inventoryModel.find({}, 'item -_id');
+}
+
 function findItemById(id) {
   return inventoryModel.findById(id);
 }
@@ -38,6 +42,7 @@ export default {
   addItem,
   deleteItemById,
   getInventory,
+  getIngredients,
   findItemById,
   findItemByName,
 };

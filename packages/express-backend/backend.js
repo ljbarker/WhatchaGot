@@ -3,6 +3,7 @@ import cors from "cors";
 import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
+import recipeAPIQueries from"./models/recipeAPI-services.js";
 
 const app = express();
 const port = 8000;
@@ -201,6 +202,10 @@ app.delete("/inventory_list/:id", (req, res) => {
       console.log(error);
     });
 });
+
+app.get("/recipe_API", (req, res) => {
+  
+})
 
 app.get("/shopping_list", (req, res) => {
   const name = req.query.name;
