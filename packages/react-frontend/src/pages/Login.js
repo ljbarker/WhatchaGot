@@ -1,10 +1,9 @@
-import { Heading, Pane, TextInput, Button } from "evergreen-ui";
+import { Heading, Pane, Link, TextInput, Button, Text, TextInputField } from "evergreen-ui";
 import { useState } from "react";
 import { Link as RouteLink } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
-import { Link } from "react-router-dom";
 
-function Login() {
+function Login(props) {
   const [creds, setCreds] = useState({
     username: "",
     password: "",
@@ -22,6 +21,11 @@ function Login() {
       default:
         break;
     }
+  }
+
+  function submitForm() {
+    props.handleSubmit(creds);
+    setCreds({ username: "", pwd: "" });
   }
 
   return (
@@ -46,52 +50,46 @@ function Login() {
           paddingTop={12}
           paddingX={40}
           width={360}
-          height={250}
+          height={350}
         >
           <Pane paddingY={30}>
-            <TextInput
+            <TextInputField
+              label="Username"
+              name="username"
+              id="username"
               placeholder="Enter Username"
               onChange={handleChange}
-              userName={creds.username}
+              value={creds.username}
             />
             <Pane paddingY={10} />
-            <TextInput
+            <TextInputField
+              label="Password"
+              name="password"
+              id="password"
               placeholder="Enter Password"
               onChange={handleChange}
-              password={creds.password}
+              value={creds.password}
             />
             <Pane
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
               paddingY={10}
             >
-              <form onSubmit={submitForm}>
-                <Button>Login</Button>
-                <RouteLink to="/forgotPassword"><Link paddingY={10}>Forgot Password?</Link></RouteLink>
-                <RouteLink to="/signup"><Link paddingY={10}>New User? Sign up here!</Link></RouteLink>
+              <form onSubmit={submitForm} style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center"
+              }}>
+                <Button type="submit">Login</Button>
+                <RouteLink to="/forgotPassword"><Text paddingY={10}>Forgot Password?</Text></RouteLink>
+                <RouteLink to="/signup"><Text paddingY={10}>New User? Sign up here!</Text></RouteLink>
+              </form>
             </Pane>
           </Pane>
         </Pane>
       </Pane>
     </Pane>
   );
-  function submitForm() {
-    props.handleSubmit(creds);
-    setCreds({ username: "", pwd: "" });
-  }
-  function handleChange(event) {
-    const { name, value } = event.target;
-    switch (name) {
-      case "username":
-        setCreds({ ...creds, username: value });
-        break;
-      case "password":
-        setCreds({ ...creds, pwd: value });
-        break;
-    }
-  }
+
 }
 
 export default Login;

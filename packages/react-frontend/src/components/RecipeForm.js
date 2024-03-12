@@ -12,39 +12,45 @@ function RecipeForm(props) {
 
   function handleChange(event, index) {
     const { name, value } = event.target;
+    let ingredient;
+    let ingredientlist;
+    switch (name) {
+      case "amount":
+        ingredient = { name: recipe["ingredients"][index].name, amount: value }
+        ingredientlist = recipe["ingredients"]
+        ingredientlist[index] = ingredient
 
-    if (name === "amount") {
-      const ingredient = { name: recipe["ingredients"][index].name, amount: value }
-      let ingredientlist = recipe["ingredients"]
-      ingredientlist[index] = ingredient
+        setRecipe({
+          name: recipe["name"],
+          ingredients: ingredientlist,
+          description: recipe["description"]
+        });
+        break;
+      case "ingredient":
+        ingredient = { name: value, amount: recipe["ingredients"][index].amount }
+        ingredientlist = recipe["ingredients"]
+        ingredientlist[index] = ingredient
 
-      setRecipe({
-        name: recipe["name"],
-        ingredients: ingredientlist,
-        description: recipe["description"]
-      });
-    } else if (name === "ingredient") {
-      const ingredient = { name: value, amount: recipe["ingredients"][index].amount }
-      let ingredientlist = recipe["ingredients"]
-      ingredientlist[index] = ingredient
-
-      setRecipe({
-        name: recipe["name"],
-        ingredients: ingredientlist,
-        description: recipe["description"]
-      });
-    } else if (name === "name") {
-      setRecipe({
-        name: value,
-        ingredients: recipe["ingredients"],
-        description: recipe["description"]
-      });
-    } else {
-      setRecipe({
-        name: recipe["name"],
-        ingredients: recipe["ingredients"],
-        description: value
-      });
+        setRecipe({
+          name: recipe["name"],
+          ingredients: ingredientlist,
+          description: recipe["description"]
+        });
+        break;
+      case "name":
+        setRecipe({
+          name: value,
+          ingredients: recipe["ingredients"],
+          description: recipe["description"]
+        });
+        break;
+      default:
+        setRecipe({
+          name: recipe["name"],
+          ingredients: recipe["ingredients"],
+          description: value
+        });
+        break;
     }
   }
 
@@ -74,7 +80,7 @@ function RecipeForm(props) {
   }
 
   return (
-    <form>
+    <form onSubmit={submitForm}>
       <TextInputField
         label="Name"
         name="name"
@@ -112,7 +118,7 @@ function RecipeForm(props) {
         onChange={handleChange}
       />
 
-      <Button intent="success" onClick={submitForm}>Add</Button>
+      <Button type="submit" intent="success">Add</Button>
     </form>
   );
 }
