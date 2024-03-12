@@ -44,14 +44,6 @@ function MyRecipes(props) {
     }
 
   function postRecipe(recipe) {
-    const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(recipe),
-    });
-
         const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
             method: "POST",
             headers: addAuthHeader({
