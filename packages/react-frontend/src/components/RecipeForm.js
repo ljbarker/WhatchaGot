@@ -1,4 +1,11 @@
-import { Button, Group, TextInputField, TextareaField, DeleteIcon, IconButton } from "evergreen-ui";
+import {
+  Button,
+  Group,
+  TextInputField,
+  TextareaField,
+  DeleteIcon,
+  IconButton,
+} from "evergreen-ui";
 import React, { useState } from "react";
 
 function RecipeForm(props) {
@@ -14,36 +21,42 @@ function RecipeForm(props) {
     const { name, value } = event.target;
 
     if (name === "amount") {
-      const ingredient = { name: recipe["ingredients"][index].name, amount: value }
-      let ingredientlist = recipe["ingredients"]
-      ingredientlist[index] = ingredient
+      const ingredient = {
+        name: recipe["ingredients"][index].name,
+        amount: value,
+      };
+      let ingredientlist = recipe["ingredients"];
+      ingredientlist[index] = ingredient;
 
       setRecipe({
         name: recipe["name"],
         ingredients: ingredientlist,
-        description: recipe["description"]
+        description: recipe["description"],
       });
     } else if (name === "ingredient") {
-      const ingredient = { name: value, amount: recipe["ingredients"][index].amount }
-      let ingredientlist = recipe["ingredients"]
-      ingredientlist[index] = ingredient
+      const ingredient = {
+        name: value,
+        amount: recipe["ingredients"][index].amount,
+      };
+      let ingredientlist = recipe["ingredients"];
+      ingredientlist[index] = ingredient;
 
       setRecipe({
         name: recipe["name"],
         ingredients: ingredientlist,
-        description: recipe["description"]
+        description: recipe["description"],
       });
     } else if (name === "name") {
       setRecipe({
         name: value,
         ingredients: recipe["ingredients"],
-        description: recipe["description"]
+        description: recipe["description"],
       });
     } else {
       setRecipe({
         name: recipe["name"],
         ingredients: recipe["ingredients"],
-        description: value
+        description: value,
       });
     }
   }
@@ -51,15 +64,23 @@ function RecipeForm(props) {
   function addIngredient(event) {
     event.preventDefault();
     setNumIngredients(numIngredients + 1);
-    setRecipe({ name: recipe["name"], ingredients: [...recipe["ingredients"], { name: "", amount: "" }], description: recipe["description"] })
+    setRecipe({
+      name: recipe["name"],
+      ingredients: [...recipe["ingredients"], { name: "", amount: "" }],
+      description: recipe["description"],
+    });
   }
 
   function removeIngredient(event, index) {
     event.preventDefault();
-    let ingredientlist = recipe["ingredients"]
-    ingredientlist.splice(index, 1)
-    setNumIngredients(numIngredients - 1)
-    setRecipe({ name: recipe["name"], ingredients: ingredientlist, description: recipe["description"] })
+    let ingredientlist = recipe["ingredients"];
+    ingredientlist.splice(index, 1);
+    setNumIngredients(numIngredients - 1);
+    setRecipe({
+      name: recipe["name"],
+      ingredients: ingredientlist,
+      description: recipe["description"],
+    });
   }
 
   function submitForm(e) {
@@ -69,7 +90,7 @@ function RecipeForm(props) {
       name: "",
       ingredients: [{ name: "", amount: "" }],
       description: "",
-    })
+    });
     setNumIngredients(1);
   }
 
@@ -101,9 +122,17 @@ function RecipeForm(props) {
             onChange={(e) => handleChange(e, index)}
             marginX={12}
           />
-          <IconButton alignSelf="center" icon={DeleteIcon} intent="danger" onClick={(e) => removeIngredient(e, index)}></IconButton>
-        </Group>))}
-      <Button marginBottom={16} intent="success" onClick={addIngredient}>Add Another Ingredient</Button>
+          <IconButton
+            alignSelf="center"
+            icon={DeleteIcon}
+            intent="danger"
+            onClick={(e) => removeIngredient(e, index)}
+          ></IconButton>
+        </Group>
+      ))}
+      <Button marginBottom={16} intent="success" onClick={addIngredient}>
+        Add Another Ingredient
+      </Button>
       <TextareaField
         label="Description"
         name="description"
@@ -112,10 +141,11 @@ function RecipeForm(props) {
         onChange={handleChange}
       />
 
-      <Button intent="success" onClick={submitForm}>Add</Button>
+      <Button intent="success" onClick={submitForm}>
+        Add
+      </Button>
     </form>
   );
 }
-
 
 export default RecipeForm;

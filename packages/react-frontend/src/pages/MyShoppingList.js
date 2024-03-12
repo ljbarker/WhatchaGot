@@ -32,13 +32,16 @@ function MyShoppingList() {
   }
 
   function postItem(item) {
-    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(item),
-    });
+    const promise = fetch(
+      "https://whatchagot.azurewebsites.net/shopping_list",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      }
+    );
 
     return promise;
   }
@@ -67,9 +70,12 @@ function MyShoppingList() {
   }
 
   function deleteItem(id) {
-    const promise = fetch(`https://whatchagot.azurewebsites.net/shopping_list/${id}`, {
-      method: "DELETE",
-    });
+    const promise = fetch(
+      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     return promise;
   }
 
@@ -95,9 +101,14 @@ function MyShoppingList() {
     <Pane>
       <Pane>
         <Navbar />
-        <Heading margin={8} fontSize={32}>
-          My Shopping List
-        </Heading>
+        <Pane
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          paddingY={30}
+        >
+          <Heading fontSize={32}>Shopping List</Heading>
+        </Pane>
       </Pane>
       <Table>
         <Table.Head>
