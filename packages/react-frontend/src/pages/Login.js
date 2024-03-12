@@ -3,7 +3,7 @@ import { useState } from "react";
 import Navbar from "../components/Navbar.js";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Login(props) {
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -50,7 +50,9 @@ function Login() {
               justifyContent="center"
               paddingY={10}
             >
+              <form onSubmit={submitForm}>
               <Button>Login</Button>
+              </form>
               <Link style={{ marginTop: "5px" }}>Forgot Password?</Link>
               <Link style={{ marginTop: "30px" }} to="/signup">
                 New User? Sign up here!
@@ -61,6 +63,21 @@ function Login() {
       </Pane>
     </Pane>
   );
+  function submitForm() {
+    props.handleSubmit(creds);
+    setCreds({ username: "", pwd: "" });
+  }
+  function handleChange(event) {
+    const { name, value } = event.target;
+    switch (name) {
+      case "username":
+        setCreds({ ...creds, username: value });
+        break;
+      case "password":
+        setCreds({ ...creds, pwd: value });
+        break;
+    }
+  }
 }
 
 export default Login;

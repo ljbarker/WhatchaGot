@@ -3,6 +3,7 @@ import cors from "cors";
 import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
+import { registerUser, loginUser, authenticateUser } from './auth.js';
 
 const app = express();
 const port = 8000;
@@ -11,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("WatchaGot Data Home");
+  res.send("WhatchaGot Data Home");
 });
 
 app.get("/recipe_list", (req, res) => {
@@ -295,6 +296,17 @@ app.delete("/shopping_list/:id", (req, res) => {
       console.log(error);
     });
 });
+
+app.post("/signup", registerUser);
+
+app.post("/users", authenticateUser, (req, res) => {
+  const userToAdd = req.body;
+  Users.addUser(userToAdd).then((result) =>
+    res.status(201).send(result)
+  );
+});
+
+app.post("/login", registerUser);
 
 app.listen(process.env.PORT || port, () => {
   console.log(`REST API is listening`);
