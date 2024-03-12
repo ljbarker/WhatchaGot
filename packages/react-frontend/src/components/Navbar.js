@@ -20,7 +20,7 @@ function Navbar() {
       padding={8}
     >
       <Link to="/" style={{ textDecoration: "none" }}>
-        <Heading size={900} marginRight={16} color="white">
+        <Heading size={900} marginRight={16} marginY={3} color="white">
           WhatchaGot
         </Heading>
       </Link>
@@ -34,7 +34,7 @@ function Navbar() {
         <Link to="/myshoppinglist">
           <Tab size={500}>My List</Tab>
         </Link>
-        <Link to="/login">
+        <Link style={{ marginTop: "10px" }} to="/login">
           <Tab appearance="primary">
             <Avatar name="User" size={40}></Avatar>
           </Tab>
