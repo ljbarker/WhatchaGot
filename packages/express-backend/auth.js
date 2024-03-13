@@ -76,7 +76,7 @@ export function authenticateUser(req, res, next) {
 export function loginUser(req, res) {
   const { username, password, uid } = req.body; // from form
   const retrievedUser = userqueries.findUserByUsername(username);
-
+  console.log(username, password, uid, retrievedUser);
   if (!retrievedUser) {
     // invalid username
     res.status(401).send("Invalid Username", username, retrievedUser);
