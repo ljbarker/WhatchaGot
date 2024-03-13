@@ -3,7 +3,7 @@ import { Pane, Button, Heading, Table, TextInput } from "evergreen-ui";
 import { Form } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
 
-function MyShoppingList() {
+function MyShoppingList(props) {
   const [shoppinglist, setList] = useState([]);
   const [item, setItem] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -16,8 +16,35 @@ function MyShoppingList() {
       .catch((error) => console.log(error));
   }, []);
 
+  function addAuthHeader(otherHeaders = {}) {
+    if (props.token === "INVALID_TOKEN") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${props.token}`
+      };
+    }
+  }
+
+  function addAuthHeader(otherHeaders = {}) {
+    if (props.token === "INVALID_TOKEN") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${props.token}`,
+      };
+    }
+  }
+
   function fetchShoppingList() {
-    const promise = fetch("https://whatchagot.azurewebsites.net/shopping_list");
+    const promise = fetch(
+      "https://whatchagot.azurewebsites.net/shopping_list",
+      {
+        headers: addAuthHeader(),
+      }
+    );
     return promise;
   }
 
@@ -27,9 +54,9 @@ function MyShoppingList() {
       "https://whatchagot.azurewebsites.net/shopping_list",
       {
         method: "POST",
-        headers: {
+        headers: addAuthHeader({
           "Content-Type": "application/json",
-        },
+        }),
         body: JSON.stringify(item),
       }
     );
@@ -43,23 +70,13 @@ function MyShoppingList() {
       `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
       {
         method: "PUT",
-        headers: {
+        headers: addAuthHeader({
           "Content-Type": "application/json",
-        },
+        }),
         body: JSON.stringify(item),
       }
     );
 
-    return promise;
-  }
-
-  function deleteItem(id) {
-    const promise = fetch(
-      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
     return promise;
   }
 
@@ -86,8 +103,15 @@ function MyShoppingList() {
       });
   }
 
-  function handleEdit(id) {
-    setEdit(id);
+  function deleteItem(id) {
+    const promise = fetch(
+      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
+      {
+        method: "DELETE",
+        headers: addAuthHeader(),
+      }
+    );
+    return promise;
   }
 
   function handleUpdate(item) {
