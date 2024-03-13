@@ -20,7 +20,7 @@ export function registerUser(req, res) {
 
   if (!username || !password || !uid) {
     res.status(400).send("Bad request: Invalid input data.");
-  } else if (userqueries.findUserByUsername(username)) {
+  } else if (userqueries.findUserByUsername(username).length > 0) {
     res.status(409).send("Username already taken");
   } else {
     bcrypt
