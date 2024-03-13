@@ -112,23 +112,27 @@ function MyShoppingList(props) {
   }
 
   function handleDelete(id) {
-    deleteItem(id).then((res) => {
-      console.log(res.data);
-    }).catch;
-    (error) => {
-      console.log(error);
-    };
+    deleteItem(id)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function handleEdit(id) {
-    getItem(id).then((res) => {
-      console.log(res.data);
-      usetItem(res.data.name);
-      usetQuantity(res.data.quantity);
-    }).catch;
-    (error) => {
-      console.log(error);
-    };
+    // may have to change this to res.json() return like in handleSubmit below, res.item prob doesnt exist
+    // if this is too complicated, maybe delete altogether (in rendering, services, backend, here)
+    getItem(id)
+      .then((res) => {
+        console.log(res);
+        usetItem(res.item);
+        usetQuantity(res.quantity);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   function handleSubmit(event) {
