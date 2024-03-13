@@ -3,7 +3,7 @@ import cors from "cors";
 import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
-import recipeAPIQueries from"./models/recipeAPI-services.js";
+import recipeAPIQueries from "./models/recipeAPI-services.js";
 import { registerUser, loginUser, authenticateUser } from './auth.js';
 
 
@@ -189,7 +189,7 @@ app.post("/inventory_list", authenticateUser, (req, res) => {
 app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   inventoryQueries
-    .deleteItem(id)
+    .deleteItemById(id)
     .then((qres) => {
       if (qres === null) {
         res.status(404).send("Resource not found.");
@@ -326,7 +326,7 @@ app.put("/shopping_list", (req, res) => {
 app.delete("/shopping_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   shoppingListQueries
-    .deleteItem(id)
+    .deleteItemById(id)
     .then((qres) => {
       if (qres === null) {
         res.status(404).send("Resource not found.");
