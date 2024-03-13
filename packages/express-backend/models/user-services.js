@@ -39,11 +39,10 @@ function deleteUser(id) {
   return userModel.findByIdAndDelete(id);
 }
 
-function deleteUserMany(users){
-  const idsToDelete = users.map(user=>user._id);
-  return userModel.findOneAndDelete(idsToDelete)
+function deleteUserMany(users) {
+  const idsToDelete = users.map((user) => user._id);
+  return userModel.findOneAndDelete(idsToDelete);
 }
-
 
 export default {
   addUser,
