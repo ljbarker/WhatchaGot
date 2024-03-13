@@ -106,7 +106,7 @@ export function loginUser(req, res) {
     res.status(401).send("Unauthorized");
   } else {
     bcrypt
-      .compare(password, retrievedUser.hashedPassword)
+      .compare(password, retrievedUser.password)
       .then((matched) => {
         if (matched) {
           generateAccessToken(username).then((token) => {
