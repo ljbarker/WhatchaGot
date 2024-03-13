@@ -4,6 +4,8 @@ import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
 import recipeAPIQueries from"./models/recipeAPI-services.js";
+import { registerUser, loginUser, authenticateUser } from './auth.js';
+
 
 const app = express();
 const port = 8000;
@@ -12,10 +14,10 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("WatchaGot Data Home");
+  res.send("WhatchaGot Data Home");
 });
 
-app.get("/recipe_list", (req, res) => {
+app.get("/recipe_list", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -46,7 +48,7 @@ app.get("/recipe_list", (req, res) => {
   }
 });
 
-app.get("/recipe_list/:id", (req, res) => {
+app.get("/recipe_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result;
   recipeQueries
@@ -65,7 +67,7 @@ app.get("/recipe_list/:id", (req, res) => {
     });
 });
 
-app.post("/recipe_list", (req, res) => {
+app.post("/recipe_list", authenticateUser, (req, res) => {
   const body = {
     name: req.body.name,
     ingredientList: req.body.ingredients,
@@ -93,7 +95,7 @@ app.post("/recipe_list", (req, res) => {
     });
 });
 
-app.delete("/recipe_list/:id", (req, res) => {
+app.delete("/recipe_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   recipeQueries
     .deleteRecipe(id)
@@ -109,7 +111,7 @@ app.delete("/recipe_list/:id", (req, res) => {
     });
 });
 
-app.get("/inventory_list", (req, res) => {
+app.get("/inventory_list", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -140,7 +142,7 @@ app.get("/inventory_list", (req, res) => {
   }
 });
 
-app.get("/inventory_list/:id", (req, res) => {
+app.get("/inventory_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result;
   inventoryQueries
@@ -159,7 +161,7 @@ app.get("/inventory_list/:id", (req, res) => {
     });
 });
 
-app.post("/inventory_list", (req, res) => {
+app.post("/inventory_list", authenticateUser, (req, res) => {
   const body = {
     name: req.body.name,
     quantity: req.body.quantity,
@@ -187,7 +189,7 @@ app.post("/inventory_list", (req, res) => {
     });
 });
 
-app.delete("/inventory_list/:id", (req, res) => {
+app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   inventoryQueries
     .deleteItem(id)
@@ -202,6 +204,7 @@ app.delete("/inventory_list/:id", (req, res) => {
       console.log(error);
     });
 });
+
 
 app.get("/recipe_API", (req, res) => { // filtering returned recipes
   inventoryQueries.getIngredients()
@@ -223,7 +226,8 @@ app.get("/recipe_API", (req, res) => { // filtering returned recipes
     });
 });
 
-app.get("/shopping_list", (req, res) => {
+
+app.get("/shopping_list", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -254,7 +258,7 @@ app.get("/shopping_list", (req, res) => {
   }
 });
 
-app.get("/shopping_list/:id", (req, res) => {
+app.get("/shopping_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result;
   shoppingListQueries
@@ -273,7 +277,7 @@ app.get("/shopping_list/:id", (req, res) => {
     });
 });
 
-app.post("/shopping_list", (req, res) => {
+app.post("/shopping_list", authenticateUser, (req, res) => {
   const body = {
     name: req.body.name,
     quantity: req.body.quantity,
@@ -301,7 +305,7 @@ app.post("/shopping_list", (req, res) => {
     });
 });
 
-app.delete("/shopping_list/:id", (req, res) => {
+app.delete("/shopping_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   shoppingListQueries
     .deleteItem(id)
@@ -316,6 +320,10 @@ app.delete("/shopping_list/:id", (req, res) => {
       console.log(error);
     });
 });
+
+app.post("/signup", registerUser);
+
+app.post("/login", loginUser);
 
 app.listen(process.env.PORT || port, () => {
   console.log(`REST API is listening`);

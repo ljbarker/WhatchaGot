@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import InventoryForm from "../components/InventoryForm.js";
 import Navbar from "../components/Navbar.js";
 
-function MyInventory() {
+function MyInventory(props) {
   const [inventory, setItems] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
@@ -26,23 +26,38 @@ function MyInventory() {
       .catch((error) => console.log(error));
   }, []);
 
-  function fetchInventory() {
+  function addAuthHeader(otherHeaders = {}) {
+    if (props.token === "INVALID_TOKEN") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${props.token}`
+      };
+    }
+  }
 
-    const promise = fetch("https://whatchagot.azurewebsites.net/inventory_list");
+  function fetchInventory() {
+    const promise = fetch(
+      "https://whatchagot.azurewebsites.net/inventory_list", {
+      headers: addAuthHeader()
+    }
+    );
 
     return promise;
   }
 
   function postItem(item) {
-
-    const promise = fetch("https://whatchagot.azurewebsites.net/inventory_list", {
-
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(item),
-    });
+    const promise = fetch(
+      "https://whatchagot.azurewebsites.net/inventory_list",
+      {
+        method: "POST",
+        headers: addAuthHeader({
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify(item),
+      }
+    );
 
     return promise;
   }
@@ -71,11 +86,13 @@ function MyInventory() {
   }
 
   function deleteItem(id) {
-
-    const promise = fetch(`https://whatchagot.azurewebsites.net/inventory_list/${id}`, {
-
-      method: "DELETE",
-    });
+    const promise = fetch(
+      `https://whatchagot.azurewebsites.net/inventory_list/${id}`,
+      {
+        method: "DELETE",
+        headers: addAuthHeader(),
+      }
+    );
     return promise;
   }
 
@@ -101,9 +118,14 @@ function MyInventory() {
     <Pane>
       <Pane>
         <Navbar />
-        <Heading margin={8} fontSize={32}>
-          My Inventory
-        </Heading>
+        <Pane
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          paddingY={30}
+        >
+          <Heading fontSize={32}>Inventory</Heading>
+        </Pane>
       </Pane>
       <Table>
         <Table.Head>
