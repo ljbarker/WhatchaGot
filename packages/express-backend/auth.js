@@ -31,25 +31,7 @@ export function registerUser(req, res) {
         generateAccessToken(username).then((token) => {
           res.status(201).send({ token: token });
           console.log("trying to post user")
-          fetch("https://whatchagot.azurewebsites.net/users", {
-            method: "POST",
-            headers: addAuthHeader({
-              "Content-Type": "application/json",
-            }),
-            body: JSON.stringify({ username, hashedPassword, uid })
-          })
-            .then((response) => {
-              if (response.status === 201) {
-                response
-                  .json()
-                  .then((json) => console.log(json));
-              } else {
-                console.log(response);
-              }
-            })
-            .catch((error) => {
-              console.log(`Signup Error: ${error}`);
-            });
+          userqueries.addUser({ username, password: hashedPassword, uid })
         })
       })
       .catch((error) => {
