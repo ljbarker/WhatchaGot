@@ -77,9 +77,9 @@ export function loginUser(req, res) {
   const { username, password, uid } = req.body; // from form
   const retrievedUser = userqueries.findUserByUsername(username);
   console.log(username, password, uid, retrievedUser);
-  if (!retrievedUser) {
+  if (retrievedUser.length === 0) {
     // invalid username
-    res.status(401).send("Invalid Username", username, retrievedUser);
+    res.status(401).send(`Invalid Username ${username} ${retrievedUser}`);
   } else {
     bcrypt
       .compare(password, retrievedUser.password)
@@ -90,11 +90,11 @@ export function loginUser(req, res) {
           });
         } else {
           // invalid password
-          res.status(401).send("Invalid Password", password, retrievedUser);
+          res.status(401).send(`Invalid Password ${password} ${retrievedUse}`);
         }
       })
       .catch(() => {
-        res.status(401).send("bcrypt compare failed", username, password, retrievedUser.password);
+        res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser.password}`);
       });
   }
 }
