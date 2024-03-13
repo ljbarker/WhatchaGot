@@ -46,7 +46,7 @@ function deleteUserMany(users) {
 
 export default {
   addUser,
-  findUserByName,
+  findUserByUsername,
   deleteUser,
   deleteUserMany,
 };
