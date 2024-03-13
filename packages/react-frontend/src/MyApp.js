@@ -69,13 +69,13 @@ function MyApp() {
                         `Signup successful for user: ${creds.username}; auth token saved`
                     );
                 } else {
-                    console.log(response)
                     setMessage(
                         `Signup Error ${response.status}: ${response.data}`
                     );
                 }
             })
             .catch((error) => {
+                console.log(error);
                 setMessage(`Signup Error: ${error}`);
             });
 

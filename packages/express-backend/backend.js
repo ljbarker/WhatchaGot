@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import userQueries from "./models/user-services.js";
 import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
@@ -16,7 +15,7 @@ app.get("/", (req, res) => {
   res.send("WhatchaGot Data Home");
 });
 
-app.get("/recipe_list", (req, res) => {
+app.get("/recipe_list", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -47,7 +46,7 @@ app.get("/recipe_list", (req, res) => {
   }
 });
 
-app.get("/recipe_list/:id", (req, res) => {
+app.get("/recipe_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result;
   recipeQueries
@@ -66,7 +65,7 @@ app.get("/recipe_list/:id", (req, res) => {
     });
 });
 
-app.post("/recipe_list", (req, res) => {
+app.post("/recipe_list", authenticateUser, (req, res) => {
   const body = {
     name: req.body.name,
     ingredientList: req.body.ingredients,
@@ -94,7 +93,7 @@ app.post("/recipe_list", (req, res) => {
     });
 });
 
-app.delete("/recipe_list/:id", (req, res) => {
+app.delete("/recipe_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   recipeQueries
     .deleteRecipe(id)
@@ -110,7 +109,7 @@ app.delete("/recipe_list/:id", (req, res) => {
     });
 });
 
-app.get("/inventory_list", (req, res) => {
+app.get("/inventory_list", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -141,7 +140,7 @@ app.get("/inventory_list", (req, res) => {
   }
 });
 
-app.get("/inventory_list/:id", (req, res) => {
+app.get("/inventory_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result;
   inventoryQueries
@@ -160,7 +159,7 @@ app.get("/inventory_list/:id", (req, res) => {
     });
 });
 
-app.post("/inventory_list", (req, res) => {
+app.post("/inventory_list", authenticateUser, (req, res) => {
   const itemToAdd = {
     _id: req.body._id,
     name: req.body.name,
@@ -185,7 +184,7 @@ app.post("/inventory_list", (req, res) => {
     });
 });
 
-app.delete("/inventory_list/:id", (req, res) => {
+app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   inventoryQueries
     .deleteItem(id)
@@ -201,7 +200,7 @@ app.delete("/inventory_list/:id", (req, res) => {
     });
 });
 
-app.get("/shopping_list", (req, res) => {
+app.get("/shopping_list", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -232,7 +231,7 @@ app.get("/shopping_list", (req, res) => {
   }
 });
 
-app.get("/shopping_list/:id", (req, res) => {
+app.get("/shopping_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result;
   shoppingListQueries
@@ -251,8 +250,8 @@ app.get("/shopping_list/:id", (req, res) => {
     });
 });
 
-app.post("/shopping_list", (req, res) => {
-  const itemToAdd = {
+app.post("/shopping_list", authenticateUser, (req, res) => {
+  const body = {
     _id: req.body._id,
     name: req.body.name,
     quantity: req.body.quantity,
@@ -300,7 +299,7 @@ app.put("/shopping_list", (req, res) => {
     });
 });
 
-app.delete("/shopping_list/:id", (req, res) => {
+app.delete("/shopping_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   shoppingListQueries
     .deleteItem(id)
@@ -317,11 +316,6 @@ app.delete("/shopping_list/:id", (req, res) => {
 });
 
 app.post("/signup", registerUser);
-
-app.post("/users_list", authenticateUser, (req, res) => {
-  const userToAdd = req.body;
-  userQueries.addUser(userToAdd).then((result) => res.status(201).send(result));
-});
 
 app.post("/login", loginUser);
 

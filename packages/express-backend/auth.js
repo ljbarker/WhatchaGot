@@ -1,22 +1,33 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import userqueries from "./models/user-services.js";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 export function registerUser(req, res) {
   const { username, password, uid } = req.body; // from form
 
   if (!username || !password || !uid) {
     res.status(400).send("Bad request: Invalid input data.");
-  } else if (creds.find((c) => c.username === username)) {
+  } else if (userqueries.findUserByUsername(username).length > 0) {
     res.status(409).send("Username already taken");
   } else {
+    console.log(username, password, uid);
     bcrypt
       .genSalt(10)
-      .then((salt) => bcrypt.hash(pwd, salt))
+      .then((salt) => bcrypt.hash(password, salt))
       .then((hashedPassword) => {
         generateAccessToken(username).then((token) => {
           res.status(201).send({ token: token });
-          creds.push({ username, hashedPassword });
-        });
+          userqueries.addUser({ username, password: hashedPassword, uid })
+        })
+          .catch((error) => {
+            res.status(500).send("something went wrong generating token" + error);
+          });
+      })
+      .catch((error) => {
+        res.status(500).send("something went wrong posting user");
       });
   }
 }
@@ -63,17 +74,14 @@ export function authenticateUser(req, res, next) {
 }
 
 export function loginUser(req, res) {
-  const { username, pwd } = req.body; // from form
-  const retrievedUser = creds.find(
-    (c) => c.username === username
-  );
-
-  if (!retrievedUser) {
+  const { username, password, uid } = req.body; // from form
+  const retrievedUser = userqueries.findUserByUsername(username);
+  if (retrievedUser.length === 0) {
     // invalid username
-    res.status(401).send("Unauthorized");
+    res.status(401).send(`Invalid Username ${username} ${retrievedUser}`);
   } else {
     bcrypt
-      .compare(pwd, retrievedUser.hashedPassword)
+      .compare(password, retrievedUser.password)
       .then((matched) => {
         if (matched) {
           generateAccessToken(username).then((token) => {
@@ -81,11 +89,11 @@ export function loginUser(req, res) {
           });
         } else {
           // invalid password
-          res.status(401).send("Unauthorized");
+          res.status(401).send(`Invalid Password ${password} ${retrievedUse}`);
         }
       })
       .catch(() => {
-        res.status(401).send("Unauthorized");
+        res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser}`);
       });
   }
 }

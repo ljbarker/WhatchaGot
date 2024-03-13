@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import InventoryForm from "../components/InventoryForm.js";
 import Navbar from "../components/Navbar.js";
 
-function MyInventory() {
+function MyInventory(props) {
   const [inventory, setItems] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
@@ -26,9 +26,22 @@ function MyInventory() {
       .catch((error) => console.log(error));
   }, []);
 
+  function addAuthHeader(otherHeaders = {}) {
+    if (props.token === "INVALID_TOKEN") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${props.token}`
+      };
+    }
+  }
+
   function fetchInventory() {
     const promise = fetch(
-      "https://whatchagot.azurewebsites.net/inventory_list"
+      "https://whatchagot.azurewebsites.net/inventory_list", {
+      headers: addAuthHeader()
+    }
     );
 
     return promise;
@@ -39,9 +52,9 @@ function MyInventory() {
       "https://whatchagot.azurewebsites.net/inventory_list",
       {
         method: "POST",
-        headers: {
+        headers: addAuthHeader({
           "Content-Type": "application/json",
-        },
+        }),
         body: JSON.stringify(item),
       }
     );
@@ -77,6 +90,7 @@ function MyInventory() {
       `https://whatchagot.azurewebsites.net/inventory_list/${id}`,
       {
         method: "DELETE",
+        headers: addAuthHeader(),
       }
     );
     return promise;
@@ -105,13 +119,13 @@ function MyInventory() {
       <Pane>
         <Navbar />
         <Pane
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        paddingY={30}
-      >
-        <Heading fontSize={32}>Inventory</Heading>
-      </Pane>
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          paddingY={30}
+        >
+          <Heading fontSize={32}>Inventory</Heading>
+        </Pane>
       </Pane>
       <Table>
         <Table.Head>
