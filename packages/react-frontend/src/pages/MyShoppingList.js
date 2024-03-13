@@ -93,29 +93,6 @@ function MyShoppingList(props) {
     return promise;
   }
 
-  // function removeOneItem(index) {
-  //   let id;
-  //   shoppinglist.forEach((item, i) => {
-  //     if (i === index) {
-  //       id = item._id;
-  //     }
-  //   });
-  //   const updated = shoppinglist.filter((item, i) => {
-  //     return i !== index;
-  //   });
-  //   deleteItem(id)
-  //     .then((res) => {
-  //       if (res.status === 204) {
-  //         setList(updated);
-  //       } else {
-  //         console.log("Error: " + res.status + " No object found.");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
-
   function handleUpdate() {
     const data = { _id: edit, name: uitem, quantity: uquantity };
     putItem(edit, data)
