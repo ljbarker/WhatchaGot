@@ -25,7 +25,7 @@ export function registerUser(req, res) {
   } else {
     bcrypt
       .genSalt(10)
-      .then((salt) => bcrypt.hash(pwd, salt))
+      .then((salt) => bcrypt.hash(password, salt))
       .then((hashedPassword) => {
         generateAccessToken(username).then((token) => {
           res.status(201).send({ token: token });
