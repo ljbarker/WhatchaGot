@@ -10,25 +10,38 @@ export function registerUser(req, res) {
 
   if (!username || !password || !uid) {
     res.status(400).send("Bad request: Invalid input data.");
-  } else if (userqueries.findUserByUsername(username).length > 0) {
-    res.status(409).send("Username already taken");
   } else {
-    console.log(username, password, uid);
-    bcrypt
-      .genSalt(10)
-      .then((salt) => bcrypt.hash(password, salt))
-      .then((hashedPassword) => {
-        generateAccessToken(username).then((token) => {
-          res.status(201).send({ token: token });
-          userqueries.addUser({ username, password: hashedPassword, uid })
-        })
-          .catch((error) => {
-            res.status(500).send("something went wrong generating token" + error);
-          });
+    userqueries.findUserByUsername(username)
+      .then((retrievedUser) => {
+        if (retrievedUser.length > 0) {
+          res.status(409).send(`Username already taken ${username} ${retrievedUser}`);
+        } else {
+          bcrypt
+            .genSalt(10)
+            .then((salt) => bcrypt.hash(password, salt))
+            .then((hashedPassword) => {
+              generateAccessToken(username).then((token) => {
+                res.status(201).send({ token: token });
+                userqueries.addUser({ username, password: hashedPassword, uid })
+                  .then((result) => {
+                    console.log("User added", result)
+                  })
+                  .catch((error) => {
+                    console.log("Error adding user", error);
+                  });
+              })
+                .catch((error) => {
+                  res.status(500).send("something went wrong generating token" + error);
+                });
+            })
+            .catch((error) => {
+              res.status(500).send("something went wrong posting user");
+            });
+        }
       })
-      .catch((error) => {
-        res.status(500).send("something went wrong posting user");
-      });
+      .catch(() => {
+        res.status(500).send(`findUserByUsername failed ${username}`);
+      })
   }
 }
 
@@ -75,25 +88,34 @@ export function authenticateUser(req, res, next) {
 
 export function loginUser(req, res) {
   const { username, password, uid } = req.body; // from form
-  const retrievedUser = userqueries.findUserByUsername(username);
-  if (retrievedUser.length === 0) {
-    // invalid username
-    res.status(401).send(`Invalid Username ${username} ${retrievedUser}`);
-  } else {
-    bcrypt
-      .compare(password, retrievedUser.password)
-      .then((matched) => {
-        if (matched) {
-          generateAccessToken(username).then((token) => {
-            res.status(200).send({ token: token });
+  userqueries.findUserByUsername(username)
+    .then((retrievedUser) => {
+      retrievedUser = JSON.parse(retrievedUser)
+      if (retrievedUser.length === 0) {
+        // invalid username
+        res.status(401).send(`Invalid Username ${username} ${retrievedUser}`);
+      } else {
+        bcrypt
+          .compare(password, retrievedUser.password)
+          .then((matched) => {
+            if (matched) {
+              generateAccessToken(username).then((token) => {
+                res.status(200).send({ token: token });
+              })
+                .catch((error) => {
+                  res.status(500).send("something went wrong generating token" + error);
+                })
+            } else {
+              // invalid password
+              res.status(401).send(`Invalid Password ${password} ${retrievedUser}`);
+            }
+          })
+          .catch(() => {
+            res.status(401).send(`bcrypt compare failed using JSON.parse ${username} ${password} ${retrievedUser} ${retrievedUser.password}`);
           });
-        } else {
-          // invalid password
-          res.status(401).send(`Invalid Password ${password} ${retrievedUse}`);
-        }
-      })
-      .catch(() => {
-        res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser}`);
-      });
-  }
+      }
+    })
+    .catch(() => {
+      res.status(500).send(`findUserByUsername failed ${username}`);
+    });
 }
