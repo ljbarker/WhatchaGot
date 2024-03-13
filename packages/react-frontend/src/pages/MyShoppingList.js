@@ -111,7 +111,7 @@ function MyShoppingList(props) {
       });
   }
 
-  function handleEdit(id) {
+  function handleDelete(id) {
     deleteItem(id).then((res) => {
       console.log(res.data);
     }).catch;
