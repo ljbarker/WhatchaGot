@@ -1,6 +1,9 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import userqueries from "./models/user-services.js";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 export function registerUser(req, res) {
   const { username, password, uid } = req.body; // from form
