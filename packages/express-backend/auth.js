@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import userqueries from "./models/user-services.js";
 
 
 function addAuthHeader(otherHeaders = {}) {
@@ -19,7 +20,7 @@ export function registerUser(req, res) {
 
   if (!username || !password || !uid) {
     res.status(400).send("Bad request: Invalid input data.");
-  } else if (creds.find((c) => c.username === username)) {
+  } else if (userqueries.findUserByUsername(username)) {
     res.status(409).send("Username already taken");
   } else {
     bcrypt
@@ -41,7 +42,7 @@ export function registerUser(req, res) {
                   .json()
                   .then((payload) => setToken(payload.token));
                 setMessage(
-                  `Signup successful for user: ${creds.username}; auth token saved`
+                  `Signup successful for user: ${username}; auth token saved`
                 );
               } else {
                 console.log(response)
