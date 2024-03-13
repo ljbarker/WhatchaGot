@@ -1,18 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Pane,
-  Group,
-  Button,
-  TrashIcon,
-  ManualIcon,
-  Dialog,
-  Heading,
-  Table,
-  TextInput,
-} from "evergreen-ui";
-import { Link } from "react-router-dom";
-import ShoppingListForm from "../components/ShoppingListForm.js";
+import { Pane, Button, Heading, Table, TextInput } from "evergreen-ui";
+import { Form } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
 
 function MyShoppingList() {
@@ -120,6 +108,7 @@ function MyShoppingList() {
   function handleItem(event) {}
 
   function handleSubmit(event) {
+    event.preventDefault();
     postItem(item)
       .then((res) => {
         if (res.status === 201) {
@@ -150,6 +139,26 @@ function MyShoppingList() {
           <Heading fontSize={32}>Shopping List</Heading>
         </Pane>
       </Pane>
+      <Pane
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        paddingY={10}
+      >
+        <form onSubmit={handleSubmit}>
+          <TextInput
+            type="text"
+            placeholder="Enter Item Name"
+            onChange={(e) => setItem(e.target.value)}
+          ></TextInput>
+          <TextInput
+            type="text"
+            placeholder="Enter Quantity"
+            onChange={(e) => setQuantity(e.target.value)}
+          ></TextInput>
+          <Button style={{ marginTop: "-3px" }}>Add</Button>
+        </form>
+      </Pane>
       <Table>
         <Table.Head>
           <Table.SearchHeaderCell />
@@ -164,14 +173,16 @@ function MyShoppingList() {
             >
               <Table.TextCell>{item.name}</Table.TextCell>
               <Table.TextCell>{item.quantity}</Table.TextCell>
+              <Table.Button>edit</Table.Button>
+              <Table.Button>delete</Table.Button>
             </Table.Row>
           ))}
-          {showAddItem && (
+          {/* {edit && (
             <Table.Row>
               <Table.TextCell>
                 <TextInput
                   name="name"
-                  value={newItem.name}
+                  value={item.name}
                   onChange={handleItem}
                   placeholder="Item Name"
                 />
@@ -179,7 +190,7 @@ function MyShoppingList() {
               <Table.TextCell>
                 <TextInput
                   name="quantity"
-                  value={newItem.quantity}
+                  value={item.quantity}
                   onChange={handleItem}
                   placeholder="Quantity"
                 />
@@ -190,10 +201,9 @@ function MyShoppingList() {
                 </Button>
               </Table.TextCell>
             </Table.Row>
-          )}
+          )} */}
         </Table.Body>
       </Table>
-      <Button onClick={handleAddItem}>Add Item</Button>
     </Pane>
   );
 }
