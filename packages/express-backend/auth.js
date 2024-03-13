@@ -90,12 +90,13 @@ export function loginUser(req, res) {
   const { username, password, uid } = req.body; // from form
   userqueries.findUserByUsername(username)
     .then((retrievedUser) => {
+      JSON.parse(retrievedUser)
       if (retrievedUser.length === 0) {
         // invalid username
         res.status(401).send(`Invalid Username ${username} ${retrievedUser}`);
       } else {
         bcrypt
-          .compare(password, retrievedUser[2])
+          .compare(password, retrievedUser.password)
           .then((matched) => {
             if (matched) {
               generateAccessToken(username).then((token) => {
@@ -110,7 +111,7 @@ export function loginUser(req, res) {
             }
           })
           .catch(() => {
-            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser} ${retrievedUser[2]}`);
+            res.status(401).send(`bcrypt compare failed using JSON.parse ${username} ${password} ${retrievedUser} ${retrievedUser.password}`);
           });
       }
     })
