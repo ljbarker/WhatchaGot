@@ -99,9 +99,7 @@ export function authenticateUser(req, res, next) {
 
 export function loginUser(req, res) {
   const { username, pwd } = req.body; // from form
-  const retrievedUser = creds.find(
-    (c) => c.username === username
-  );
+  const retrievedUser = userqueries.findUserByUsername(username);
 
   if (!retrievedUser) {
     // invalid username
