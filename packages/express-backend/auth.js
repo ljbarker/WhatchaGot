@@ -103,11 +103,11 @@ export function loginUser(req, res) {
               });
             } else {
               // invalid password
-              res.status(401).send(`Invalid Password ${password} ${retrievedUse}`);
+              res.status(401).send(`Invalid Password ${password} ${retrievedUser}`);
             }
           })
           .catch(() => {
-            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser}`);
+            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser} ${retrievedUser.password}`);
           });
       }
     })
