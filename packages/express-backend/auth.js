@@ -2,19 +2,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import userqueries from "./models/user-services.js";
 
-
-function addAuthHeader(otherHeaders = {}) {
-  if (token === "INVALID_TOKEN") {
-    return otherHeaders;
-  } else {
-    return {
-      ...otherHeaders,
-      Authorization: `Bearer ${token}`
-    };
-  }
-}
-
-
 export function registerUser(req, res) {
   const { username, password, uid } = req.body; // from form
 
@@ -30,9 +17,11 @@ export function registerUser(req, res) {
       .then((hashedPassword) => {
         generateAccessToken(username).then((token) => {
           res.status(201).send({ token: token });
-          console.log("trying to post user")
           userqueries.addUser({ username, password: hashedPassword, uid })
         })
+          .catch((error) => {
+            res.status(500).send("something went wrong generating token" + error);
+          });
       })
       .catch((error) => {
         res.status(500).send("something went wrong posting user");
