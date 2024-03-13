@@ -33,7 +33,7 @@ export function registerUser(req, res) {
             headers: addAuthHeader({
               "Content-Type": "application/json",
             }),
-            body: JSON.stringify({ username, password, uid })
+            body: JSON.stringify({ username, hashedPassword, uid })
           })
             .then((response) => {
               if (response.status === 201) {
@@ -56,7 +56,7 @@ export function registerUser(req, res) {
         })
       })
       .catch((error) => {
-        res.status(500).send("Internal server error");
+        res.status(500).send("Internal server error" + error);
       });
   }
 }
