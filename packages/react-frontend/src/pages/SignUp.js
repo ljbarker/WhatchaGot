@@ -32,7 +32,12 @@ function SignUp(props) {
   return (
     <Pane>
       <Navbar />
-      <Pane display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+      <Pane
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Heading margin={8} fontSize={32} marginY={60}>
           SignUp
         </Heading>

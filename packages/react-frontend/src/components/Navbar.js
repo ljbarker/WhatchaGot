@@ -16,7 +16,7 @@ function Navbar() {
     <Tablist
       display="flex"
       justifyContent="space-between"
-      backgroundColor="lightgreen"
+      backgroundColor="darkgreen"
       padding={8}
     >
       <Link to="/" style={{ textDecoration: "none" }}>
@@ -26,17 +26,23 @@ function Navbar() {
       </Link>
       <Group display="flex" alignItems="center">
         <Link to="/myrecipes">
-          <Tab size={500}>My Recipes</Tab>
+          <Tab size={500} color="white">
+            My Recipes
+          </Tab>
         </Link>
         <Link to="/myinventory">
-          <Tab size={500}>My Inventory</Tab>
+          <Tab size={500} color="white">
+            My Inventory
+          </Tab>
         </Link>
         <Link to="/myshoppinglist">
-          <Tab size={500}>My List</Tab>
+          <Tab size={500} color="white">
+            My List
+          </Tab>
         </Link>
         <Link style={{ marginTop: "10px" }} to="/login">
           <Tab appearance="primary">
-            <Avatar name="User" size={40}></Avatar>
+            <Avatar name="User" size={40} backgroundColor="white"></Avatar>
           </Tab>
         </Link>
       </Group>

@@ -1,7 +1,7 @@
-import { useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar.js';
-import { Pane, Table, Text } from 'evergreen-ui';
-import { useEffect, useState } from 'react';
+import { useParams } from "react-router-dom";
+import Navbar from "../components/Navbar.js";
+import { Pane, Table, Text } from "evergreen-ui";
+import { useEffect, useState } from "react";
 
 function Recipe(props) {
     const { id } = useParams();

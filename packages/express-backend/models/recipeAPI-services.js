@@ -17,12 +17,12 @@ function getRecipes() {
 }
 
 function getRecipeIngredients() {
-    return recipeAPIModel.find({}, 'strIngredients -idMeal');
-  }
-  
+  return recipeAPIModel.find({}, "strIngredients -idMeal");
+}
+
 function getRecipeSource(id) {
-    return recipeAPIModel.findById(id, 'strSource -idmeal');
-  }
+  return recipeAPIModel.findById(id, "strSource -idmeal");
+}
 
 function findRecipeById(id) {
   return recipeAPIModel.findById(id);
@@ -31,7 +31,6 @@ function findRecipeById(id) {
 function findRecipeByName(name) {
   return recipeAPIModel.find({ name: name });
 }
-
 
 export default {
   getRecipes,

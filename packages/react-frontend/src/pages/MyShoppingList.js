@@ -109,9 +109,14 @@ function MyShoppingList(props) {
     <Pane>
       <Pane>
         <Navbar />
-        <Heading margin={8} fontSize={32}>
-          My Shopping List
-        </Heading>
+        <Pane
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          paddingY={30}
+        >
+          <Heading fontSize={32}>Shopping List</Heading>
+        </Pane>
       </Pane>
       <Table>
         <Table.Head>
