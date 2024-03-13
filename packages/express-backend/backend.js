@@ -161,14 +161,11 @@ app.get("/inventory_list/:id", (req, res) => {
 });
 
 app.post("/inventory_list", (req, res) => {
-  const body = {
+  const itemToAdd = {
+    _id: req.body._id,
     name: req.body.name,
     quantity: req.body.quantity,
     expiration: req.body.expiration,
-  };
-  const itemToAdd = {
-    _id: Math.floor(Math.random() * 1000).toString(),
-    ...body,
   };
   let result;
   console.log(itemToAdd);
@@ -255,14 +252,10 @@ app.get("/shopping_list/:id", (req, res) => {
 });
 
 app.post("/shopping_list", (req, res) => {
-  const body = {
+  const itemToAdd = {
+    _id: req.body._id,
     name: req.body.name,
     quantity: req.body.quantity,
-    expiration: req.body.expiration,
-  };
-  const itemToAdd = {
-    _id: Math.floor(Math.random() * 1000).toString(),
-    ...body,
   };
   let result;
   console.log(itemToAdd);
