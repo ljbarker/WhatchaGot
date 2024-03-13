@@ -301,10 +301,15 @@ app.delete("/shopping_list/:id", (req, res) => {
 app.post("/signup", registerUser);
 
 app.post("/users", authenticateUser, (req, res) => {
+  console.log("adding user", req.body);
   const userToAdd = req.body;
   userQueries.addUser(userToAdd).then((result) =>
     res.status(201).send(result)
-  );
+  )
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send("something went wrong posting user");
+    });
 });
 
 app.post("/login", loginUser);

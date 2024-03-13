@@ -23,12 +23,14 @@ export function registerUser(req, res) {
   } else if (userqueries.findUserByUsername(username).length > 0) {
     res.status(409).send("Username already taken");
   } else {
+    console.log(username, password, uid);
     bcrypt
       .genSalt(10)
       .then((salt) => bcrypt.hash(password, salt))
       .then((hashedPassword) => {
         generateAccessToken(username).then((token) => {
           res.status(201).send({ token: token });
+          console.log("trying to post user")
           fetch("https://whatchagot.azurewebsites.net/users", {
             method: "POST",
             headers: addAuthHeader({
@@ -51,7 +53,7 @@ export function registerUser(req, res) {
         })
       })
       .catch((error) => {
-        res.status(500).send("Internal server error" + error);
+        res.status(500).send("something went wrong posting user");
       });
   }
 }
