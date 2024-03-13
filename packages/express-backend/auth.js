@@ -90,7 +90,7 @@ export function loginUser(req, res) {
   const { username, password, uid } = req.body; // from form
   userqueries.findUserByUsername(username)
     .then((retrievedUser) => {
-      JSON.parse(retrievedUser)
+      retrievedUser = JSON.parse(retrievedUser)
       if (retrievedUser.length === 0) {
         // invalid username
         res.status(401).send(`Invalid Username ${username} ${retrievedUser}`);
