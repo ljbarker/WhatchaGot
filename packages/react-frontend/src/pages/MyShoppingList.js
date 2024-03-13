@@ -50,7 +50,7 @@ function MyShoppingList(props) {
   }
 
   function postItem(item) {
-    // need to set up the item in return (id, item, quantity)
+    // EXTREMELY slow, go to office hours to see if correct
     console.log(item);
     const promise = fetch(
       "https://whatchagot.azurewebsites.net/shopping_list",
@@ -67,7 +67,6 @@ function MyShoppingList(props) {
   }
 
   function putItem(id, item) {
-    // need to set up the item in return (id, item, quantity)
     const promise = fetch(
       `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
       {
