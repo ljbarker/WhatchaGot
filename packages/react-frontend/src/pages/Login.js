@@ -24,7 +24,7 @@ function Login(props) {
   }
 
   function submitForm(e) {
-    e.preeventDefault();
+    e.preventDefault();
     props.handleSubmit(creds);
     setCreds({ username: "", pwd: "" });
   }
