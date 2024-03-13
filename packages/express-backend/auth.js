@@ -40,7 +40,7 @@ export function registerUser(req, res) {
               if (response.status === 201) {
                 response
                   .json()
-                  .then((payload) => setToken(payload.token));
+                  .then((json) => console.log(json));
                 setMessage(
                   `Signup successful for user: ${username}; auth token saved`
                 );
