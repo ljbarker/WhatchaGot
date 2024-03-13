@@ -3,7 +3,9 @@ import cors from "cors";
 import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
-import { registerUser, loginUser, authenticateUser } from "./auth.js";
+import recipeAPIQueries from"./models/recipeAPI-services.js";
+import { registerUser, loginUser, authenticateUser } from './auth.js';
+
 
 const app = express();
 const port = 8000;
@@ -199,6 +201,28 @@ app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
       console.log(error);
     });
 });
+
+
+app.get("/recipe_API", (req, res) => { // filtering returned recipes
+  inventoryQueries.getIngredients()
+    .then(userIngredients => {
+      // Now, use those ingredients to find matching recipes
+      recipeAPIQueries.searchRecByUserIngreds(userIngredients)
+        .then(matchingRecipes => {
+          // Respond with the matching recipes
+          res.json(matchingRecipes);
+        })
+        .catch(error => {
+          console.error(error);
+          res.status(500).send("Error searching for recipes");
+        });
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).send("Error fetching user ingredients");
+    });
+});
+
 
 app.get("/shopping_list", authenticateUser, (req, res) => {
   const name = req.query.name;
