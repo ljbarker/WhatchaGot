@@ -94,7 +94,7 @@ export function loginUser(req, res) {
         }
       })
       .catch(() => {
-        res.status(401).send("Unauthorized", username, password, retrievedUser);
+        res.status(401).send("bcrypt compare failed", username, password, retrievedUser.password);
       });
   }
 }
