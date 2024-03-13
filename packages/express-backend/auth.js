@@ -116,6 +116,6 @@ export function loginUser(req, res) {
       }
     })
     .catch(() => {
-      res.status(500).send(`findUserByUsername failed ${username}`);
+      res.status(500).send(`findUserByUsername failed ${username} ${retrievedUser}`);
     });
 }
