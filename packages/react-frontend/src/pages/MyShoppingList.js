@@ -93,28 +93,28 @@ function MyShoppingList(props) {
     return promise;
   }
 
-  function removeOneItem(index) {
-    let id;
-    shoppinglist.forEach((item, i) => {
-      if (i === index) {
-        id = item._id;
-      }
-    });
-    const updated = shoppinglist.filter((item, i) => {
-      return i !== index;
-    });
-    deleteItem(id)
-      .then((res) => {
-        if (res.status === 204) {
-          setList(updated);
-        } else {
-          console.log("Error: " + res.status + " No object found.");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  // function removeOneItem(index) {
+  //   let id;
+  //   shoppinglist.forEach((item, i) => {
+  //     if (i === index) {
+  //       id = item._id;
+  //     }
+  //   });
+  //   const updated = shoppinglist.filter((item, i) => {
+  //     return i !== index;
+  //   });
+  //   deleteItem(id)
+  //     .then((res) => {
+  //       if (res.status === 204) {
+  //         setList(updated);
+  //       } else {
+  //         console.log("Error: " + res.status + " No object found.");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   function handleUpdate() {
     const data = { _id: edit, name: uitem, quantity: uquantity };
@@ -135,11 +135,23 @@ function MyShoppingList(props) {
   }
 
   function handleEdit(id) {
+    deleteItem(id).then((res) => {
+      console.log(res.data);
+    }).catch;
+    (error) => {
+      console.log(error);
+    };
+  }
+
+  function handleEdit(id) {
     getItem(id).then((res) => {
       console.log(res.data);
       usetItem(res.data.name);
       usetQuantity(res.data.quantity);
-    });
+    }).catch;
+    (error) => {
+      console.log(error);
+    };
   }
 
   function handleSubmit(event) {
@@ -240,7 +252,11 @@ function MyShoppingList(props) {
                 >
                   edit
                 </Button>
-                <Button marginY={15} marginRight={10}>
+                <Button
+                  marginY={15}
+                  marginRight={10}
+                  onClick={() => handleDelete(item.id)}
+                >
                   delete
                 </Button>
               </Table.Row>

@@ -275,6 +275,31 @@ app.post("/shopping_list", (req, res) => {
     });
 });
 
+app.put("/shopping_list", (req, res) => {
+  // POTENTIALLY MAY NOT WORK, IF NOT, THROW OUT FEATURE
+  const itemToAdd = {
+    _id: req.body._id,
+    name: req.body.name,
+    quantity: req.body.quantity,
+  };
+  let result;
+  console.log(itemToAdd);
+  shoppingListQueries
+    .putItem(req.body._id, itemToAdd)
+    .then((qres) => {
+      result = qres;
+      if (result != null) {
+        res.status(201).send(result);
+      } else {
+        res.status(400).send("Bad user.");
+      }
+    })
+    .catch((error) => {
+      result = undefined;
+      console.log(error);
+    });
+});
+
 app.delete("/shopping_list/:id", (req, res) => {
   const id = req.params["id"];
   shoppingListQueries
