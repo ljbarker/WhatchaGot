@@ -14,8 +14,8 @@ import RecipeForm from "../components/RecipeForm.js";
 import Navbar from "../components/Navbar.js";
 
 function MyRecipes(props) {
-    const [recipes, setRecipes] = useState([]);
-    const [showForm, setShowForm] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     setShowForm(false);
@@ -25,85 +25,85 @@ function MyRecipes(props) {
       .catch((error) => console.log(error));
   }, []);
 
-    function addAuthHeader(otherHeaders = {}) {
-        if (props.token === "INVALID_TOKEN") {
-            return otherHeaders;
-        } else {
-            return {
-                ...otherHeaders,
-                Authorization: `Bearer ${props.token}`
-            };
-        }
+  function addAuthHeader(otherHeaders = {}) {
+    if (props.token === "INVALID_TOKEN") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${props.token}`
+      };
     }
+  }
 
-    function fetchRecipes() {
-        const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
-            headers: addAuthHeader()
-        });
-        return promise;
-    }
+  function fetchRecipes() {
+    const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
+      headers: addAuthHeader()
+    });
+    return promise;
+  }
 
   function postRecipe(recipe) {
-        const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
-            method: "POST",
-            headers: addAuthHeader({
-                "Content-Type": "application/json",
-            }),
-            body: JSON.stringify(recipe),
-        });
+    const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
+      method: "POST",
+      headers: addAuthHeader({
+        "Content-Type": "application/json",
+      }),
+      body: JSON.stringify(recipe),
+    });
 
-        return promise;
-    }
+    return promise;
+  }
 
-    function removeOneRecipe(index) {
-        let id
-        recipes.forEach((recipe, i) => {
-            if (i === index) {
-                id = recipe._id
-            };
-        });
-        const updated = recipes.filter((character, i) => {
-            return i !== index;
-        });
-        deleteRecipe(id)
-            .then((res) => {
-                if (res.status === 204) {
-                    setRecipes(updated);
-                } else {
-                    console.log("Error: " + res.status + " No object found.");
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
+  function removeOneRecipe(index) {
+    let id
+    recipes.forEach((recipe, i) => {
+      if (i === index) {
+        id = recipe._id
+      };
+    });
+    const updated = recipes.filter((character, i) => {
+      return i !== index;
+    });
+    deleteRecipe(id)
+      .then((res) => {
+        if (res.status === 204) {
+          setRecipes(updated);
+        } else {
+          console.log("Error: " + res.status + " No object found.");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-    function deleteRecipe(id) {
-        const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${id}`, {
-            method: "DELETE",
-            headers: addAuthHeader()
-        });
-        return promise;
-    }
+  function deleteRecipe(id) {
+    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${id}`, {
+      method: "DELETE",
+      headers: addAuthHeader()
+    });
+    return promise;
+  }
 
-    function updateList(recipe) {
-        postRecipe(recipe)
-            .then((res) => {
-                if (res.status === 201) {
-                    return res.json()
+  function updateList(recipe) {
+    postRecipe(recipe)
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json()
 
-                } else {
-                    console.log("Error: " + res.status);
-                    return undefined;
-                }
-            })
-            .then((json) => {
-                if (json) setRecipes([...recipes, json])
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }
+        } else {
+          console.log("Error: " + res.status);
+          return undefined;
+        }
+      })
+      .then((json) => {
+        if (json) setRecipes([...recipes, json])
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
   function deleteRecipe(id) {
     const promise = fetch(
