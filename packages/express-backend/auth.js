@@ -110,7 +110,11 @@ export function loginUser(req, res) {
             }
           })
           .catch(() => {
-            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser} ${retrievedUser.password}`);
+            let userinfo = "";
+            retrievedUser.forEach((user) => {
+              userinfo += user + " ";
+            })
+            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser} ${userinfo}`);
           });
       }
     })
