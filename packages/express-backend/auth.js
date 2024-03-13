@@ -98,7 +98,7 @@ export function authenticateUser(req, res, next) {
 }
 
 export function loginUser(req, res) {
-  const { username, pwd } = req.body; // from form
+  const { username, password, uid } = req.body; // from form
   const retrievedUser = userqueries.findUserByUsername(username);
 
   if (!retrievedUser) {
@@ -106,7 +106,7 @@ export function loginUser(req, res) {
     res.status(401).send("Unauthorized");
   } else {
     bcrypt
-      .compare(pwd, retrievedUser.hashedPassword)
+      .compare(password, retrievedUser.hashedPassword)
       .then((matched) => {
         if (matched) {
           generateAccessToken(username).then((token) => {
