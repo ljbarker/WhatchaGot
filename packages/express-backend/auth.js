@@ -20,7 +20,7 @@ export function registerUser(req, res) {
 
   if (!username || !password || !uid) {
     res.status(400).send("Bad request: Invalid input data.");
-  } else if (userqueries.findUserByUsername(username)) {
+  } else if (userqueries.findUserByName(username)) {
     res.status(409).send("Username already taken");
   } else {
     bcrypt
@@ -41,18 +41,12 @@ export function registerUser(req, res) {
                 response
                   .json()
                   .then((json) => console.log(json));
-                setMessage(
-                  `Signup successful for user: ${username}; auth token saved`
-                );
               } else {
-                console.log(response)
-                setMessage(
-                  `Signup Error ${response.status}: ${response.data}`
-                );
+                console.log(response);
               }
             })
             .catch((error) => {
-              setMessage(`Signup Error: ${error}`);
+              console.log(`Signup Error: ${error}`);
             });
         })
       })
