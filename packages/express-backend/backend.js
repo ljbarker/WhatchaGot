@@ -275,15 +275,10 @@ app.get("/shopping_list/:id", authenticateUser, (req, res) => {
 });
 
 app.post("/shopping_list", authenticateUser, (req, res) => {
-  const body = {
-    _id: req.body._id,
-    name: req.body.name,
-    quantity: req.body.quantity,
-  };
   let result;
-  console.log(itemToAdd);
+  console.log(req.body);
   shoppingListQueries
-    .addItem(itemToAdd)
+    .addItem(req.body)
     .then((qres) => {
       result = qres;
       if (result != null) {

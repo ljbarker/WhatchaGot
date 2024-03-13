@@ -51,7 +51,6 @@ function MyShoppingList(props) {
 
   function postItem(item) {
     // EXTREMELY slow, go to office hours to see if correct
-    console.log(item);
     const promise = fetch(
       "https://whatchagot.azurewebsites.net/shopping_list",
       {
