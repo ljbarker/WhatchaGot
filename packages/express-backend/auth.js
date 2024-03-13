@@ -1,13 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const creds = [];
 
 export function registerUser(req, res) {
-  console.log(req);
-  const { username, pwd } = req.body; // from form
+  const { username, password, uid } = req.body; // from form
 
-  if (!username || !pwd) {
+  if (!username || !password || !uid) {
     res.status(400).send("Bad request: Invalid input data.");
   } else if (creds.find((c) => c.username === username)) {
     res.status(409).send("Username already taken");
@@ -17,7 +15,6 @@ export function registerUser(req, res) {
       .then((salt) => bcrypt.hash(pwd, salt))
       .then((hashedPassword) => {
         generateAccessToken(username).then((token) => {
-          console.log("Token:", token);
           res.status(201).send({ token: token });
           creds.push({ username, hashedPassword });
         });

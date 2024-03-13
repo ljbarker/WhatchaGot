@@ -26,7 +26,7 @@ function SignUp(props) {
   function submitForm(e) {
     e.preventDefault();
     props.handleSubmit(creds);
-    setCreds({ username: "", pwd: "" });
+    setCreds({ username: "", password: "" });
   }
 
   return (

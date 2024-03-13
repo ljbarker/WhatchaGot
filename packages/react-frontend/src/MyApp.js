@@ -14,12 +14,23 @@ function MyApp() {
     const [token, setToken] = useState(INVALID_TOKEN);
     const [message, setMessage] = useState("");
 
+    function addAuthHeader(otherHeaders = {}) {
+        if (token === "INVALID_TOKEN") {
+            return otherHeaders;
+        } else {
+            return {
+                ...otherHeaders,
+                Authorization: `Bearer ${token}`
+            };
+        }
+    }
+
     function loginUser(creds) {
         const promise = fetch(`https://whatchagot.azurewebsites.net/login`, {
             method: "POST",
-            headers: {
+            headers: addAuthHeader({
                 "Content-Type": "application/json"
-            },
+            }),
             body: JSON.stringify(creds)
         })
             .then((response) => {
@@ -44,10 +55,10 @@ function MyApp() {
     function signupUser(creds) {
         const promise = fetch(`https://whatchagot.azurewebsites.net/signup`, {
             method: "POST",
-            headers: {
+            headers: addAuthHeader({
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify(creds)
+            }),
+            body: JSON.stringify({ ...creds, uid: `${Math.floor(Math.random() * 100)}` })
         })
             .then((response) => {
                 if (response.status === 201) {
@@ -58,6 +69,7 @@ function MyApp() {
                         `Signup successful for user: ${creds.username}; auth token saved`
                     );
                 } else {
+                    console.log(response)
                     setMessage(
                         `Signup Error ${response.status}: ${response.data}`
                     );
@@ -78,9 +90,9 @@ function MyApp() {
                 <Route path="/recipe/:id" element={<Recipe token={token} />} />
                 <Route path="/myinventory" element={<MyInventory token={token} />} />
                 <Route path="/myshoppinglist" element={<MyShoppingList token={token} />} />
-                <Route path="/login" element={<Login handleSubmit={loginUser} />} />
-                <Route path="/signup" element={<SignUp handleSubmit={signupUser} />} />
-                <Route path="/forgotPassword" element={<SignUp handleSubmit={signupUser} />} />
+                <Route path="/login" element={<Login token={token} handleSubmit={loginUser} />} />
+                <Route path="/signup" element={<SignUp token={token} handleSubmit={signupUser} />} />
+                <Route path="/forgotPassword" element={<SignUp token={token} handleSubmit={signupUser} />} />
             </Routes>
         </BrowserRouter>
     );

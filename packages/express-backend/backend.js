@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import userQueries from "./models/user-services.js";
 import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
@@ -301,12 +302,12 @@ app.post("/signup", registerUser);
 
 app.post("/users", authenticateUser, (req, res) => {
   const userToAdd = req.body;
-  Users.addUser(userToAdd).then((result) =>
+  userQueries.addUser(userToAdd).then((result) =>
     res.status(201).send(result)
   );
 });
 
-app.post("/login", registerUser);
+app.post("/login", loginUser);
 
 app.listen(process.env.PORT || port, () => {
   console.log(`REST API is listening`);
