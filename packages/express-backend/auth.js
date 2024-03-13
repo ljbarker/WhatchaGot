@@ -95,7 +95,7 @@ export function loginUser(req, res) {
         res.status(401).send(`Invalid Username ${username} ${retrievedUser}`);
       } else {
         bcrypt
-          .compare(password, retrievedUser["password"])
+          .compare(password, retrievedUser[2])
           .then((matched) => {
             if (matched) {
               generateAccessToken(username).then((token) => {
@@ -110,7 +110,7 @@ export function loginUser(req, res) {
             }
           })
           .catch(() => {
-            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser} ${retrievedUser["password"]}`);
+            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser} ${retrievedUser[2]}`);
           });
       }
     })
