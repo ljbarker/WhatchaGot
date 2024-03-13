@@ -105,24 +105,6 @@ function MyRecipes(props) {
       })
   }
 
-  function updateList(recipe) {
-    postRecipe(recipe)
-      .then((res) => {
-        if (res.status === 201) {
-          return res.json();
-        } else {
-          console.log("Error: " + res.status);
-          return undefined;
-        }
-      })
-      .then((json) => {
-        if (json) setRecipes([...recipes, json]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   return (
     <Pane>
       <Navbar />
