@@ -9,20 +9,22 @@ import {
   Dialog,
   Heading,
   Table,
+  TextInput,
 } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import ShoppingListForm from "../components/ShoppingListForm.js";
 import Navbar from "../components/Navbar.js";
 
 function MyShoppingList() {
-  const [shoppinglist, setItems] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const [shoppinglist, setList] = useState([]);
+  const [item, setItem] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [edit, setEdit] = useState(-1);
 
   useEffect(() => {
-    setShowForm(false);
     fetchShoppingList()
       .then((res) => res.json())
-      .then((json) => setItems(json["shopping_list"]))
+      .then((json) => setList(json["shopping_list"]))
       .catch((error) => console.log(error));
   }, []);
 
@@ -32,6 +34,7 @@ function MyShoppingList() {
   }
 
   function postItem(item) {
+    // need to set up the item in return (id, item, quantity)
     const promise = fetch(
       "https://whatchagot.azurewebsites.net/shopping_list",
       {
@@ -43,6 +46,32 @@ function MyShoppingList() {
       }
     );
 
+    return promise;
+  }
+
+  function putItem(id, item) {
+    // need to set up the item in return (id, item, quantity)
+    const promise = fetch(
+      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      }
+    );
+
+    return promise;
+  }
+
+  function deleteItem(id) {
+    const promise = fetch(
+      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     return promise;
   }
 
@@ -59,7 +88,7 @@ function MyShoppingList() {
     deleteItem(id)
       .then((res) => {
         if (res.status === 204) {
-          setItems(updated);
+          setList(updated);
         } else {
           console.log("Error: " + res.status + " No object found.");
         }
@@ -69,17 +98,28 @@ function MyShoppingList() {
       });
   }
 
-  function deleteItem(id) {
-    const promise = fetch(
-      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
-    return promise;
+  function handleEdit(id) {
+    setEdit(id);
   }
 
-  function updateList(item) {
+  function handleUpdate(item) {
+    putItem(item)
+      .then((res) => {
+        if (res.status === 201) {
+          return res.json();
+        } else {
+          console.log("Error: " + res.status);
+          return undefined;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function handleItem(event) {}
+
+  function handleSubmit(event) {
     postItem(item)
       .then((res) => {
         if (res.status === 201) {
@@ -90,7 +130,7 @@ function MyShoppingList() {
         }
       })
       .then((json) => {
-        if (json) setItems([...shoppinglist, json]);
+        if (json) setList([...shoppinglist, json]);
       })
       .catch((error) => {
         console.log(error);
@@ -126,8 +166,34 @@ function MyShoppingList() {
               <Table.TextCell>{item.quantity}</Table.TextCell>
             </Table.Row>
           ))}
+          {showAddItem && (
+            <Table.Row>
+              <Table.TextCell>
+                <TextInput
+                  name="name"
+                  value={newItem.name}
+                  onChange={handleItem}
+                  placeholder="Item Name"
+                />
+              </Table.TextCell>
+              <Table.TextCell>
+                <TextInput
+                  name="quantity"
+                  value={newItem.quantity}
+                  onChange={handleItem}
+                  placeholder="Quantity"
+                />
+              </Table.TextCell>
+              <Table.TextCell>
+                <Button appearance="primary" onClick={handleSubmit}>
+                  Add
+                </Button>
+              </Table.TextCell>
+            </Table.Row>
+          )}
         </Table.Body>
       </Table>
+      <Button onClick={handleAddItem}>Add Item</Button>
     </Pane>
   );
 }

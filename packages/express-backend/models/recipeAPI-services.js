@@ -16,7 +16,7 @@ function getRecipes() {
   return recipeAPIModel.find();
 }
 
-function getRecipeIngredients() {
+function getRecipeIngredients(id) {
   return recipeAPIModel.find({}, "strIngredients -idMeal");
 }
 
