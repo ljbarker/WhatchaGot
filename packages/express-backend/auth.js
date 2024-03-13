@@ -79,7 +79,7 @@ export function loginUser(req, res) {
 
   if (!retrievedUser) {
     // invalid username
-    res.status(401).send("Invalid Username", retrievedUser);
+    res.status(401).send("Invalid Username", username, retrievedUser);
   } else {
     bcrypt
       .compare(password, retrievedUser.password)
@@ -90,11 +90,11 @@ export function loginUser(req, res) {
           });
         } else {
           // invalid password
-          res.status(401).send("Invalid Password", retrievedUser);
+          res.status(401).send("Invalid Password", password, retrievedUser);
         }
       })
       .catch(() => {
-        res.status(401).send("Unauthorized", retrievedUser);
+        res.status(401).send("Unauthorized", username, password, retrievedUser);
       });
   }
 }
