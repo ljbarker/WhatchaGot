@@ -14,7 +14,7 @@ export function registerUser(req, res) {
     userqueries.findUserByUsername(username)
       .then((retrievedUser) => {
         if (retrievedUser.length > 0) {
-          res.status(409).send(`Username already taken ${username} ${retrievedUser}`);
+          res.status(409).send(`Username already taken ${username}`);
         } else {
           bcrypt
             .genSalt(10)
@@ -92,7 +92,7 @@ export function loginUser(req, res) {
     .then((retrievedUser) => {
       if (retrievedUser.length === 0) {
         // invalid username
-        res.status(401).send(`Invalid Username ${username} ${retrievedUser}`);
+        res.status(401).send(`Invalid Username ${username}`);
       } else {
         bcrypt
           .compare(password, retrievedUser[0].password)
@@ -106,15 +106,11 @@ export function loginUser(req, res) {
                 })
             } else {
               // invalid password
-              res.status(401).send(`Invalid Password ${password} ${retrievedUser}`);
+              res.status(401).send(`Invalid Password ${password}`);
             }
           })
           .catch(() => {
-            let userinfo = "";
-            retrievedUser.forEach((user) => {
-              userinfo += user.password;
-            })
-            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser} ${userinfo}`);
+            res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser}`);
           });
       }
     })
