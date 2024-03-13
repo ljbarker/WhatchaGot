@@ -109,6 +109,7 @@ function MyShoppingList() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    const id = shoppinglist.length + 1;
     postItem(item)
       .then((res) => {
         if (res.status === 201) {
