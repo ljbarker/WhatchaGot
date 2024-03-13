@@ -82,6 +82,7 @@ function MyShoppingList(props) {
   }
 
   function deleteItem(id) {
+    console.log(id);
     const promise = fetch(
       `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
       {
@@ -200,7 +201,7 @@ function MyShoppingList(props) {
           {shoppinglist.map((item, index) =>
             item.id === edit ? (
               <Table.TextCell>
-                <Table.TextCell>{item.id}</Table.TextCell>
+                <Table.TextCell>{item.name}</Table.TextCell>
                 <TextInput
                   type="text"
                   value={uitem}
@@ -216,11 +217,7 @@ function MyShoppingList(props) {
                 </TextInput>
               </Table.TextCell>
             ) : (
-              <Table.Row
-                key={index}
-                isSelectable
-                onSelect={() => alert(item.name)}
-              >
+              <Table.Row key={index}>
                 <Table.TextCell>{item.name}</Table.TextCell>
                 <Table.TextCell>{item.quantity}</Table.TextCell>
                 <Button
@@ -228,14 +225,14 @@ function MyShoppingList(props) {
                   marginX={5}
                   marginRight={10}
                   width={70}
-                  onClick={() => handleEdit(item.id)}
+                  onClick={() => handleEdit(item._id)}
                 >
                   edit
                 </Button>
                 <Button
                   marginY={15}
                   marginRight={10}
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handleDelete(item._id)}
                 >
                   delete
                 </Button>
