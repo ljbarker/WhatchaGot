@@ -2,6 +2,18 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 
+function addAuthHeader(otherHeaders = {}) {
+  if (token === "INVALID_TOKEN") {
+    return otherHeaders;
+  } else {
+    return {
+      ...otherHeaders,
+      Authorization: `Bearer ${token}`
+    };
+  }
+}
+
+
 export function registerUser(req, res) {
   const { username, password, uid } = req.body; // from form
 
@@ -16,8 +28,35 @@ export function registerUser(req, res) {
       .then((hashedPassword) => {
         generateAccessToken(username).then((token) => {
           res.status(201).send({ token: token });
-          creds.push({ username, hashedPassword });
-        });
+          fetch("https://whatchagot.azurewebsites.net/users", {
+            method: "POST",
+            headers: addAuthHeader({
+              "Content-Type": "application/json",
+            }),
+            body: JSON.stringify({ username, password, uid })
+          })
+            .then((response) => {
+              if (response.status === 201) {
+                response
+                  .json()
+                  .then((payload) => setToken(payload.token));
+                setMessage(
+                  `Signup successful for user: ${creds.username}; auth token saved`
+                );
+              } else {
+                console.log(response)
+                setMessage(
+                  `Signup Error ${response.status}: ${response.data}`
+                );
+              }
+            })
+            .catch((error) => {
+              setMessage(`Signup Error: ${error}`);
+            });
+        })
+      })
+      .catch((error) => {
+        res.status(500).send("Internal server error");
       });
   }
 }
