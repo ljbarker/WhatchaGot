@@ -79,6 +79,7 @@ function Login(props) {
               placeholder="Enter Password"
               onChange={handleChange}
               value={creds.password}
+              type="password"
             />
             <Pane paddingY={10}>
               <form
