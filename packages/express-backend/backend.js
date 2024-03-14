@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.send("WhatchaGot Data Home");
 });
 
-app.get("/recipe_list", authenticateUser, (req, res) => {
+app.get("/recipe_list/:username", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -33,7 +33,7 @@ app.get("/recipe_list", authenticateUser, (req, res) => {
       });
   } else {
     recipeQueries
-      .getRecipes()
+      .getRecipes(req.query.username)
       .then((qres) => {
         console.log(qres);
         result = qres;
@@ -47,7 +47,7 @@ app.get("/recipe_list", authenticateUser, (req, res) => {
   }
 });
 
-app.get("/recipe_list/:id", authenticateUser, (req, res) => {
+app.get("/recipe_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id; //or req.params.id
   let result;
   recipeQueries
@@ -95,7 +95,7 @@ app.post("/recipe_list", authenticateUser, (req, res) => {
     });
 });
 
-app.delete("/recipe_list/:id", authenticateUser, (req, res) => {
+app.delete("/recipe_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
   recipeQueries
     .deleteRecipe(id)

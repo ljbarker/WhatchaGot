@@ -12,8 +12,8 @@ mongoose
   })
   .catch((error) => console.log(error));
 
-function getRecipes() {
-  return recipeModel.find();
+function getRecipes(username) {
+  return recipeModel.find({ username: username });
 }
 
 function findRecipeByName(name) {

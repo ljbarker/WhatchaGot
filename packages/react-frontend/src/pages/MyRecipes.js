@@ -19,15 +19,15 @@ function MyRecipes(props) {
 
   useEffect(() => {
     setShowForm(false);
-    fetchRecipes()
+    fetchRecipes(props.username)
       .then((res) => res.json())
       .then((json) => setRecipes(json["recipe_list"]))
       .catch((error) => console.log(error));
   }, [props]);
 
   function fetchRecipes() {
-    const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
-      headers: props.addAuthHeader()
+    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${props.username}`, {
+      headers: props.addAuthHeader(),
     });
     return promise;
   }
@@ -122,7 +122,7 @@ function MyRecipes(props) {
             </Heading>
             <Group>
               <Button iconAfter={ManualIcon}>
-                <Link to={`/recipe/${recipe._id}`}>View</Link>
+                <Link to={`/recipe/${props.username}/${recipe._id}`}>View</Link>
               </Button>
               <Button
                 intent="danger"
