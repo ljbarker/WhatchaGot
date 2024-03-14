@@ -81,7 +81,7 @@ function MyShoppingList(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const id = (Math.floor(Math.random() * 1000)).toString();
+    const id = Math.floor(Math.random() * 1000).toString();
     const data = { _id: id, item, quantity };
     postItem(data)
       .then((res) => {
@@ -136,13 +136,10 @@ function MyShoppingList(props) {
       <Table>
         <Table.Head>
           <Table.TextHeaderCell>Item</Table.TextHeaderCell>
-          <Table.TextHeaderCell marginRight={140}>
-            Quantity
-          </Table.TextHeaderCell>
+          <Table.TextHeaderCell marginRight={70}>Quantity</Table.TextHeaderCell>
         </Table.Head>
-        <Table.Body height={240}>
-          {shoppinglist.map((item, index) =>
-          (
+        <Table.Body height={500}>
+          {shoppinglist.map((item, index) => (
             <Table.Row key={index}>
               <Table.TextCell>{item.item}</Table.TextCell>
               <Table.TextCell>{item.quantity}</Table.TextCell>
@@ -154,8 +151,7 @@ function MyShoppingList(props) {
                 delete
               </Button>
             </Table.Row>
-          )
-          )}
+          ))}
         </Table.Body>
       </Table>
     </Pane>

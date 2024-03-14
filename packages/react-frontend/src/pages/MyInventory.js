@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Pane,
-  Group,
-  Button,
-  TrashIcon,
-  ManualIcon,
-  Dialog,
-  Heading,
-  Table,
-} from "evergreen-ui";
-import { Link } from "react-router-dom";
-import InventoryForm from "../components/InventoryForm.js";
+import { Pane, Button, Heading, Table, TextInput } from "evergreen-ui";
 import Navbar from "../components/Navbar.js";
 
 function MyInventory(props) {
-  const [inventory, setItems] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const [inventory, setInventory] = useState([]);
+  const [item, setItem] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [expiration, setExpiration] = useState("");
 
   useEffect(() => {
-    setShowForm(false);
-    fetchInventory()
+    fetchinventory()
       .then((res) => res.json())
-      .then((json) => setItems(json["inventory_list"]))
+      .then((json) => setInventory(json["inventory_list"]))
       .catch((error) => console.log(error));
   }, []);
 
@@ -32,18 +21,18 @@ function MyInventory(props) {
     } else {
       return {
         ...otherHeaders,
-        Authorization: `Bearer ${props.token}`
+        Authorization: `Bearer ${props.token}`,
       };
     }
   }
 
-  function fetchInventory() {
+  function fetchinventory() {
     const promise = fetch(
-      "https://whatchagot.azurewebsites.net/inventory_list", {
-      headers: addAuthHeader()
-    }
+      "https://whatchagot.azurewebsites.net/inventory_list",
+      {
+        headers: addAuthHeader(),
+      }
     );
-
     return promise;
   }
 
@@ -62,29 +51,6 @@ function MyInventory(props) {
     return promise;
   }
 
-  function removeOneItem(index) {
-    let id;
-    inventory.forEach((item, i) => {
-      if (i === index) {
-        id = item._id;
-      }
-    });
-    const updated = inventory.filter((item, i) => {
-      return i !== index;
-    });
-    deleteItem(id)
-      .then((res) => {
-        if (res.status === 204) {
-          setItems(updated);
-        } else {
-          console.log("Error: " + res.status + " No object found.");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   function deleteItem(id) {
     const promise = fetch(
       `https://whatchagot.azurewebsites.net/inventory_list/${id}`,
@@ -96,8 +62,28 @@ function MyInventory(props) {
     return promise;
   }
 
-  function updateList(item) {
-    postItem(item)
+  function handleDelete(id) {
+    const updated = inventory.filter((item) => {
+      return item._id !== id;
+    });
+    deleteItem(id)
+      .then((res) => {
+        if (res.status === 204) {
+          setInventory(updated);
+        } else {
+          console.log("Error: " + res.status + " No object found.");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const id = Math.floor(Math.random() * 1000).toString();
+    const data = { _id: id, item, quantity, expiration };
+    postItem(data)
       .then((res) => {
         if (res.status === 201) {
           return res.json();
@@ -107,7 +93,7 @@ function MyInventory(props) {
         }
       })
       .then((json) => {
-        if (json) setItems([...inventory, json]);
+        if (json) setInventory([...inventory, json]);
       })
       .catch((error) => {
         console.log(error);
@@ -127,22 +113,52 @@ function MyInventory(props) {
           <Heading fontSize={32}>Inventory</Heading>
         </Pane>
       </Pane>
+      <Pane
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        paddingY={10}
+      >
+        <form onSubmit={handleSubmit}>
+          <TextInput
+            type="text"
+            placeholder="Enter Item Name"
+            onChange={(e) => setItem(e.target.value)}
+          ></TextInput>
+          <TextInput
+            type="text"
+            placeholder="Enter Quantity"
+            onChange={(e) => setQuantity(e.target.value)}
+          ></TextInput>
+          <TextInput
+            type="text"
+            placeholder="Enter Expiration"
+            onChange={(e) => setExpiration(e.target.value)}
+          ></TextInput>
+          <Button style={{ marginTop: "-3px" }}>Add</Button>
+        </form>
+      </Pane>
       <Table>
         <Table.Head>
-          <Table.SearchHeaderCell />
+          <Table.TextHeaderCell>Item</Table.TextHeaderCell>
           <Table.TextHeaderCell>Quantity</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Expires</Table.TextHeaderCell>
+          <Table.TextHeaderCell marginRight={65}>
+            Expiration
+          </Table.TextHeaderCell>
         </Table.Head>
-        <Table.Body height={240}>
+        <Table.Body height={500}>
           {inventory.map((item, index) => (
-            <Table.Row
-              key={index}
-              isSelectable
-              onSelect={() => alert(item.name)}
-            >
+            <Table.Row key={index}>
               <Table.TextCell>{item.item}</Table.TextCell>
               <Table.TextCell>{item.quantity}</Table.TextCell>
               <Table.TextCell>{item.expiration}</Table.TextCell>
+              <Button
+                marginY={15}
+                marginRight={10}
+                onClick={() => handleDelete(item._id)}
+              >
+                delete
+              </Button>
             </Table.Row>
           ))}
         </Table.Body>
