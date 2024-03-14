@@ -26,6 +26,10 @@ function addItem(item) {
   return promise;
 }
 
+function putItem(id, item) {
+  return shoppingListModel.findByIdAndUpdate(id, item);
+}
+
 function deleteItemById(id) {
   return shoppingListModel.findByIdAndDelete(id);
 }
@@ -36,6 +40,7 @@ function findItemByName(name) {
 
 export default {
   addItem,
+  putItem,
   deleteItemById,
   getShoppingList,
   findItemById,

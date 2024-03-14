@@ -3,7 +3,7 @@ import cors from "cors";
 import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
-import recipeAPIQueries from"./models/recipeAPI-services.js";
+import recipeAPIQueries from "./models/recipeAPI-services.js";
 import { registerUser, loginUser, authenticateUser } from './auth.js';
 
 
@@ -162,14 +162,11 @@ app.get("/inventory_list/:id", authenticateUser, (req, res) => {
 });
 
 app.post("/inventory_list", authenticateUser, (req, res) => {
-  const body = {
+  const itemToAdd = {
+    _id: req.body._id,
     name: req.body.name,
     quantity: req.body.quantity,
     expiration: req.body.expiration,
-  };
-  const itemToAdd = {
-    _id: Math.floor(Math.random() * 1000).toString(),
-    ...body,
   };
   let result;
   console.log(itemToAdd);
@@ -192,7 +189,7 @@ app.post("/inventory_list", authenticateUser, (req, res) => {
 app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   inventoryQueries
-    .deleteItem(id)
+    .deleteItemById(id)
     .then((qres) => {
       if (qres === null) {
         res.status(404).send("Resource not found.");
@@ -278,19 +275,35 @@ app.get("/shopping_list/:id", authenticateUser, (req, res) => {
 });
 
 app.post("/shopping_list", authenticateUser, (req, res) => {
-  const body = {
+  let result;
+  console.log(req.body);
+  shoppingListQueries
+    .addItem(req.body)
+    .then((qres) => {
+      result = qres;
+      if (result != null) {
+        res.status(201).send(result);
+      } else {
+        res.status(400).send("Bad user.");
+      }
+    })
+    .catch((error) => {
+      result = undefined;
+      console.log(error);
+    });
+});
+
+app.put("/shopping_list", (req, res) => {
+  // POTENTIALLY MAY NOT WORK, IF NOT, THROW OUT FEATURE
+  const itemToAdd = {
+    _id: req.body._id,
     name: req.body.name,
     quantity: req.body.quantity,
-    expiration: req.body.expiration,
-  };
-  const itemToAdd = {
-    _id: Math.floor(Math.random() * 1000).toString(),
-    ...body,
   };
   let result;
   console.log(itemToAdd);
   shoppingListQueries
-    .addItem(itemToAdd)
+    .putItem(req.body._id, itemToAdd)
     .then((qres) => {
       result = qres;
       if (result != null) {
@@ -308,7 +321,7 @@ app.post("/shopping_list", authenticateUser, (req, res) => {
 app.delete("/shopping_list/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   shoppingListQueries
-    .deleteItem(id)
+    .deleteItemById(id)
     .then((qres) => {
       if (qres === null) {
         res.status(404).send("Resource not found.");
