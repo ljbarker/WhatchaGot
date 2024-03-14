@@ -194,9 +194,17 @@ app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
     });
 });
 
-app.get("/recipe_API", (req, res) => {
+app.get("/recipe_API", authenticateUser, (req, res) => {
+  recipeAPIQueries
+    .get50()
+    .then((qres) => {
+      res.send(qres);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   // filtering returned recipes
-  inventoryQueries
+  /*inventoryQueries
     .getIngredients()
     .then((userIngredients) => {
       // Now, use those ingredients to find matching recipes
@@ -214,7 +222,7 @@ app.get("/recipe_API", (req, res) => {
     .catch((error) => {
       console.error(error);
       res.status(500).send("Error fetching user ingredients");
-    });
+    });*/
 });
 
 app.get("/shopping_list", authenticateUser, (req, res) => {

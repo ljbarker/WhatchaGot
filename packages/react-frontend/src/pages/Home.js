@@ -1,9 +1,32 @@
 import { Heading, Pane, Paragraph, SearchInput, Table } from "evergreen-ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.js";
-function Home() {
+
+function Home(props) {
   const [value, setValue] = useState("");
   const [headerValue, setheaderValue] = useState("");
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    fetch("https://whatchagot.azurewebsites.net/recipe_API", {
+      headers: addAuthHeader(),
+    })
+      .then((res) => res.json())
+      .then((json) => setRecipes(json["recipe_list"]))
+      .catch((error) => console.log(error));
+  });
+
+  function addAuthHeader(otherHeaders = {}) {
+    if (props.token === "INVALID_TOKEN") {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${props.token}`
+      };
+    }
+  }
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,15 +62,27 @@ function Home() {
           <Table.TextHeaderCell>Recipe</Table.TextHeaderCell>
           <Table.TextHeaderCell>Ingredients</Table.TextHeaderCell>
         </Table.Head>
-        <Table.Body height={240}>
-          <Table.Row
-            key={headerValue}
-            isSelectable
-            onSelect={() => alert(headerValue)}
-          >
-            <Table.TextCell>{headerValue}</Table.TextCell>
-            <Table.TextCell>{headerValue}</Table.TextCell>
-          </Table.Row>
+        <Table.Body>
+          {recipes.map((recipe, index) => (
+            <Table.Row key={index}>
+              <Table.TextCell>{recipe.strMeal}</Table.TextCell>
+              <Table.TextCell>
+                <Pane display="flex" flexDirection="column">
+                  {recipe.map((element, i) => {
+                    if (i > 1 && i < 17) {
+                      return (
+                        <Paragraph key={i}>
+                          {element}
+                        </Paragraph>
+                      )
+                    } else {
+                      return null;
+                    }
+                  })}
+                </Pane>
+              </Table.TextCell>
+            </Table.Row>
+          ))}
         </Table.Body>
       </Table>
     </Pane>

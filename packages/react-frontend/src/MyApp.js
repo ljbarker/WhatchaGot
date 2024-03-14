@@ -41,10 +41,10 @@ function MyApp() {
                         .then((payload) => setToken(payload.token));
                     setMessage(`Login successful; auth token saved`);
                     toaster.success("Login successful!");
-                } 
-                else if(response.status === 401){
+                }
+                else if (response.status === 401) {
                     response.text()
-                    .then((text) => toaster.danger(text));
+                        .then((text) => toaster.danger(text));
                 }
                 else {
                     setMessage(
@@ -77,9 +77,9 @@ function MyApp() {
                     );
                     toaster.success('User successfully added!');
                 }
-                else if (response.status === 409){
+                else if (response.status === 409) {
                     response.text()
-                    .then((text) => toaster.danger(text));
+                        .then((text) => toaster.danger(text));
                 }
                 else {
                     setMessage(
