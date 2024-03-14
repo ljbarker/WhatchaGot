@@ -7,6 +7,7 @@ import Recipe from './pages/Recipe.js';
 import Login from './pages/Login.js';
 import SignUp from './pages/SignUp.js';
 import { useState } from 'react';
+import { toaster } from 'evergreen-ui';
 
 
 function MyApp() {
@@ -39,7 +40,13 @@ function MyApp() {
                         .json()
                         .then((payload) => setToken(payload.token));
                     setMessage(`Login successful; auth token saved`);
-                } else {
+                    toaster.success("Login successful!");
+                } 
+                else if(response.status === 401){
+                    response.text()
+                    .then((text) => toaster.danger(text));
+                }
+                else {
                     setMessage(
                         `Login Error ${response.status}: ${response.data}`
                     );
@@ -68,7 +75,13 @@ function MyApp() {
                     setMessage(
                         `Signup successful for user: ${creds.username}; auth token saved`
                     );
-                } else {
+                    toaster.success('User successfully added!');
+                }
+                else if (response.status === 409){
+                    response.text()
+                    .then((text) => toaster.danger(text));
+                }
+                else {
                     setMessage(
                         `Signup Error ${response.status}: ${response.data}`
                     );
