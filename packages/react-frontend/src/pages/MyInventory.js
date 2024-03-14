@@ -13,24 +13,13 @@ function MyInventory(props) {
       .then((res) => res.json())
       .then((json) => setInventory(json["inventory_list"]))
       .catch((error) => console.log(error));
-  }, []);
-
-  function addAuthHeader(otherHeaders = {}) {
-    if (props.token === "INVALID_TOKEN") {
-      return otherHeaders;
-    } else {
-      return {
-        ...otherHeaders,
-        Authorization: `Bearer ${props.token}`,
-      };
-    }
-  }
+  }, [props]);
 
   function fetchinventory() {
     const promise = fetch(
       "https://whatchagot.azurewebsites.net/inventory_list",
       {
-        headers: addAuthHeader(),
+        headers: props.addAuthHeader(),
       }
     );
     return promise;
@@ -41,7 +30,7 @@ function MyInventory(props) {
       "https://whatchagot.azurewebsites.net/inventory_list",
       {
         method: "POST",
-        headers: addAuthHeader({
+        headers: props.addAuthHeader({
           "Content-Type": "application/json",
         }),
         body: JSON.stringify(item),
@@ -56,7 +45,7 @@ function MyInventory(props) {
       `https://whatchagot.azurewebsites.net/inventory_list/${id}`,
       {
         method: "DELETE",
-        headers: addAuthHeader(),
+        headers: props.addAuthHeader(),
       }
     );
     return promise;

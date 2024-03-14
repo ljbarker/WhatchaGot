@@ -12,24 +12,13 @@ function MyShoppingList(props) {
       .then((res) => res.json())
       .then((json) => setList(json["shopping_list"]))
       .catch((error) => console.log(error));
-  }, []);
-
-  function addAuthHeader(otherHeaders = {}) {
-    if (props.token === "INVALID_TOKEN") {
-      return otherHeaders;
-    } else {
-      return {
-        ...otherHeaders,
-        Authorization: `Bearer ${props.token}`,
-      };
-    }
-  }
+  }, [props]);
 
   function fetchShoppingList() {
     const promise = fetch(
       "https://whatchagot.azurewebsites.net/shopping_list",
       {
-        headers: addAuthHeader(),
+        headers: props.addAuthHeader(),
       }
     );
     return promise;
@@ -41,7 +30,7 @@ function MyShoppingList(props) {
       "https://whatchagot.azurewebsites.net/shopping_list",
       {
         method: "POST",
-        headers: addAuthHeader({
+        headers: props.addAuthHeader({
           "Content-Type": "application/json",
         }),
         body: JSON.stringify(item),
@@ -56,7 +45,7 @@ function MyShoppingList(props) {
       `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
       {
         method: "DELETE",
-        headers: addAuthHeader(),
+        headers: props.addAuthHeader(),
       }
     );
     return promise;

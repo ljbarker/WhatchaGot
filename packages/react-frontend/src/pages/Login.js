@@ -1,8 +1,6 @@
 import {
   Heading,
   Pane,
-  Link,
-  TextInput,
   Button,
   Text,
   TextInputField,

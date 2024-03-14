@@ -1,4 +1,4 @@
-import { Heading, Pane, Link, Paragraph, SearchInput, Table } from "evergreen-ui";
+import { Heading, Pane, Link, SearchInput, Table } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.js";
 
@@ -9,23 +9,12 @@ function Home(props) {
 
   useEffect(() => {
     fetch("https://whatchagot.azurewebsites.net/recipe_API", {
-      headers: addAuthHeader(),
+      headers: props.addAuthHeader(),
     })
       .then((res) => res.json())
       .then((json) => setRecipes(json))
       .catch((error) => console.log(error));
-  }, []);
-
-  function addAuthHeader(otherHeaders = {}) {
-    if (props.token === "INVALID_TOKEN") {
-      return otherHeaders;
-    } else {
-      return {
-        ...otherHeaders,
-        Authorization: `Bearer ${props.token}`
-      };
-    }
-  }
+  }, [props]);
 
 
   const handleSubmit = (e) => {

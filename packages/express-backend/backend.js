@@ -68,6 +68,7 @@ app.get("/recipe_list/:id", authenticateUser, (req, res) => {
 
 app.post("/recipe_list", authenticateUser, (req, res) => {
   const body = {
+    username: req.body.username,
     name: req.body.name,
     ingredientList: req.body.ingredients,
     description: req.body.description,

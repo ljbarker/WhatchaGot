@@ -10,6 +10,7 @@ import React, { useState } from "react";
 
 function RecipeForm(props) {
   const [recipe, setRecipe] = useState({
+    username: props.username,
     name: "",
     ingredients: [{ name: "", amount: "" }],
     description: "",
@@ -28,6 +29,7 @@ function RecipeForm(props) {
         ingredientlist[index] = ingredient;
 
         setRecipe({
+          username: recipe["username"],
           name: recipe["name"],
           ingredients: ingredientlist,
           description: recipe["description"],
@@ -42,6 +44,7 @@ function RecipeForm(props) {
         ingredientlist[index] = ingredient;
 
         setRecipe({
+          username: recipe["username"],
           name: recipe["name"],
           ingredients: ingredientlist,
           description: recipe["description"],
@@ -49,6 +52,7 @@ function RecipeForm(props) {
         break;
       case "name":
         setRecipe({
+          username: recipe["username"],
           name: value,
           ingredients: recipe["ingredients"],
           description: recipe["description"],
@@ -56,6 +60,7 @@ function RecipeForm(props) {
         break;
       default:
         setRecipe({
+          username: recipe["username"],
           name: recipe["name"],
           ingredients: recipe["ingredients"],
           description: value,
@@ -68,6 +73,7 @@ function RecipeForm(props) {
     event.preventDefault();
     setNumIngredients(numIngredients + 1);
     setRecipe({
+      username: recipe["username"],
       name: recipe["name"],
       ingredients: [...recipe["ingredients"], { name: "", amount: "" }],
       description: recipe["description"],

@@ -10,23 +10,12 @@ function Recipe(props) {
 
     useEffect(() => {
         fetch(`https://whatchagot.azurewebsites.net/recipe_list/${id}`, {
-            headers: addAuthHeader()
+            headers: props.addAuthHeader()
         })
             .then((res) => res.json())
             .then((json) => setRecipe(json))
             .catch((error) => console.log(error));
-    }, [id]);
-
-    function addAuthHeader(otherHeaders = {}) {
-        if (props.token === "INVALID_TOKEN") {
-            return otherHeaders;
-        } else {
-            return {
-                ...otherHeaders,
-                Authorization: `Bearer ${props.token}`
-            };
-        }
-    }
+    }, [id, props]);
 
     return (
         <Pane>

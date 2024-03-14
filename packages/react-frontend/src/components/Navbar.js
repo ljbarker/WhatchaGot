@@ -1,10 +1,7 @@
 import {
   Avatar,
-  Dialog,
   Group,
   Heading,
-  LogInIcon,
-  Pane,
   Tab,
   Tablist,
 } from "evergreen-ui";

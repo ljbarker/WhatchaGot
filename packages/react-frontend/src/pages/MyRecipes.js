@@ -23,22 +23,11 @@ function MyRecipes(props) {
       .then((res) => res.json())
       .then((json) => setRecipes(json["recipe_list"]))
       .catch((error) => console.log(error));
-  }, []);
-
-  function addAuthHeader(otherHeaders = {}) {
-    if (props.token === "INVALID_TOKEN") {
-      return otherHeaders;
-    } else {
-      return {
-        ...otherHeaders,
-        Authorization: `Bearer ${props.token}`
-      };
-    }
-  }
+  }, [props]);
 
   function fetchRecipes() {
     const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
-      headers: addAuthHeader()
+      headers: props.addAuthHeader()
     });
     return promise;
   }
@@ -46,7 +35,7 @@ function MyRecipes(props) {
   function postRecipe(recipe) {
     const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
       method: "POST",
-      headers: addAuthHeader({
+      headers: props.addAuthHeader({
         "Content-Type": "application/json",
       }),
       body: JSON.stringify(recipe),
@@ -81,7 +70,7 @@ function MyRecipes(props) {
   function deleteRecipe(id) {
     const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${id}`, {
       method: "DELETE",
-      headers: addAuthHeader()
+      headers: props.addAuthHeader()
     });
     return promise;
   }
@@ -159,7 +148,7 @@ function MyRecipes(props) {
           confirmLabel="Done"
           hasFooter={false}
         >
-          <RecipeForm handleSubmit={updateList} />
+          <RecipeForm handleSubmit={updateList} username={props.username} />
         </Dialog>
         <Button
           marginLeft={16}
