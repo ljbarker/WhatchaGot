@@ -116,7 +116,7 @@ function MyRecipes(props) {
       >
         <Heading fontSize={32}>My Recipes</Heading>
       </Pane>
-      <Group>
+      <Group display="flex" flexWrap="wrap">
         {recipes.map((recipe, index) => (
           <Card
             key={index}

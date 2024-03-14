@@ -1,4 +1,4 @@
-import { Heading, Pane, Paragraph, SearchInput, Table } from "evergreen-ui";
+import { Heading, Pane, Link, Paragraph, SearchInput, Table } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.js";
 
@@ -11,10 +11,10 @@ function Home(props) {
     fetch("https://whatchagot.azurewebsites.net/recipe_API", {
       headers: addAuthHeader(),
     })
-      .then((res) => { console.log(res); res.json() })
-      .then((json) => { console.log(json); setRecipes(json["recipe_list"]) })
+      .then((res) => res.json())
+      .then((json) => setRecipes(json))
       .catch((error) => console.log(error));
-  });
+  }, []);
 
   function addAuthHeader(otherHeaders = {}) {
     if (props.token === "INVALID_TOKEN") {
@@ -60,29 +60,22 @@ function Home(props) {
       <Table>
         <Table.Head>
           <Table.TextHeaderCell>Recipe</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Ingredients</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Link to Recipe</Table.TextHeaderCell>
         </Table.Head>
         <Table.Body>
-          {recipes.map((recipe, index) => (
-            <Table.Row key={index}>
-              <Table.TextCell>{recipe.strMeal}</Table.TextCell>
-              <Table.TextCell>
-                <Pane display="flex" flexDirection="column">
-                  {recipe.map((element, i) => {
-                    if (i > 1 && i < 17) {
-                      return (
-                        <Paragraph key={i}>
-                          {element}
-                        </Paragraph>
-                      )
-                    } else {
-                      return null;
-                    }
-                  })}
-                </Pane>
-              </Table.TextCell>
-            </Table.Row>
-          ))}
+          {recipes.map((recipe, index) => {
+            let ingredients = [];
+            for (let i = 1; i <= 15; i++) {
+              ingredients.push(recipe[`strIngredient${i}`]);
+            };
+            return (
+
+              < Table.Row key={index} height="auto" >
+                <Table.TextCell>{recipe.strMeal}</Table.TextCell>
+                <Table.TextCell><Link href={recipe.strSource}>To Recipe</Link></Table.TextCell>
+              </Table.Row>
+            )
+          })}
           {/* {recipes.map((recipe, index) => (
           <Card
             key={index}
@@ -113,7 +106,7 @@ function Home(props) {
         ))} */}
         </Table.Body>
       </Table>
-    </Pane>
+    </Pane >
   );
 }
 
