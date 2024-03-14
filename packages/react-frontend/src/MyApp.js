@@ -106,9 +106,9 @@ function MyApp() {
                 <Route path="/recipe/:username/:id" element={<Recipe token={token} addAuthHeader={addAuthHeader} username={username} />} />
                 <Route path="/myinventory" element={<MyInventory token={token} addAuthHeader={addAuthHeader} username={username} />} />
                 <Route path="/myshoppinglist" element={<MyShoppingList token={token} addAuthHeader={addAuthHeader} username={username} />} />
-                <Route path="/login" element={<Login token={token} addAuthHeader={addAuthHeader} handleSubmit={loginUser} />} />
-                <Route path="/signup" element={<SignUp token={token} addAuthHeader={addAuthHeader} handleSubmit={signupUser} />} />
-                <Route path="/forgotPassword" element={<SignUp token={token} addAuthHeader={addAuthHeader} handleSubmit={signupUser} />} />
+                <Route path="/login" element={<Login token={token} addAuthHeader={addAuthHeader} handleSubmit={loginUser} username={username} />} />
+                <Route path="/signup" element={<SignUp token={token} addAuthHeader={addAuthHeader} handleSubmit={signupUser} username={username} />} />
+                <Route path="/forgotPassword" element={<SignUp token={token} addAuthHeader={addAuthHeader} handleSubmit={signupUser} username={username} />} />
             </Routes>
         </BrowserRouter>
     );

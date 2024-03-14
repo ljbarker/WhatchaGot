@@ -19,7 +19,7 @@ function Recipe(props) {
 
     return (
         <Pane>
-            <Navbar />
+            <Navbar username={props.username} />
             <Pane>
                 <Table>
                     <Table.Head>

@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import React from "react";
 
-function Navbar() {
+function Navbar(props) {
   return (
     <Tablist
       display="flex"
@@ -39,7 +39,7 @@ function Navbar() {
         </Link>
         <Link style={{ marginTop: "10px" }} to="/login">
           <Tab appearance="primary">
-            <Avatar name="User" size={40} backgroundColor="white"></Avatar>
+            <Avatar name={props.username} size={40} backgroundColor="white"></Avatar>
           </Tab>
         </Link>
       </Group>

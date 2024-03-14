@@ -92,7 +92,7 @@ function MyShoppingList(props) {
   return (
     <Pane>
       <Pane>
-        <Navbar />
+        <Navbar username={props.username} />
         <Pane
           display="flex"
           alignItems="center"
