@@ -10,7 +10,14 @@ export function registerUser(req, res) {
 
   if (!username || !password || !_id) {
     res.status(400).send("Bad request: Invalid input data.");
-  } else {
+  } 
+  else if (username.length < 3){
+    res.status(409).send("Username is too short. Please make your username larger than 2 characters.");
+  }
+  else if (password.length < 7){
+    res.status(409).send("Password is too short. Please make your password larger than 7 characters.");
+  }
+    else {
     userqueries.findUserByUsername(username)
       .then((retrievedUser) => {
         if (retrievedUser.length > 0) {

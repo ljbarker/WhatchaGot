@@ -30,7 +30,7 @@ function SignUp(props) {
     }
   }
 
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault();
     props.handleSubmit(creds);
     setCreds({ username: "", password: "" });
