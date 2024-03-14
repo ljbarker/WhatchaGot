@@ -126,6 +126,7 @@ function RecipeForm(props) {
             marginX={12}
           />
           <IconButton
+            data-testid="delete"
             alignSelf="center"
             icon={DeleteIcon}
             intent="danger"
