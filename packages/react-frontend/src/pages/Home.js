@@ -11,8 +11,8 @@ function Home(props) {
     fetch("https://whatchagot.azurewebsites.net/recipe_API", {
       headers: addAuthHeader(),
     })
-      .then((res) => res.json())
-      .then((json) => setRecipes(json["recipe_list"]))
+      .then((res) => { console.log(res); res.json() })
+      .then((json) => { console.log(json); setRecipes(json["recipe_list"]) })
       .catch((error) => console.log(error));
   });
 
@@ -83,6 +83,34 @@ function Home(props) {
               </Table.TextCell>
             </Table.Row>
           ))}
+          {/* {recipes.map((recipe, index) => (
+          <Card
+            key={index}
+            elevation={1}
+            margin={16}
+            padding={16}
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Heading size={900} padding={10}>
+              {recipe.name}
+            </Heading>
+            <Group>
+              <Button iconAfter={ManualIcon}>
+                <Link to={`/recipe/${recipe._id}`}>View</Link>
+              </Button>
+              <Button
+                intent="danger"
+                iconAfter={TrashIcon}
+                onClick={() => removeOneRecipe(index)}
+              >
+                Delete
+              </Button>
+            </Group>
+          </Card>
+        ))} */}
         </Table.Body>
       </Table>
     </Pane>
