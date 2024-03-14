@@ -45,7 +45,7 @@ function Login(props) {
           elevation={4}
           float="left"
           is="section"
-          background="lightgreen"
+          background="darkgreen"
           border="muted"
           marginY={24}
           paddingTop={12}
