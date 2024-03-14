@@ -4,8 +4,7 @@ import recipeQueries from "./models/recipe-services.js";
 import inventoryQueries from "./models/inventory-services.js";
 import shoppingListQueries from "./models/shoppinglist-services.js";
 import recipeAPIQueries from "./models/recipeAPI-services.js";
-import { registerUser, loginUser, authenticateUser } from './auth.js';
-
+import { registerUser, loginUser, authenticateUser } from "./auth.js";
 
 const app = express();
 const port = 8000;
@@ -49,7 +48,7 @@ app.get("/recipe_list", authenticateUser, (req, res) => {
 });
 
 app.get("/recipe_list/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"]; //or req.params.id
+  const id = req.params.id; //or req.params.id
   let result;
   recipeQueries
     .findRecipeById(id)
@@ -96,7 +95,7 @@ app.post("/recipe_list", authenticateUser, (req, res) => {
 });
 
 app.delete("/recipe_list/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"];
+  const id = req.params.id;
   recipeQueries
     .deleteRecipe(id)
     .then((qres) => {
@@ -143,7 +142,7 @@ app.get("/inventory_list", authenticateUser, (req, res) => {
 });
 
 app.get("/inventory_list/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"]; //or req.params.id
+  const id = req.params.id; //or req.params.id
   let result;
   inventoryQueries
     .findItemById(id)
@@ -162,16 +161,16 @@ app.get("/inventory_list/:id", authenticateUser, (req, res) => {
 });
 
 app.post("/inventory_list", authenticateUser, (req, res) => {
-  const itemToAdd = {
-    _id: req.body._id,
-    name: req.body.name,
-    quantity: req.body.quantity,
-    expiration: req.body.expiration,
-  };
+  // const itemToAdd = {
+  //   _id: req.body._id,
+  //   name: req.body.name,
+  //   quantity: req.body.quantity,
+  //   expiration: req.body.expiration,
+  // };
   let result;
-  console.log(itemToAdd);
+  console.log(req.body);
   inventoryQueries
-    .addItem(itemToAdd)
+    .addItem(req.body)
     .then((qres) => {
       result = qres;
       if (result != null) {
@@ -187,7 +186,7 @@ app.post("/inventory_list", authenticateUser, (req, res) => {
 });
 
 app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"];
+  const id = req.params.id;
   inventoryQueries
     .deleteItemById(id)
     .then((qres) => {
@@ -202,27 +201,28 @@ app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
     });
 });
 
-
-app.get("/recipe_API", (req, res) => { // filtering returned recipes
-  inventoryQueries.getIngredients()
-    .then(userIngredients => {
+app.get("/recipe_API", (req, res) => {
+  // filtering returned recipes
+  inventoryQueries
+    .getIngredients()
+    .then((userIngredients) => {
       // Now, use those ingredients to find matching recipes
-      recipeAPIQueries.searchRecByUserIngreds(userIngredients)
-        .then(matchingRecipes => {
+      recipeAPIQueries
+        .searchRecByUserIngreds(userIngredients)
+        .then((matchingRecipes) => {
           // Respond with the matching recipes
           res.json(matchingRecipes);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
           res.status(500).send("Error searching for recipes");
         });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       res.status(500).send("Error fetching user ingredients");
     });
 });
-
 
 app.get("/shopping_list", authenticateUser, (req, res) => {
   const name = req.query.name;
@@ -256,7 +256,7 @@ app.get("/shopping_list", authenticateUser, (req, res) => {
 });
 
 app.get("/shopping_list/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"]; //or req.params.id
+  const id = req.params.id; //or req.params.id
   let result;
   shoppingListQueries
     .findItemById(id)
