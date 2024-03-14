@@ -58,7 +58,7 @@ function MyApp() {
             headers: addAuthHeader({
                 "Content-Type": "application/json"
             }),
-            body: JSON.stringify({ ...creds, uid: `${Math.floor(Math.random() * 100)}` })
+            body: JSON.stringify({ ...creds, _id: `${Math.floor(Math.random() * 1000)}` })
         })
             .then((response) => {
                 if (response.status === 201) {

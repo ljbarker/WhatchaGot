@@ -52,7 +52,6 @@ function MyShoppingList(props) {
   }
 
   function deleteItem(id) {
-    console.log(id);
     const promise = fetch(
       `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
       {
@@ -82,11 +81,10 @@ function MyShoppingList(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const id = (shoppinglist.length + 1).toString();
-    const data = { _id: id, name: item, quantity: quantity };
+    const id = (Math.floor(Math.random() * 1000)).toString();
+    const data = { _id: id, item, quantity };
     postItem(data)
       .then((res) => {
-        console.log(res);
         if (res.status === 201) {
           return res.json();
         } else {
@@ -146,7 +144,7 @@ function MyShoppingList(props) {
           {shoppinglist.map((item, index) =>
           (
             <Table.Row key={index}>
-              <Table.TextCell>{item.name}</Table.TextCell>
+              <Table.TextCell>{item.item}</Table.TextCell>
               <Table.TextCell>{item.quantity}</Table.TextCell>
               <Button
                 marginY={15}
