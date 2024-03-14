@@ -1,4 +1,11 @@
-import { Heading, Pane, TextInput, Button, Text, TextInputField } from "evergreen-ui";
+import {
+  Heading,
+  Pane,
+  TextInput,
+  Button,
+  Text,
+  TextInputField,
+} from "evergreen-ui";
 import { useState } from "react";
 import { Link as RouteLink } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
@@ -52,11 +59,12 @@ function SignUp(props) {
           paddingX={40}
           width={360}
           height={420}
+          borderRadius={10}
         >
           <form onSubmit={submitForm}>
             <Pane paddingY={30}>
               <TextInputField
-                label="Username"
+                label={<span style={{ color: "white" }}>Username</span>}
                 name="username"
                 id="username"
                 placeholder="Enter Username"
@@ -65,7 +73,7 @@ function SignUp(props) {
               />
               <Pane paddingY={10} />
               <TextInputField
-                label="Password"
+                label={<span style={{ color: "white" }}>Password</span>}
                 name="password"
                 id="password"
                 placeholder="Enter Password"
@@ -74,15 +82,32 @@ function SignUp(props) {
               />
               <Pane paddingY={10} />
               <TextInputField
-                label="Re-enter Password"
+                label={
+                  <span style={{ color: "white" }}>Re-enter Password</span>
+                }
                 name="repassword"
                 id="repassword"
                 placeholder="Re-enter Password"
-              /* Add functionality to check if curr password is equal to re-entered password */
+                /* Add functionality to check if curr password is equal to re-entered password */
               />
-              <Pane display="flex" flexDirection="column" alignItems="center" justifyContent="center" paddingY={10}>
-                <Button type="submit">Sign Up</Button>
-                <RouteLink to="/login"><Text paddingY={10}>Already have an account?</Text></RouteLink>
+              <Pane
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                paddingY={10}
+              >
+                <Button type="submit" style={{ marginTop: "-3px" }}>
+                  Sign Up
+                </Button>
+                <RouteLink
+                  to="/login"
+                  style={{ textDecoration: "none", marginTop: "10px" }}
+                >
+                  <Text paddingY={10} color="white">
+                    Already have an account?
+                  </Text>
+                </RouteLink>
               </Pane>
             </Pane>
           </form>

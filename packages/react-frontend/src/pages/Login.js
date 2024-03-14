@@ -1,4 +1,12 @@
-import { Heading, Pane, Link, TextInput, Button, Text, TextInputField } from "evergreen-ui";
+import {
+  Heading,
+  Pane,
+  Link,
+  TextInput,
+  Button,
+  Text,
+  TextInputField,
+} from "evergreen-ui";
 import { useState } from "react";
 import { Link as RouteLink } from "react-router-dom";
 import Navbar from "../components/Navbar.js";
@@ -52,10 +60,11 @@ function Login(props) {
           paddingX={40}
           width={360}
           height={350}
+          borderRadius={10}
         >
           <Pane paddingY={30}>
             <TextInputField
-              label="Username"
+              label={<span style={{ color: "white" }}>Username</span>}
               name="username"
               id="username"
               placeholder="Enter Username"
@@ -64,25 +73,40 @@ function Login(props) {
             />
             <Pane paddingY={10} />
             <TextInputField
-              label="Password"
+              label={<span style={{ color: "white" }}>Password</span>}
               name="password"
               id="password"
               placeholder="Enter Password"
               onChange={handleChange}
               value={creds.password}
             />
-            <Pane
-              paddingY={10}
-            >
-              <form onSubmit={submitForm} style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
+            <Pane paddingY={10}>
+              <form
+                onSubmit={submitForm}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <Button type="submit">Login</Button>
-                <RouteLink to="/forgotPassword"><Text paddingY={10}>Forgot Password?</Text></RouteLink>
-                <RouteLink to="/signup"><Text paddingY={10}>New User? Sign up here!</Text></RouteLink>
+                <RouteLink
+                  to="/forgotPassword"
+                  style={{ textDecoration: "none", marginTop: "12px" }}
+                >
+                  <Text paddingY={10} color="white">
+                    Forgot Password?
+                  </Text>
+                </RouteLink>
+                <RouteLink
+                  to="/signup"
+                  style={{ textDecoration: "none", marginTop: "8px" }}
+                >
+                  <Text paddingY={10} color="white">
+                    New User? Sign up here!
+                  </Text>
+                </RouteLink>
               </form>
             </Pane>
           </Pane>
@@ -90,7 +114,6 @@ function Login(props) {
       </Pane>
     </Pane>
   );
-
 }
 
 export default Login;
