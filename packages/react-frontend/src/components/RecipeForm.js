@@ -23,39 +23,42 @@ function RecipeForm(props) {
     let ingredientlist;
     switch (name) {
       case "amount":
-        ingredient = { name: recipe["ingredients"][index].name, amount: value }
-        ingredientlist = recipe["ingredients"]
-        ingredientlist[index] = ingredient
+        ingredient = { name: recipe["ingredients"][index].name, amount: value };
+        ingredientlist = recipe["ingredients"];
+        ingredientlist[index] = ingredient;
 
         setRecipe({
           name: recipe["name"],
           ingredients: ingredientlist,
-          description: recipe["description"]
+          description: recipe["description"],
         });
         break;
       case "ingredient":
-        ingredient = { name: value, amount: recipe["ingredients"][index].amount }
-        ingredientlist = recipe["ingredients"]
-        ingredientlist[index] = ingredient
+        ingredient = {
+          name: value,
+          amount: recipe["ingredients"][index].amount,
+        };
+        ingredientlist = recipe["ingredients"];
+        ingredientlist[index] = ingredient;
 
         setRecipe({
           name: recipe["name"],
           ingredients: ingredientlist,
-          description: recipe["description"]
+          description: recipe["description"],
         });
         break;
       case "name":
         setRecipe({
           name: value,
           ingredients: recipe["ingredients"],
-          description: recipe["description"]
+          description: recipe["description"],
         });
         break;
       default:
         setRecipe({
           name: recipe["name"],
           ingredients: recipe["ingredients"],
-          description: value
+          description: value,
         });
         break;
     }
@@ -141,7 +144,9 @@ function RecipeForm(props) {
         onChange={handleChange}
       />
 
-      <Button type="submit" intent="success">Add</Button>
+      <Button type="submit" intent="success">
+        Add
+      </Button>
     </form>
   );
 }
