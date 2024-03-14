@@ -81,7 +81,7 @@ function MyShoppingList(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const id = (Math.random() * 1000).toString();
+    const id = (Math.floor(Math.random() * 1000)).toString();
     const data = { _id: id, item, quantity };
     postItem(data)
       .then((res) => {
