@@ -40,7 +40,13 @@ function MyApp() {
                         .json()
                         .then((payload) => setToken(payload.token));
                     setMessage(`Login successful; auth token saved`);
-                } else {
+                    toaster.success("Login successful!");
+                } 
+                else if(response.status === 401){
+                    response.text()
+                    .then((text) => toaster.danger(text));
+                }
+                else {
                     setMessage(
                         `Login Error ${response.status}: ${response.data}`
                     );

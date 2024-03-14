@@ -5,6 +5,7 @@ import {
   Button,
   Text,
   TextInputField,
+  toaster
 } from "evergreen-ui";
 import { useState } from "react";
 import { Link as RouteLink } from "react-router-dom";
@@ -15,6 +16,7 @@ function SignUp(props) {
     username: "",
     password: "",
   });
+  const [checkPassword, setCheckPassword] = useState("");
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -32,8 +34,14 @@ function SignUp(props) {
 
   async function submitForm(e) {
     e.preventDefault();
-    props.handleSubmit(creds);
-    setCreds({ username: "", password: "" });
+    if(creds.password === checkPassword){
+      props.handleSubmit(creds);
+      setCreds({ username: "", password: "" });
+      setCheckPassword("");
+    }
+    else{
+      toaster.danger("Password mismatch");
+    }
   }
 
   return (
@@ -85,10 +93,11 @@ function SignUp(props) {
                 label={
                   <span style={{ color: "white" }}>Re-enter Password</span>
                 }
-                name="repassword"
-                id="repassword"
+                name="checkPassword"
+                id="checkPassword"
                 placeholder="Re-enter Password"
-                /* Add functionality to check if curr password is equal to re-entered password */
+                value={checkPassword}
+                onChange={(e) => setCheckPassword(e.target.value)}
               />
               <Pane
                 display="flex"

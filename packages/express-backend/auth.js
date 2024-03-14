@@ -14,7 +14,7 @@ export function registerUser(req, res) {
   else if (username.length < 3){
     res.status(409).send("Username is too short. Please make your username larger than 2 characters.");
   }
-  else if (password.length < 7){
+  else if (password.length < 8){
     res.status(409).send("Password is too short. Please make your password larger than 7 characters.");
   }
     else {
