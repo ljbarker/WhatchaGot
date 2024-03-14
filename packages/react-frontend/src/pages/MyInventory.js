@@ -9,7 +9,7 @@ function MyInventory(props) {
   const [expiration, setExpiration] = useState("");
 
   useEffect(() => {
-    fetchinventory()
+    fetchinventory(props.username)
       .then((res) => res.json())
       .then((json) => setInventory(json["inventory_list"]))
       .catch((error) => console.log(error));
@@ -17,7 +17,7 @@ function MyInventory(props) {
 
   function fetchinventory() {
     const promise = fetch(
-      "https://whatchagot.azurewebsites.net/inventory_list",
+      `https://whatchagot.azurewebsites.net/inventory_list/${props.uername}`,
       {
         headers: props.addAuthHeader(),
       }
@@ -42,7 +42,7 @@ function MyInventory(props) {
 
   function deleteItem(id) {
     const promise = fetch(
-      `https://whatchagot.azurewebsites.net/inventory_list/${id}`,
+      `https://whatchagot.azurewebsites.net/inventory_list/${props.username}/${id}`,
       {
         method: "DELETE",
         headers: props.addAuthHeader(),

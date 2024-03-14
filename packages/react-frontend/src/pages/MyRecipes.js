@@ -68,7 +68,7 @@ function MyRecipes(props) {
   }
 
   function deleteRecipe(id) {
-    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${id}`, {
+    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${props.username}/${id}`, {
       method: "DELETE",
       headers: props.addAuthHeader()
     });

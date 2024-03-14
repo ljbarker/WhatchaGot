@@ -103,7 +103,7 @@ function MyApp() {
             <Routes>
                 <Route path="/" element={<Home token={token} addAuthHeader={addAuthHeader} username={username} />} />
                 <Route path="/myrecipes" element={<MyRecipes token={token} addAuthHeader={addAuthHeader} username={username} />} />
-                <Route path="/recipe/:id" element={<Recipe token={token} addAuthHeader={addAuthHeader} username={username} />} />
+                <Route path="/recipe/:username/:id" element={<Recipe token={token} addAuthHeader={addAuthHeader} username={username} />} />
                 <Route path="/myinventory" element={<MyInventory token={token} addAuthHeader={addAuthHeader} username={username} />} />
                 <Route path="/myshoppinglist" element={<MyShoppingList token={token} addAuthHeader={addAuthHeader} username={username} />} />
                 <Route path="/login" element={<Login token={token} addAuthHeader={addAuthHeader} handleSubmit={loginUser} />} />

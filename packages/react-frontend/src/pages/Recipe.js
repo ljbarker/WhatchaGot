@@ -9,7 +9,7 @@ function Recipe(props) {
     const [recipe, setRecipe] = useState({ name: "", ingredientList: [], description: "" });
 
     useEffect(() => {
-        fetch(`https://whatchagot.azurewebsites.net/recipe_list/${id}`, {
+        fetch(`https://whatchagot.azurewebsites.net/recipe_list/${props.username}/${id}`, {
             headers: props.addAuthHeader()
         })
             .then((res) => res.json())

@@ -33,7 +33,7 @@ app.get("/recipe_list/:username", authenticateUser, (req, res) => {
       });
   } else {
     recipeQueries
-      .getRecipes(req.query.username)
+      .getRecipes(req.params.username)
       .then((qres) => {
         console.log(qres);
         result = qres;
@@ -111,7 +111,7 @@ app.delete("/recipe_list/:username/:id", authenticateUser, (req, res) => {
     });
 });
 
-app.get("/inventory_list", authenticateUser, (req, res) => {
+app.get("/inventory_list/:username", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -128,7 +128,7 @@ app.get("/inventory_list", authenticateUser, (req, res) => {
       });
   } else {
     inventoryQueries
-      .getInventory()
+      .getInventory(req.params.username)
       .then((qres) => {
         console.log(qres);
         result = qres;
@@ -142,7 +142,7 @@ app.get("/inventory_list", authenticateUser, (req, res) => {
   }
 });
 
-app.get("/inventory_list/:id", authenticateUser, (req, res) => {
+app.get("/inventory_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
   let result;
   inventoryQueries
@@ -179,7 +179,7 @@ app.post("/inventory_list", authenticateUser, (req, res) => {
     });
 });
 
-app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
+app.delete("/inventory_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
   inventoryQueries
     .deleteItemById(id)
@@ -226,7 +226,7 @@ app.get("/recipe_API", (req, res) => {
     });*/
 });
 
-app.get("/shopping_list", authenticateUser, (req, res) => {
+app.get("/shopping_list/:username", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -243,7 +243,7 @@ app.get("/shopping_list", authenticateUser, (req, res) => {
       });
   } else {
     shoppingListQueries
-      .getShoppingList()
+      .getShoppingList(req.params.username)
       .then((qres) => {
         console.log(qres);
         result = qres;
@@ -257,7 +257,7 @@ app.get("/shopping_list", authenticateUser, (req, res) => {
   }
 });
 
-app.get("/shopping_list/:id", authenticateUser, (req, res) => {
+app.get("/shopping_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
   let result;
   shoppingListQueries
@@ -294,7 +294,7 @@ app.post("/shopping_list", authenticateUser, (req, res) => {
     });
 });
 
-app.delete("/shopping_list/:id", authenticateUser, (req, res) => {
+app.delete("/shopping_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   shoppingListQueries
     .deleteItemById(id)

@@ -8,7 +8,7 @@ function MyShoppingList(props) {
   const [quantity, setQuantity] = useState("");
 
   useEffect(() => {
-    fetchShoppingList()
+    fetchShoppingList(props.username)
       .then((res) => res.json())
       .then((json) => setList(json["shopping_list"]))
       .catch((error) => console.log(error));
@@ -16,7 +16,7 @@ function MyShoppingList(props) {
 
   function fetchShoppingList() {
     const promise = fetch(
-      "https://whatchagot.azurewebsites.net/shopping_list",
+      `https://whatchagot.azurewebsites.net/shopping_list/${props.username}`,
       {
         headers: props.addAuthHeader(),
       }
@@ -42,7 +42,7 @@ function MyShoppingList(props) {
 
   function deleteItem(id) {
     const promise = fetch(
-      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
+      `https://whatchagot.azurewebsites.net/shopping_list/${props.username}/${id}`,
       {
         method: "DELETE",
         headers: props.addAuthHeader(),
