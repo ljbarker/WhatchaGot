@@ -276,7 +276,6 @@ app.get("/shopping_list/:id", authenticateUser, (req, res) => {
 
 app.post("/shopping_list", authenticateUser, (req, res) => {
   let result;
-  console.log(req.body);
   shoppingListQueries
     .addItem(req.body)
     .then((qres) => {

@@ -6,9 +6,9 @@ import dotenv from "dotenv";
 dotenv.config()
 
 export function registerUser(req, res) {
-  const { username, password, uid } = req.body; // from form
+  const { username, password, _id } = req.body; // from form
 
-  if (!username || !password || !uid) {
+  if (!username || !password || !_id) {
     res.status(400).send("Bad request: Invalid input data.");
   } else {
     userqueries.findUserByUsername(username)
@@ -22,7 +22,7 @@ export function registerUser(req, res) {
             .then((hashedPassword) => {
               generateAccessToken(username).then((token) => {
                 res.status(201).send({ token: token });
-                userqueries.addUser({ username, password: hashedPassword, uid })
+                userqueries.addUser({ username, password: hashedPassword, _id })
                   .then((result) => {
                     console.log("User added", result)
                   })
@@ -87,7 +87,7 @@ export function authenticateUser(req, res, next) {
 }
 
 export function loginUser(req, res) {
-  const { username, password, uid } = req.body; // from form
+  const { username, password, _id } = req.body; // from form
   userqueries.findUserByUsername(username)
     .then((retrievedUser) => {
       if (retrievedUser.length === 0) {
