@@ -87,6 +87,7 @@ function SignUp(props) {
                 placeholder="Enter Password"
                 onChange={handleChange}
                 value={creds.password}
+                type="password"
               />
               <Pane paddingY={10} />
               <TextInputField
@@ -98,6 +99,7 @@ function SignUp(props) {
                 placeholder="Re-enter Password"
                 value={checkPassword}
                 onChange={(e) => setCheckPassword(e.target.value)}
+                type="password"
               />
               <Pane
                 display="flex"
