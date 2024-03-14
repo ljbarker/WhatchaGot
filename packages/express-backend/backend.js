@@ -194,7 +194,7 @@ app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
     });
 });
 
-app.get("/recipe_API", authenticateUser, (req, res) => {
+app.get("/recipe_API", (req, res) => {
   recipeAPIQueries
     .get50()
     .then((qres) => {
