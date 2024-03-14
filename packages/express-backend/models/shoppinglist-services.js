@@ -12,8 +12,8 @@ mongoose
   })
   .catch((error) => console.log(error));
 
-function getShoppingList() {
-  return shoppingListModel.find();
+function getShoppingList(username) {
+  return shoppingListModel.find({ username: username });
 }
 
 function findItemById(id) {

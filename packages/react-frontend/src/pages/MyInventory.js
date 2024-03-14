@@ -9,7 +9,7 @@ function MyInventory(props) {
   const [expiration, setExpiration] = useState("");
 
   useEffect(() => {
-    fetchinventory(props.username)
+    fetchinventory()
       .then((res) => res.json())
       .then((json) => setInventory(json["inventory_list"]))
       .catch((error) => console.log(error));
@@ -17,7 +17,7 @@ function MyInventory(props) {
 
   function fetchinventory() {
     const promise = fetch(
-      `https://whatchagot.azurewebsites.net/inventory_list/${props.uername}`,
+      `https://whatchagot.azurewebsites.net/inventory_list/${props.username}`,
       {
         headers: props.addAuthHeader(),
       }
@@ -71,7 +71,7 @@ function MyInventory(props) {
   function handleSubmit(event) {
     event.preventDefault();
     const id = Math.floor(Math.random() * 1000).toString();
-    const data = { _id: id, item, quantity, expiration };
+    const data = { _id: id, item, quantity, expiration, username: props.username };
     postItem(data)
       .then((res) => {
         if (res.status === 201) {

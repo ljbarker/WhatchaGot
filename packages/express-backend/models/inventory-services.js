@@ -12,8 +12,8 @@ mongoose
   })
   .catch((error) => console.log(error));
 
-function getInventory() {
-  return inventoryModel.find();
+function getInventory(username) {
+  return inventoryModel.find({ username: username });
 }
 
 // function getIngredients() {
