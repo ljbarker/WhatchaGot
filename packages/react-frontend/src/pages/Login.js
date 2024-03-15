@@ -37,7 +37,7 @@ function Login(props) {
 
   return (
     <Pane>
-      <Navbar />
+      <Navbar username={props.username} />
       <Pane
         display="flex"
         flexDirection="column"
