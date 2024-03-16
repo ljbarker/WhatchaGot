@@ -19,11 +19,6 @@ From root, react-frontend, express-backend: npm install
     ~/express-backend npm run dev //only if you want to test routes on local host instead of the deployed azure backend
     ~/WhatchaGot npm start || ~/react-frontend npm start
 
-## UML Diagram:
-
-[https://www.figma.com/file/NXHFEVPmsFmF4P6Owu6rbL/Diagram?type=whiteboard&node-id=0-1&t=jmJ0zN9lX9oFkves-0]
-last updated: 3/14/2024
-
 ## Design System-EverGreen:
 
 [https://evergreen.segment.com/components]
