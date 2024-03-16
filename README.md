@@ -6,7 +6,7 @@ WhatchaGot is a recipe and food inventory management website. The site allows us
 
 ## UI Prototype:
 
-https://www.figma.com/file/GJAN0poTUviD0UPXdKkVh5/Low-Fidelity-Wirefrane?type=design&mode=design&t=vt5ZqeBka29QDeUl-0
+[https://www.figma.com/file/GJAN0poTUviD0UPXdKkVh5/Low-Fidelity-Wirefrane?type=design&mode=design&t=vt5ZqeBka29QDeUl-0]
 
 last updated: 2/19/2024
 
@@ -19,6 +19,11 @@ From root, react-frontend, express-backend: npm install
     ~/express-backend npm run dev
     ~/react-frontend npm start
 
+## UML Diagram:
+
+[https://www.figma.com/file/NXHFEVPmsFmF4P6Owu6rbL/Diagram?type=whiteboard&node-id=0-1&t=jmJ0zN9lX9oFkves-0]
+last updated: 3/14/2024
+
 ## Design System-EverGreen:
 
 [https://evergreen.segment.com/components]
@@ -26,3 +31,4 @@ From root, react-frontend, express-backend: npm install
 ## Recipe API:
 
 [https://www.themealdb.com/]
+
