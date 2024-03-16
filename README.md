@@ -16,8 +16,8 @@ From root, react-frontend, express-backend: npm install
 
 ## To Develop:
 
-    ~/express-backend npm run dev
-    ~/react-frontend npm start
+    ~/express-backend npm run dev //only if you want to test routes on local host instead of the deployed azure backend
+    ~/WhatchaGot npm start || ~/react-frontend npm start
 
 ## UML Diagram:
 
