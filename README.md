@@ -30,13 +30,13 @@ From root, react-frontend, express-backend: npm install
 
 ## Deployed Link
 
-    https://calm-forest-025139a10.4.azurestaticapps.net/
+ [WhatchaGot](https://calm-forest-025139a10.4.azurestaticapps.net/)
 
 ## Design System-EverGreen:
 
-[https://evergreen.segment.com/components]
+[Evergreen](https://evergreen.segment.com/components)
 
 ## Recipe API:
 
-[https://www.themealdb.com/]
+[Recipes](https://www.themealdb.com/)
 
