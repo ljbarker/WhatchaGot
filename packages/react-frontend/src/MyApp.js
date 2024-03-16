@@ -17,6 +17,7 @@ function MyApp() {
     const [username, setUsername] = useState("");
 
     function addAuthHeader(otherHeaders = {}) {
+        // checks the token and returns a header based on the token
         if (token === "INVALID_TOKEN") {
             return otherHeaders;
         } else {
@@ -28,6 +29,7 @@ function MyApp() {
     }
 
     function loginUser(creds) {
+        // makes a fetch to our backend to fetch information from backend to see if login is possible
         const promise = fetch(`https://whatchagot.azurewebsites.net/login`, {
             method: "POST",
             headers: addAuthHeader({
@@ -37,6 +39,7 @@ function MyApp() {
         })
             .then((response) => {
                 if (response.status === 200) {
+                    // login was successful!
                     response
                         .json()
                         .then((payload) => setToken(payload.token));
@@ -45,6 +48,7 @@ function MyApp() {
                     setUsername(creds.username);
                 }
                 else if (response.status === 401) {
+                    // If the message returned is a 401, means that login either failed or wrong password/username put in
                     response.text()
                         .then((text) => toaster.danger(text));
                 }
@@ -62,6 +66,7 @@ function MyApp() {
     }
 
     function signupUser(creds) {
+        // makes a fetch to our backend when we get a signup req from signup.js
         const promise = fetch(`https://whatchagot.azurewebsites.net/signup`, {
             method: "POST",
             headers: addAuthHeader({
@@ -70,6 +75,7 @@ function MyApp() {
             body: JSON.stringify({ ...creds, _id: `${Math.floor(Math.random() * 1000)}` })
         })
             .then((response) => {
+                // if the response is a 201, that means everything worked correctly!
                 if (response.status === 201) {
                     response
                         .json()
@@ -81,6 +87,7 @@ function MyApp() {
                     setUsername(creds.username);
                 }
                 else if (response.status === 409) {
+                    // If the response from backend is 409, we display whatever the flavor text is returned into toaster to display to the screen!
                     response.text()
                         .then((text) => toaster.danger(text));
                 }

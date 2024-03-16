@@ -30,11 +30,12 @@ function Login(props) {
   }
 
   function submitForm(e) {
+    // sends data in the username and password fields to backend
     e.preventDefault();
     props.handleSubmit(creds);
     setCreds({ username: "", password: "" });
   }
-
+  // Return is basic props for login page, and contains text fields for entering in password and username along with the button to log in
   return (
     <Pane>
       <Navbar username={props.username} />

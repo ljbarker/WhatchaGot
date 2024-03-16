@@ -7,10 +7,12 @@ dotenv.config()
 
 export function registerUser(req, res) {
   const { username, password, _id } = req.body; // from form
-
+  
+  // If username password or id is null or empty, we send a bad request.
   if (!username || !password || !_id) {
     res.status(400).send("Bad request: Invalid input data.");
   }
+  // If password or length does not meet our requirements, it sends the same 409 error.
   else if (username.length < 3) {
     res.status(409).send("Username is too short. Please make your username larger than 2 characters.");
   }
@@ -23,6 +25,7 @@ export function registerUser(req, res) {
         if (retrievedUser.length > 0) {
           res.status(409).send(`Username already taken ${username}`);
         } else {
+          // encryps and salts the password using bcrypt
           bcrypt
             .genSalt(10)
             .then((salt) => bcrypt.hash(password, salt))
@@ -31,6 +34,7 @@ export function registerUser(req, res) {
                 res.status(201).send({ token: token });
                 userqueries.addUser({ username, password: hashedPassword, _id })
                   .then((result) => {
+                    // user will add to our backend if we get a 201 status
                     console.log("User added", result)
                   })
                   .catch((error) => {
@@ -38,10 +42,12 @@ export function registerUser(req, res) {
                   });
               })
                 .catch((error) => {
+                  // if the token generates incorrectly, we get a 500 error
                   res.status(500).send("something went wrong generating token" + error);
                 });
             })
             .catch((error) => {
+              // if we get a post error, we post a 500 error
               res.status(500).send("something went wrong posting user");
             });
         }
@@ -117,6 +123,7 @@ export function loginUser(req, res) {
             }
           })
           .catch(() => {
+            // happens when the salted/encrypted password fails the comparison check
             res.status(401).send(`bcrypt compare failed ${username} ${password} ${retrievedUser}`);
           });
       }
