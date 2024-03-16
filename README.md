@@ -30,7 +30,7 @@ From root, react-frontend, express-backend: npm install
 
 ## Deployed Link
 
-    [WhatchaGot](https://calm-forest-025139a10.4.azurestaticapps.net/)
+    https://calm-forest-025139a10.4.azurestaticapps.net/
 
 ## Design System-EverGreen:
 
