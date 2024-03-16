@@ -32,17 +32,20 @@ function SignUp(props) {
   }
 
   async function submitForm(e) {
+    // Sends the data to myapp.js with the username and password data along with the extra password for checking
     e.preventDefault();
     if (creds.password === checkPassword) {
+      // If the password is == to reenter password, send the credentials through to backend
       props.handleSubmit(creds);
       setCreds({ username: "", password: "" });
       setCheckPassword("");
     }
     else {
+      // If it isnt, dont send data and ask for user to make passwords the same
       toaster.danger("Password mismatch");
     }
   }
-
+  // Return is for all props used in creating the website and text data entries for password, username and recheck password, along with button to signup
   return (
     <Pane>
       <Navbar username={props.username} />

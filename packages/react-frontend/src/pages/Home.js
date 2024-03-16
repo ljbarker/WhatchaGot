@@ -65,34 +65,7 @@ function Home(props) {
               </Table.Row>
             )
           })}
-          {/* {recipes.map((recipe, index) => (
-          <Card
-            key={index}
-            elevation={1}
-            margin={16}
-            padding={16}
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Heading size={900} padding={10}>
-              {recipe.name}
-            </Heading>
-            <Group>
-              <Button iconAfter={ManualIcon}>
-                <Link to={`/recipe/${recipe._id}`}>View</Link>
-              </Button>
-              <Button
-                intent="danger"
-                iconAfter={TrashIcon}
-                onClick={() => removeOneRecipe(index)}
-              >
-                Delete
-              </Button>
-            </Group>
-          </Card>
-        ))} */}
+          
         </Table.Body>
       </Table>
     </Pane >
