@@ -96,6 +96,7 @@ function RecipeForm(props) {
     e.preventDefault();
     props.handleSubmit(recipe);
     setRecipe({
+      username: props.username,
       name: "",
       ingredients: [{ name: "", amount: "" }],
       description: "",

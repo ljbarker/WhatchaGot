@@ -75,6 +75,9 @@ function MyInventory(props) {
     postItem(data)
       .then((res) => {
         if (res.status === 201) {
+          setItem("");
+          setExpiration("");
+          setQuantity("");
           return res.json();
         } else {
           console.log("Error: " + res.status);

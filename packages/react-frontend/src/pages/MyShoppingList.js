@@ -75,6 +75,8 @@ function MyShoppingList(props) {
     postItem(data)
       .then((res) => {
         if (res.status === 201) {
+          setItem("");
+          setQuantity("");
           return res.json();
         } else {
           console.log("Error: " + res.status);
