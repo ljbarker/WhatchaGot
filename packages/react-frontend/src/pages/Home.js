@@ -1,9 +1,21 @@
-import { Heading, Pane, Paragraph, SearchInput, Table } from "evergreen-ui";
-import { useState } from "react";
+import { Heading, Pane, Link, SearchInput, Table } from "evergreen-ui";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.js";
-function Home() {
+
+function Home(props) {
   const [value, setValue] = useState("");
   const [headerValue, setheaderValue] = useState("");
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    fetch("https://whatchagot.azurewebsites.net/recipe_API", {
+      headers: props.addAuthHeader(),
+    })
+      .then((res) => res.json())
+      .then((json) => setRecipes(json))
+      .catch((error) => console.log(error));
+  }, [props]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,7 +23,7 @@ function Home() {
   };
   return (
     <Pane>
-      <Navbar />
+      <Navbar username={props.username} />
       <Pane
         display="flex"
         alignItems="center"
@@ -37,20 +49,53 @@ function Home() {
       <Table>
         <Table.Head>
           <Table.TextHeaderCell>Recipe</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Ingredients</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Link to Recipe</Table.TextHeaderCell>
         </Table.Head>
-        <Table.Body height={240}>
-          <Table.Row
-            key={headerValue}
-            isSelectable
-            onSelect={() => alert(headerValue)}
+        <Table.Body>
+          {recipes.map((recipe, index) => {
+            let ingredients = [];
+            for (let i = 1; i <= 15; i++) {
+              ingredients.push(recipe[`strIngredient${i}`]);
+            };
+            return (
+
+              < Table.Row key={index} height="auto" >
+                <Table.TextCell>{recipe.strMeal}</Table.TextCell>
+                <Table.TextCell><Link href={recipe.strSource}>To Recipe</Link></Table.TextCell>
+              </Table.Row>
+            )
+          })}
+          {/* {recipes.map((recipe, index) => (
+          <Card
+            key={index}
+            elevation={1}
+            margin={16}
+            padding={16}
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            <Table.TextCell>{headerValue}</Table.TextCell>
-            <Table.TextCell>{headerValue}</Table.TextCell>
-          </Table.Row>
+            <Heading size={900} padding={10}>
+              {recipe.name}
+            </Heading>
+            <Group>
+              <Button iconAfter={ManualIcon}>
+                <Link to={`/recipe/${recipe._id}`}>View</Link>
+              </Button>
+              <Button
+                intent="danger"
+                iconAfter={TrashIcon}
+                onClick={() => removeOneRecipe(index)}
+              >
+                Delete
+              </Button>
+            </Group>
+          </Card>
+        ))} */}
         </Table.Body>
       </Table>
-    </Pane>
+    </Pane >
   );
 }
 

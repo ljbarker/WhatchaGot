@@ -13,24 +13,13 @@ function MyInventory(props) {
       .then((res) => res.json())
       .then((json) => setInventory(json["inventory_list"]))
       .catch((error) => console.log(error));
-  }, []);
-
-  function addAuthHeader(otherHeaders = {}) {
-    if (props.token === "INVALID_TOKEN") {
-      return otherHeaders;
-    } else {
-      return {
-        ...otherHeaders,
-        Authorization: `Bearer ${props.token}`,
-      };
-    }
-  }
+  }, [props]);
 
   function fetchinventory() {
     const promise = fetch(
-      "https://whatchagot.azurewebsites.net/inventory_list",
+      `https://whatchagot.azurewebsites.net/inventory_list/${props.username}`,
       {
-        headers: addAuthHeader(),
+        headers: props.addAuthHeader(),
       }
     );
     return promise;
@@ -41,7 +30,7 @@ function MyInventory(props) {
       "https://whatchagot.azurewebsites.net/inventory_list",
       {
         method: "POST",
-        headers: addAuthHeader({
+        headers: props.addAuthHeader({
           "Content-Type": "application/json",
         }),
         body: JSON.stringify(item),
@@ -53,10 +42,10 @@ function MyInventory(props) {
 
   function deleteItem(id) {
     const promise = fetch(
-      `https://whatchagot.azurewebsites.net/inventory_list/${id}`,
+      `https://whatchagot.azurewebsites.net/inventory_list/${props.username}/${id}`,
       {
         method: "DELETE",
-        headers: addAuthHeader(),
+        headers: props.addAuthHeader(),
       }
     );
     return promise;
@@ -82,7 +71,7 @@ function MyInventory(props) {
   function handleSubmit(event) {
     event.preventDefault();
     const id = Math.floor(Math.random() * 1000).toString();
-    const data = { _id: id, item, quantity, expiration };
+    const data = { _id: id, item, quantity, expiration, username: props.username };
     postItem(data)
       .then((res) => {
         if (res.status === 201) {
@@ -103,7 +92,7 @@ function MyInventory(props) {
   return (
     <Pane>
       <Pane>
-        <Navbar />
+        <Navbar username={props.username} />
         <Pane
           display="flex"
           alignItems="center"

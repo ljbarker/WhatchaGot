@@ -1,7 +1,6 @@
 import {
   Heading,
   Pane,
-  TextInput,
   Button,
   Text,
   TextInputField,
@@ -34,19 +33,19 @@ function SignUp(props) {
 
   async function submitForm(e) {
     e.preventDefault();
-    if(creds.password === checkPassword){
+    if (creds.password === checkPassword) {
       props.handleSubmit(creds);
       setCreds({ username: "", password: "" });
       setCheckPassword("");
     }
-    else{
+    else {
       toaster.danger("Password mismatch");
     }
   }
 
   return (
     <Pane>
-      <Navbar />
+      <Navbar username={props.username} />
       <Pane
         display="flex"
         flexDirection="column"

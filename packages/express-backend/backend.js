@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.send("WhatchaGot Data Home");
 });
 
-app.get("/recipe_list", authenticateUser, (req, res) => {
+app.get("/recipe_list/:username", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -33,7 +33,7 @@ app.get("/recipe_list", authenticateUser, (req, res) => {
       });
   } else {
     recipeQueries
-      .getRecipes()
+      .getRecipes(req.params.username)
       .then((qres) => {
         console.log(qres);
         result = qres;
@@ -47,7 +47,7 @@ app.get("/recipe_list", authenticateUser, (req, res) => {
   }
 });
 
-app.get("/recipe_list/:id", authenticateUser, (req, res) => {
+app.get("/recipe_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id; //or req.params.id
   let result;
   recipeQueries
@@ -68,6 +68,7 @@ app.get("/recipe_list/:id", authenticateUser, (req, res) => {
 
 app.post("/recipe_list", authenticateUser, (req, res) => {
   const body = {
+    username: req.body.username,
     name: req.body.name,
     ingredientList: req.body.ingredients,
     description: req.body.description,
@@ -94,7 +95,7 @@ app.post("/recipe_list", authenticateUser, (req, res) => {
     });
 });
 
-app.delete("/recipe_list/:id", authenticateUser, (req, res) => {
+app.delete("/recipe_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
   recipeQueries
     .deleteRecipe(id)
@@ -110,7 +111,7 @@ app.delete("/recipe_list/:id", authenticateUser, (req, res) => {
     });
 });
 
-app.get("/inventory_list", authenticateUser, (req, res) => {
+app.get("/inventory_list/:username", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -127,7 +128,7 @@ app.get("/inventory_list", authenticateUser, (req, res) => {
       });
   } else {
     inventoryQueries
-      .getInventory()
+      .getInventory(req.params.username)
       .then((qres) => {
         console.log(qres);
         result = qres;
@@ -141,7 +142,7 @@ app.get("/inventory_list", authenticateUser, (req, res) => {
   }
 });
 
-app.get("/inventory_list/:id", authenticateUser, (req, res) => {
+app.get("/inventory_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
   let result;
   inventoryQueries
@@ -178,7 +179,7 @@ app.post("/inventory_list", authenticateUser, (req, res) => {
     });
 });
 
-app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
+app.delete("/inventory_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
   inventoryQueries
     .deleteItemById(id)
@@ -195,8 +196,16 @@ app.delete("/inventory_list/:id", authenticateUser, (req, res) => {
 });
 
 app.get("/recipe_API", (req, res) => {
+  recipeAPIQueries
+    .get50()
+    .then((qres) => {
+      res.send(qres);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   // filtering returned recipes
-  inventoryQueries
+  /*inventoryQueries
     .getIngredients()
     .then((userIngredients) => {
       // Now, use those ingredients to find matching recipes
@@ -214,10 +223,10 @@ app.get("/recipe_API", (req, res) => {
     .catch((error) => {
       console.error(error);
       res.status(500).send("Error fetching user ingredients");
-    });
+    });*/
 });
 
-app.get("/shopping_list", authenticateUser, (req, res) => {
+app.get("/shopping_list/:username", authenticateUser, (req, res) => {
   const name = req.query.name;
   let result;
   if (name != undefined) {
@@ -234,7 +243,7 @@ app.get("/shopping_list", authenticateUser, (req, res) => {
       });
   } else {
     shoppingListQueries
-      .getShoppingList()
+      .getShoppingList(req.params.username)
       .then((qres) => {
         console.log(qres);
         result = qres;
@@ -248,7 +257,7 @@ app.get("/shopping_list", authenticateUser, (req, res) => {
   }
 });
 
-app.get("/shopping_list/:id", authenticateUser, (req, res) => {
+app.get("/shopping_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params.id;
   let result;
   shoppingListQueries
@@ -285,7 +294,7 @@ app.post("/shopping_list", authenticateUser, (req, res) => {
     });
 });
 
-app.delete("/shopping_list/:id", authenticateUser, (req, res) => {
+app.delete("/shopping_list/:username/:id", authenticateUser, (req, res) => {
   const id = req.params["id"];
   shoppingListQueries
     .deleteItemById(id)

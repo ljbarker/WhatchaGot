@@ -19,26 +19,15 @@ function MyRecipes(props) {
 
   useEffect(() => {
     setShowForm(false);
-    fetchRecipes()
+    fetchRecipes(props.username)
       .then((res) => res.json())
       .then((json) => setRecipes(json["recipe_list"]))
       .catch((error) => console.log(error));
-  }, []);
-
-  function addAuthHeader(otherHeaders = {}) {
-    if (props.token === "INVALID_TOKEN") {
-      return otherHeaders;
-    } else {
-      return {
-        ...otherHeaders,
-        Authorization: `Bearer ${props.token}`
-      };
-    }
-  }
+  }, [props]);
 
   function fetchRecipes() {
-    const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
-      headers: addAuthHeader()
+    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${props.username}`, {
+      headers: props.addAuthHeader(),
     });
     return promise;
   }
@@ -46,7 +35,7 @@ function MyRecipes(props) {
   function postRecipe(recipe) {
     const promise = fetch("https://whatchagot.azurewebsites.net/recipe_list", {
       method: "POST",
-      headers: addAuthHeader({
+      headers: props.addAuthHeader({
         "Content-Type": "application/json",
       }),
       body: JSON.stringify(recipe),
@@ -79,9 +68,9 @@ function MyRecipes(props) {
   }
 
   function deleteRecipe(id) {
-    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${id}`, {
+    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${props.username}/${id}`, {
       method: "DELETE",
-      headers: addAuthHeader()
+      headers: props.addAuthHeader()
     });
     return promise;
   }
@@ -107,7 +96,7 @@ function MyRecipes(props) {
 
   return (
     <Pane>
-      <Navbar />
+      <Navbar username={props.username} />
       <Pane
         display="flex"
         alignItems="center"
@@ -116,7 +105,7 @@ function MyRecipes(props) {
       >
         <Heading fontSize={32}>My Recipes</Heading>
       </Pane>
-      <Group>
+      <Group display="flex" flexWrap="wrap">
         {recipes.map((recipe, index) => (
           <Card
             key={index}
@@ -133,7 +122,7 @@ function MyRecipes(props) {
             </Heading>
             <Group>
               <Button iconAfter={ManualIcon}>
-                <Link to={`/recipe/${recipe._id}`}>View</Link>
+                <Link to={`/recipe/${props.username}/${recipe._id}`}>View</Link>
               </Button>
               <Button
                 intent="danger"
@@ -159,7 +148,7 @@ function MyRecipes(props) {
           confirmLabel="Done"
           hasFooter={false}
         >
-          <RecipeForm handleSubmit={updateList} />
+          <RecipeForm handleSubmit={updateList} username={props.username} />
         </Dialog>
         <Button
           marginLeft={16}

@@ -9,28 +9,17 @@ function Recipe(props) {
     const [recipe, setRecipe] = useState({ name: "", ingredientList: [], description: "" });
 
     useEffect(() => {
-        fetch(`https://whatchagot.azurewebsites.net/recipe_list/${id}`, {
-            headers: addAuthHeader()
+        fetch(`https://whatchagot.azurewebsites.net/recipe_list/${props.username}/${id}`, {
+            headers: props.addAuthHeader()
         })
             .then((res) => res.json())
             .then((json) => setRecipe(json))
             .catch((error) => console.log(error));
-    }, [id]);
-
-    function addAuthHeader(otherHeaders = {}) {
-        if (props.token === "INVALID_TOKEN") {
-            return otherHeaders;
-        } else {
-            return {
-                ...otherHeaders,
-                Authorization: `Bearer ${props.token}`
-            };
-        }
-    }
+    }, [id, props]);
 
     return (
         <Pane>
-            <Navbar />
+            <Navbar username={props.username} />
             <Pane>
                 <Table>
                     <Table.Head>

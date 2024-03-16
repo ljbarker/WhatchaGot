@@ -8,28 +8,17 @@ function MyShoppingList(props) {
   const [quantity, setQuantity] = useState("");
 
   useEffect(() => {
-    fetchShoppingList()
+    fetchShoppingList(props.username)
       .then((res) => res.json())
       .then((json) => setList(json["shopping_list"]))
       .catch((error) => console.log(error));
-  }, []);
-
-  function addAuthHeader(otherHeaders = {}) {
-    if (props.token === "INVALID_TOKEN") {
-      return otherHeaders;
-    } else {
-      return {
-        ...otherHeaders,
-        Authorization: `Bearer ${props.token}`,
-      };
-    }
-  }
+  }, [props]);
 
   function fetchShoppingList() {
     const promise = fetch(
-      "https://whatchagot.azurewebsites.net/shopping_list",
+      `https://whatchagot.azurewebsites.net/shopping_list/${props.username}`,
       {
-        headers: addAuthHeader(),
+        headers: props.addAuthHeader(),
       }
     );
     return promise;
@@ -41,7 +30,7 @@ function MyShoppingList(props) {
       "https://whatchagot.azurewebsites.net/shopping_list",
       {
         method: "POST",
-        headers: addAuthHeader({
+        headers: props.addAuthHeader({
           "Content-Type": "application/json",
         }),
         body: JSON.stringify(item),
@@ -53,10 +42,10 @@ function MyShoppingList(props) {
 
   function deleteItem(id) {
     const promise = fetch(
-      `https://whatchagot.azurewebsites.net/shopping_list/${id}`,
+      `https://whatchagot.azurewebsites.net/shopping_list/${props.username}/${id}`,
       {
         method: "DELETE",
-        headers: addAuthHeader(),
+        headers: props.addAuthHeader(),
       }
     );
     return promise;
@@ -82,7 +71,7 @@ function MyShoppingList(props) {
   function handleSubmit(event) {
     event.preventDefault();
     const id = Math.floor(Math.random() * 1000).toString();
-    const data = { _id: id, item, quantity };
+    const data = { _id: id, item, quantity, username: props.username };
     postItem(data)
       .then((res) => {
         if (res.status === 201) {
@@ -103,7 +92,7 @@ function MyShoppingList(props) {
   return (
     <Pane>
       <Pane>
-        <Navbar />
+        <Navbar username={props.username} />
         <Pane
           display="flex"
           alignItems="center"

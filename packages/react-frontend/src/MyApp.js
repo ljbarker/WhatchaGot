@@ -14,6 +14,7 @@ function MyApp() {
     const INVALID_TOKEN = "INVALID_TOKEN";
     const [token, setToken] = useState(INVALID_TOKEN);
     const [message, setMessage] = useState("");
+    const [username, setUsername] = useState("");
 
     function addAuthHeader(otherHeaders = {}) {
         if (token === "INVALID_TOKEN") {
@@ -41,10 +42,11 @@ function MyApp() {
                         .then((payload) => setToken(payload.token));
                     setMessage(`Login successful; auth token saved`);
                     toaster.success("Login successful!");
-                } 
-                else if(response.status === 401){
+                    setUsername(creds.username);
+                }
+                else if (response.status === 401) {
                     response.text()
-                    .then((text) => toaster.danger(text));
+                        .then((text) => toaster.danger(text));
                 }
                 else {
                     setMessage(
@@ -76,10 +78,11 @@ function MyApp() {
                         `Signup successful for user: ${creds.username}; auth token saved`
                     );
                     toaster.success('User successfully added!');
+                    setUsername(creds.username);
                 }
-                else if (response.status === 409){
+                else if (response.status === 409) {
                     response.text()
-                    .then((text) => toaster.danger(text));
+                        .then((text) => toaster.danger(text));
                 }
                 else {
                     setMessage(
@@ -98,14 +101,14 @@ function MyApp() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home token={token} />} />
-                <Route path="/myrecipes" element={<MyRecipes token={token} />} />
-                <Route path="/recipe/:id" element={<Recipe token={token} />} />
-                <Route path="/myinventory" element={<MyInventory token={token} />} />
-                <Route path="/myshoppinglist" element={<MyShoppingList token={token} />} />
-                <Route path="/login" element={<Login token={token} handleSubmit={loginUser} />} />
-                <Route path="/signup" element={<SignUp token={token} handleSubmit={signupUser} />} />
-                <Route path="/forgotPassword" element={<SignUp token={token} handleSubmit={signupUser} />} />
+                <Route path="/" element={<Home token={token} addAuthHeader={addAuthHeader} username={username} />} />
+                <Route path="/myrecipes" element={<MyRecipes token={token} addAuthHeader={addAuthHeader} username={username} />} />
+                <Route path="/recipe/:username/:id" element={<Recipe token={token} addAuthHeader={addAuthHeader} username={username} />} />
+                <Route path="/myinventory" element={<MyInventory token={token} addAuthHeader={addAuthHeader} username={username} />} />
+                <Route path="/myshoppinglist" element={<MyShoppingList token={token} addAuthHeader={addAuthHeader} username={username} />} />
+                <Route path="/login" element={<Login token={token} addAuthHeader={addAuthHeader} handleSubmit={loginUser} username={username} />} />
+                <Route path="/signup" element={<SignUp token={token} addAuthHeader={addAuthHeader} handleSubmit={signupUser} username={username} />} />
+                <Route path="/forgotPassword" element={<SignUp token={token} addAuthHeader={addAuthHeader} handleSubmit={signupUser} username={username} />} />
             </Routes>
         </BrowserRouter>
     );

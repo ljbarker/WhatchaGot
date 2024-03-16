@@ -11,19 +11,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .catch((error) => console.log(error));
-/*
-function getUsers(name, job) {
-  let promise;
-  if (name === undefined && job === undefined) {
-    promise = userModel.find();
-  } else if (name && !job) {
-    promise = findUserByName(name);
-  } else if (job && !name) {
-    promise = findUserByJob(job);
-  }
-  return promise;
-}
-*/
 
 function addUser(user) {
   const userToAdd = new userModel(user);

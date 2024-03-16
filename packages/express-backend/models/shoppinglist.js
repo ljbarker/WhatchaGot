@@ -7,6 +7,11 @@ const ShoppingListSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    username: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     item: {
       type: String,
       required: true,
