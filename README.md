@@ -6,7 +6,7 @@ WhatchaGot is a recipe and food inventory management website. The site allows us
 
 ## UI Prototype:
 
-[https://www.figma.com/file/GJAN0poTUviD0UPXdKkVh5/Low-Fidelity-Wirefrane?type=design&mode=design&t=vt5ZqeBka29QDeUl-0]
+[Figma Prototype](https://www.figma.com/file/GJAN0poTUviD0UPXdKkVh5/Low-Fidelity-Wirefrane?type=design&mode=design&t=vt5ZqeBka29QDeUl-0)
 
 last updated: 2/19/2024
 
