@@ -19,6 +19,15 @@ From root, react-frontend, express-backend: npm install
     ~/express-backend npm run dev //only if you want to test routes on local host instead of the deployed azure backend
     ~/WhatchaGot npm start || ~/react-frontend npm start
 
+## To Try Out:
+
+    Existing user:
+        username: ljbarker 
+        password: 1234
+    New user:
+        username: must use >= 3 characters
+        password: must be >= 8 characters
+
 ## Design System-EverGreen:
 
 [https://evergreen.segment.com/components]
