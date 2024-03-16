@@ -28,6 +28,10 @@ From root, react-frontend, express-backend: npm install
         username: must use >= 3 characters
         password: must be >= 8 characters
 
+## Deployed Link
+
+    [WhatchaGot](https://calm-forest-025139a10.4.azurestaticapps.net/)
+
 ## Design System-EverGreen:
 
 [https://evergreen.segment.com/components]
