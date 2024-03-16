@@ -70,3 +70,42 @@ test("handles form submission", () => {
   expect(formData.ingredients[0]).toHaveProperty("amount", testRecipe.amount);
   expect(formData).toHaveProperty("description", testRecipe.description);
 });
+
+test("handles form submission with multiple ingredients and removing ingredients", () => {
+  let formData = {};
+  const mockUpdate = (data) => {
+    formData = data;
+  };
+  render(<RecipeForm handleSubmit={mockUpdate} />);
+
+  const mainFormFields = [
+    { label: "Name", value: testRecipe.name },
+    { label: "Description", value: testRecipe.description },
+  ];
+  mainFormFields.forEach(({ label, value }) => {
+    const input = screen.getByLabelText(label);
+    fireEvent.change(input, { target: { value } });
+  });
+
+  const ingredient = { name: "Banana", amount: "5" };
+
+  const nameInput = screen.getByLabelText("Ingredient");
+  fireEvent.change(nameInput, { target: { value: ingredient.name } });
+  const amountInput = screen.getByLabelText("Amount");
+  fireEvent.change(amountInput, { target: { value: ingredient.amount } });
+  const addButton = screen.getByText("Add Another Ingredient");
+  fireEvent.click(addButton);
+
+  const removeButtons = screen.getAllByTestId("delete");
+  removeButtons.forEach((button) => {
+    fireEvent.click(button);
+  });
+
+  const submitButtons = screen.getAllByRole("button", { type: "submit" });
+  fireEvent.click(submitButtons[submitButtons.length - 1]);
+
+  expect(formData).toHaveProperty("name", testRecipe.name);
+  expect(formData).toHaveProperty("description", testRecipe.description);
+  expect(formData.ingredients[0]).toHaveProperty("name", "");
+  expect(formData.ingredients[0]).toHaveProperty("amount", "");
+});
