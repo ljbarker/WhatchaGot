@@ -20,7 +20,7 @@ function MyInventory(props) {
       `https://whatchagot.azurewebsites.net/inventory_list/${props.username}`,
       {
         headers: props.addAuthHeader(),
-      }
+      },
     );
     return promise;
   }
@@ -34,7 +34,7 @@ function MyInventory(props) {
           "Content-Type": "application/json",
         }),
         body: JSON.stringify(item),
-      }
+      },
     );
 
     return promise;
@@ -46,7 +46,7 @@ function MyInventory(props) {
       {
         method: "DELETE",
         headers: props.addAuthHeader(),
-      }
+      },
     );
     return promise;
   }
@@ -71,7 +71,13 @@ function MyInventory(props) {
   function handleSubmit(event) {
     event.preventDefault();
     const id = Math.floor(Math.random() * 1000).toString();
-    const data = { _id: id, item, quantity, expiration, username: props.username };
+    const data = {
+      _id: id,
+      item,
+      quantity,
+      expiration,
+      username: props.username,
+    };
     postItem(data)
       .then((res) => {
         if (res.status === 201) {

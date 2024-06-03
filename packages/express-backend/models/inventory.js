@@ -28,7 +28,7 @@ const InventorySchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { collection: "inventory_list" }
+  { collection: "inventory_list" },
 );
 
 const Inventory = mongoose.model("Inventory", InventorySchema);

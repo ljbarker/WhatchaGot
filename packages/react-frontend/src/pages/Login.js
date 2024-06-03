@@ -1,10 +1,4 @@
-import {
-  Heading,
-  Pane,
-  Button,
-  Text,
-  TextInputField,
-} from "evergreen-ui";
+import { Heading, Pane, Button, Text, TextInputField } from "evergreen-ui";
 import { useState } from "react";
 import { Link as RouteLink } from "react-router-dom";
 import Navbar from "../components/Navbar.js";

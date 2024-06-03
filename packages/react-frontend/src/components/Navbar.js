@@ -1,10 +1,4 @@
-import {
-  Avatar,
-  Group,
-  Heading,
-  Tab,
-  Tablist,
-} from "evergreen-ui";
+import { Avatar, Group, Heading, Tab, Tablist } from "evergreen-ui";
 import { Link } from "react-router-dom";
 import React from "react";
 
@@ -39,7 +33,11 @@ function Navbar(props) {
         </Link>
         <Link style={{ marginTop: "10px" }} to="/login">
           <Tab appearance="primary">
-            <Avatar name={props.username} size={40} backgroundColor="white"></Avatar>
+            <Avatar
+              name={props.username}
+              size={40}
+              backgroundColor="white"
+            ></Avatar>
           </Tab>
         </Link>
       </Group>

@@ -6,10 +6,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      validate(value){
+      validate(value) {
         if (value.length < 2)
           throw new Error("Invalid username, must be at least 3 characters.");
-      }
+      },
     },
     password: {
       type: String,
@@ -21,12 +21,12 @@ const UserSchema = new mongoose.Schema(
       },
     },
     _id: {
-        type: String,
-        required: true,
-        trim: true,
-    }
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
-  { collection: "users_list" }
+  { collection: "users_list" },
 );
 
 const User = mongoose.model("User", UserSchema);

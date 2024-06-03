@@ -34,7 +34,7 @@ const RecipeSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { collection: "recipe_list" }
+  { collection: "recipe_list" },
 );
 
 const Recipe = mongoose.model("Recipe", RecipeSchema);

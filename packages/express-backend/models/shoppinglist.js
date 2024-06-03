@@ -23,7 +23,7 @@ const ShoppingListSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { collection: "shopping_list" }
+  { collection: "shopping_list" },
 );
 
 const ShoppingList = mongoose.model("ShoppingList", ShoppingListSchema);

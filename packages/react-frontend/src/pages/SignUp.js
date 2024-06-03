@@ -4,7 +4,7 @@ import {
   Button,
   Text,
   TextInputField,
-  toaster
+  toaster,
 } from "evergreen-ui";
 import { useState } from "react";
 import { Link as RouteLink } from "react-router-dom";
@@ -39,8 +39,7 @@ function SignUp(props) {
       props.handleSubmit(creds);
       setCreds({ username: "", password: "" });
       setCheckPassword("");
-    }
-    else {
+    } else {
       // If it isnt, dont send data and ask for user to make passwords the same
       toaster.danger("Password mismatch");
     }

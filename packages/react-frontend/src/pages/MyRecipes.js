@@ -26,9 +26,12 @@ function MyRecipes(props) {
   }, [props]);
 
   function fetchRecipes() {
-    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${props.username}`, {
-      headers: props.addAuthHeader(),
-    });
+    const promise = fetch(
+      `https://whatchagot.azurewebsites.net/recipe_list/${props.username}`,
+      {
+        headers: props.addAuthHeader(),
+      },
+    );
     return promise;
   }
 
@@ -45,11 +48,11 @@ function MyRecipes(props) {
   }
 
   function removeOneRecipe(index) {
-    let id
+    let id;
     recipes.forEach((recipe, i) => {
       if (i === index) {
-        id = recipe._id
-      };
+        id = recipe._id;
+      }
     });
     const updated = recipes.filter((character, i) => {
       return i !== index;
@@ -68,10 +71,13 @@ function MyRecipes(props) {
   }
 
   function deleteRecipe(id) {
-    const promise = fetch(`https://whatchagot.azurewebsites.net/recipe_list/${props.username}/${id}`, {
-      method: "DELETE",
-      headers: props.addAuthHeader()
-    });
+    const promise = fetch(
+      `https://whatchagot.azurewebsites.net/recipe_list/${props.username}/${id}`,
+      {
+        method: "DELETE",
+        headers: props.addAuthHeader(),
+      },
+    );
     return promise;
   }
 
@@ -79,19 +85,18 @@ function MyRecipes(props) {
     postRecipe(recipe)
       .then((res) => {
         if (res.status === 201) {
-          return res.json()
-
+          return res.json();
         } else {
           console.log("Error: " + res.status);
           return undefined;
         }
       })
       .then((json) => {
-        if (json) setRecipes([...recipes, json])
+        if (json) setRecipes([...recipes, json]);
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   }
 
   return (

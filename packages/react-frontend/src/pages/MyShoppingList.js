@@ -19,7 +19,7 @@ function MyShoppingList(props) {
       `https://whatchagot.azurewebsites.net/shopping_list/${props.username}`,
       {
         headers: props.addAuthHeader(),
-      }
+      },
     );
     return promise;
   }
@@ -34,7 +34,7 @@ function MyShoppingList(props) {
           "Content-Type": "application/json",
         }),
         body: JSON.stringify(item),
-      }
+      },
     );
 
     return promise;
@@ -46,7 +46,7 @@ function MyShoppingList(props) {
       {
         method: "DELETE",
         headers: props.addAuthHeader(),
-      }
+      },
     );
     return promise;
   }

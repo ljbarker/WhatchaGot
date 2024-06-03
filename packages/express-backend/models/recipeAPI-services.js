@@ -34,28 +34,31 @@ async function searchRecByUserIngreds() {
     const userIngredients = await inventoryQueries.getIngredients(); // Fetch user's ingredients
     const recipes = await recipeAPIModel.find(); // Fetch all recipes
 
-    const matchingRecipes = recipes.filter(recipe => {
+    const matchingRecipes = recipes.filter((recipe) => {
       // Check if every ingredient of a recipe is included in the userIngredients array
       let ingredients = [];
       for (let i = 1; i <= 15; i++) {
         ingredients.push(recipe[`strIngredient${i}`]);
       }
-      ingredients.every(ingredient => {
-        if (ingredient !== null && ingredient !== "" && ingredient !== " " && ingredient !== undefined) {
-          userIngredients.includes(ingredient)
+      ingredients.every((ingredient) => {
+        if (
+          ingredient !== null &&
+          ingredient !== "" &&
+          ingredient !== " " &&
+          ingredient !== undefined
+        ) {
+          userIngredients.includes(ingredient);
         }
       });
     });
 
     // Return only the IDs of the recipes that match the criteria
-    return matchingRecipes.map(recipe => recipe.idMeal);
+    return matchingRecipes.map((recipe) => recipe.idMeal);
   } catch (error) {
-    console.error('Error searching recipes by user ingredients:', error);
+    console.error("Error searching recipes by user ingredients:", error);
     return [];
   }
 }
-
-
 
 export default {
   getRecipes,

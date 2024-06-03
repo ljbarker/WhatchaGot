@@ -111,7 +111,7 @@ const RecipeAPISchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { collection: "recipe_API" }
+  { collection: "recipe_API" },
 );
 
 const RecipeAPI = mongoose.model("RecipeAPI", RecipeAPISchema);

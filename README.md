@@ -2,7 +2,7 @@
 
 ## Product Blurb:
 
-WhatchaGot is a recipe and food inventory management website. The site allows users to store recipes, manage their ingredients, construct a shopping list and find new recipes from the site. 
+WhatchaGot is a recipe and food inventory management website. The site allows users to store recipes, manage their ingredients, construct a shopping list and find new recipes from the site.
 
 ## UI Prototype:
 
@@ -22,7 +22,7 @@ From root, react-frontend, express-backend: npm install
 ## To Try Out:
 
     Existing user:
-        username: ljbarker 
+        username: ljbarker
         password: 1234
     New user:
         username: must use >= 3 characters
@@ -30,7 +30,7 @@ From root, react-frontend, express-backend: npm install
 
 ## Deployed Link
 
- [WhatchaGot](https://calm-forest-025139a10.4.azurestaticapps.net/)
+[WhatchaGot](https://calm-forest-025139a10.4.azurestaticapps.net/)
 
 ## Design System-EverGreen:
 
@@ -39,4 +39,3 @@ From root, react-frontend, express-backend: npm install
 ## Recipe API:
 
 [Recipes](https://www.themealdb.com/)
-

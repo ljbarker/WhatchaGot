@@ -16,7 +16,6 @@ function Home(props) {
       .catch((error) => console.log(error));
   }, [props]);
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setheaderValue(value);
@@ -56,19 +55,19 @@ function Home(props) {
             let ingredients = [];
             for (let i = 1; i <= 15; i++) {
               ingredients.push(recipe[`strIngredient${i}`]);
-            };
+            }
             return (
-
-              < Table.Row key={index} height="auto" >
+              <Table.Row key={index} height="auto">
                 <Table.TextCell>{recipe.strMeal}</Table.TextCell>
-                <Table.TextCell><Link href={recipe.strSource}>To Recipe</Link></Table.TextCell>
+                <Table.TextCell>
+                  <Link href={recipe.strSource}>To Recipe</Link>
+                </Table.TextCell>
               </Table.Row>
-            )
+            );
           })}
-          
         </Table.Body>
       </Table>
-    </Pane >
+    </Pane>
   );
 }
 
